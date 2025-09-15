@@ -30,7 +30,12 @@
                     <th>Új leltári szám</th>
                 </tr>
                 <tr>
-                    <td><select name="eszkozID" id=""></select></td>
+                    <td>
+                        <select name="eszkozID" id="">
+                            <option value="0">Tábla</option>
+                            <option value="1">Kréta</option>
+                        </select>
+                    </td>
                     <td><input type="text" name="nev"></td>
                 </tr>
                 <tr>
@@ -88,8 +93,18 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><select name="teremID" id="" class="retn"></select></td>
-                    <td><select name="eszkozID" id="" class="retn"></select></td>
+                    <td>
+                        <select name="teremID" id="" class="retn">
+                            <option value="0">0 - 7.b</option>
+                            <option value="1">1 - 5.a</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="eszkozinleltID" id="" class="retn">
+                            <option value="0">120-Tábla</option>
+                            <option value="0">122-Kréta-5db</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td><button class="kuld">Hozzáad</button></td>
@@ -99,11 +114,58 @@
     </div>
     <div class="fel">
         <h5>Eszközlista</h5>
-        <table class="retn" eljaras="eszkozlist"></table>
+        <table class="retn" eljaras="eszkozlist">
+            <thead>
+                <tr>
+                    <th>Eszköz neve</th>
+                    <th>Darabszám</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tábla</td>
+                    <td>5db</td>
+                </tr>
+            </tbody>
+        </table>
         <h5>Teremlista</h5>
-        <table class="retn" eljaras="teremlist"></table>
+        <table class="retn" eljaras="teremlist">
+            <thead>
+                <tr>
+                    <th>Terem száma</th>
+                    <th>Terem</th>
+                    <th>Terem típusa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>112</td>
+                    <td>5.b</td>
+                    <td>Osztályterem</td>
+                </tr>
+            </tbody>
+        </table>
         <h5>Leltár</h5>
-        <table class="retn" eljaras="teremlist"></table>
+        <table class="retn" eljaras="teremlist">
+            <thead>
+                <tr>
+                    <th>Terem száma</th>
+                    <th>Terem</th>
+                    <th>Eszköz leltári száma</th>
+                    <th>Eszköz neve</th>
+                    <th>Darabszám</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>112</td>
+                    <td>8.b</td>
+                    <td>120</td>
+                    <td>Tábla</td>
+                    <td>1db</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <script type="module" src="index.js"></script>
 </body>

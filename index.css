@@ -1,3 +1,7 @@
+table.retn *{
+    border:  1px solid black;
+}
+
 .fel{
     width: 50%;
     float: left;
