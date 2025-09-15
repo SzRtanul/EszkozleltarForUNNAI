@@ -1,8 +1,8 @@
 <?php
-    if(!empty($_POST['data'])){
+    if(!empty($_POST['data']) && !empty($_POST['fname'])){
         $data = $_POST['data'];
-        $fname = "data.txt";
-        $file = fopen("upload/" .$fname, 'w');
+        $fname = $_POST['fname'].".txt";
+        $file = fopen("../data/" .$fname, 'w');
         fwrite($file, $data);
         fclose($file);
     }
