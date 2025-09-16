@@ -1,0 +1,13 @@
+.fel{
+    width: 50%;
+    float: left;
+}
+
+input[type="text"], input[type="number"], input[type="password"], select, button{
+    min-height: 23px;
+    border-radius: 4px;
+}
+
+.urlap li{
+    list-style-type: none;
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="../css/leltar.css">
+    <title>UNNAI Leltárprogram</title>
+</head>
+<body>
+    <header>
+        <ul>
+            <li><button id="logout">Kijelentkezés</button></li>
+        </ul>
+    </header>
+    <main>
+        <div class="fel">
+            <!---->
+            <h5>Eszköz hozzáadása</h5>
+            <table class="urlap" eljaras="eszkhozad">
+                <tbody>
+                    <tr>
+                        <td>Eszköz neve: </td>
+                        <td><input type="text" name="nev"></td>
+                    </tr>
+                    <tr>
+                        <td><button class="kuld">Hozzáad</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!---->
+            <h5>Új eszköz leltárba vétele</h5>
+            <table class="urlap" eljaras="eszkhozad">
+                <tbody>
+                    <tr>
+                        <th>Eszköz</th>
+                        <th>Új leltári szám</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="eszkozID" id="">
+                                <option value="0">Tábla</option>
+                                <option value="1">Kréta</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="nev"></td>
+                    </tr>
+                    <tr>
+                        <td><button class="kuld">Hozzáad</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!---->
+            <h5>Terem típus hozzáadása</h5>
+            <table class="urlap" eljaras="teremhozad">
+                <tbody>
+                    <tr>
+                        <td>Típus elnevezése: </td>
+                        <td><input type="text" name="nev"></td>
+                    </tr>
+                    <tr>
+                        <td><button class="kuld">Hozzáad</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!---->
+            <h5>Terem hozzáadása</h5>
+            <table class="urlap" eljaras="teremhozad">
+                <tbody>
+                    <tr>
+                        <td>Terem neve: </td>
+                        <td><input type="text" name="nev"></td>
+                    </tr>
+                    <tr>
+                        <td>Terem száma: </td>
+                        <td><input type="number" name="id"></td>
+                    </tr>
+                    <tr>
+                        <td>Terem típusa: </td>
+                        <td>
+                            <select class="retn" eljaras="" name="typeID">
+                                <option value="0">Osztályterem</option>
+                                <option value="1">Tornaterem</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button class="kuld">Hozzáad</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!---->
+            <h5>Eszköz hozzáadása teremhez</h5>
+            <table class="urlap" eljaras="eszktermhozrend">
+                <thead>
+                    <tr>
+                        <th>Terem</th>
+                        <th>Eszköz</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select name="teremID" id="" class="retn">
+                                <option value="0">0 - 7.b</option>
+                                <option value="1">1 - 5.a</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="eszkozinleltID" id="" class="retn">
+                                <option value="0">120-Tábla</option>
+                                <option value="0">122-Kréta-5db</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button class="kuld">Hozzáad</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="fel">
+            <h5>Eszközlista</h5>
+            <table class="retn" eljaras="eszkozlist">
+                <thead>
+                    <tr>
+                        <th>Eszköz neve</th>
+                        <th>Darabszám</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tábla</td>
+                        <td>5db</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5>Teremlista</h5>
+            <table class="retn" eljaras="teremlist">
+                <thead>
+                    <tr>
+                        <th>Terem száma</th>
+                        <th>Terem</th>
+                        <th>Terem típusa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>112</td>
+                        <td>5.b</td>
+                        <td>Osztályterem</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5>Leltár</h5>
+            <table class="retn" eljaras="teremlist">
+                <thead>
+                    <tr>
+                        <th>Terem száma</th>
+                        <th>Terem</th>
+                        <th>Eszköz leltári száma</th>
+                        <th>Eszköz neve</th>
+                        <th>Darabszám</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>112</td>
+                        <td>8.b</td>
+                        <td>120</td>
+                        <td>Tábla</td>
+                        <td>1db</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script type="module" src="../js/leltar.js"></script>
+</body>
+</html>
