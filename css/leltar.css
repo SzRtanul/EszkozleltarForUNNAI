@@ -1,3 +1,23 @@
+html, body{
+     margin: 0px;
+    padding: 0px;
+}
+body{
+    background-color: #1c388c;
+}
+
+main{
+    background-color: #f8f0f0;
+    border: 1px solid black;
+    padding: 35px;
+    margin: 35px;
+    margin-top: 0px;
+}
+
+header{
+    padding: 16px;
+}
+
 table.retn *{
     border:  1px solid black;
 }
@@ -5,4 +25,15 @@ table.retn *{
 header li{
     list-style-type: none;
     float: right;
+}
+
+.fel{
+    width: 50%;
+    float: left;
+}
+
+main::after, header::after {
+  content: "";
+  display: block;
+  clear: both;
 }

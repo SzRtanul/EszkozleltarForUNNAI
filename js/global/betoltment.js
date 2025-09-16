@@ -1,13 +1,14 @@
+import { gl } from "./globaldata.js";
 import { dataJSONs } from "./constructionofdata.js";
 
 export function betolt(){
     for(const datagroup in dataJSONs){
         let xhr = new XMLHttpRequest();
-        xhr.open('get', '/web/eszkozleltar/data/' + datagroup + ".txt", true);
+        xhr.open('get', gl+'data/' + datagroup + ".txt", true);
         xhr.onload = function () {
 //console.log("Botle")
 //console.log(dataJSONs.eszkozinlelt);
-            if (xhr.status === 200) {
+            if(xhr.status === 200) {
                 dataJSONs[datagroup] = xhr.response;
             } else {
                 console.error("Hiba a fájl lekérésekor:", fname, xhr.status);
@@ -28,7 +29,7 @@ export function ment(){
         data.append("data", JSON.stringify(dataJSONs[datagroup]));
         data.append("fname", datagroup);
         let xhr = new XMLHttpRequest();
-        xhr.open('post', '/web/eszkozleltar/php/write.php', true);
+        xhr.open('post', gl+'/php/write.php', true);
         xhr.send(data);
     }
 }
