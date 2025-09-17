@@ -13,25 +13,39 @@ body{
   height: 100vh;
 }
 
+.jckg{
+  
+}
+
 .tcenter{
   text-align: center;
+}
+
+.bord{
+  padding: 12px;
+  border: 2px ridge white;
+  max-width: 80%;
 }
 
 .bckg{
   padding: 12px;
   color: #1c388c;
+  font-weight: lighter;
+  font-size: 43px;
   background-color: #dfe1e2;
 }
 
 .ackg{
-  padding: 12px;
+  padding: 3px;
+  font-size: 41px;
   color: #18b548;
   background-color: #1c388c;
 }
 
 #belepes{
   min-height: 30px;
-  padding: 12;
+  padding: 5px 12px;
+  font-size: 19px;
 }
 
 .d-none{
