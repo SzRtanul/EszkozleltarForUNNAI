@@ -1,4 +1,3 @@
-
 import { gl } from "./js/global/globaldata.js";
 
 const modal = document.getElementById("loginModal");
@@ -12,7 +11,7 @@ belepes.addEventListener("click", ()=>{
 });
 
 login.addEventListener("click", ()=>{
-    window.location.pathname=gl+"content/leltar.html"
+    window.location.href=gl+"content/leltar.html"
 });
 
 close.addEventListener("click", ()=>{
