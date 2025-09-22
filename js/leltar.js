@@ -7,5 +7,5 @@ betolt();
 const logout = document.getElementById("logout");
 
 logout.addEventListener("click", ()=>{
-    window.location.pathname = gl;
+    window.location.pathname = "";
 });

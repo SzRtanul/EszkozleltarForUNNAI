@@ -11,7 +11,7 @@ belepes.addEventListener("click", ()=>{
 });
 
 login.addEventListener("click", ()=>{
-    window.location.href=gl+"content/leltar.html"
+    window.location.pathname=gl+"content/leltar.html"
 });
 
 close.addEventListener("click", ()=>{

@@ -1,1 +1,1 @@
-export const gl = "http://localhost/web/eszkozleltarforunnai/";
+export const gl = "";
