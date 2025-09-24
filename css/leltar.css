@@ -24,6 +24,10 @@ table.retn *{
 
 header li{
     list-style-type: none;
+    float: left;
+}
+
+header li.right{
     float: right;
 }
 

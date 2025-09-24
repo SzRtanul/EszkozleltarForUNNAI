@@ -1,7 +1,10 @@
 body{
-  background-color: #1c388c;
   padding: 0;
   margin: 0;
+  background-image: url("resources/images/Honlapra-1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .center-all{
@@ -17,6 +20,10 @@ body{
   
 }
 
+.content{
+  background-color: #1c388c7f;
+}
+
 .tcenter{
   text-align: center;
 }
@@ -29,6 +36,7 @@ body{
 
 .bckg{
   padding: 12px;
+  margin-bottom: 35px;
   color: #1c388c;
   font-weight: lighter;
   font-size: 43px;
@@ -37,9 +45,19 @@ body{
 
 .ackg{
   padding: 3px;
-  font-size: 41px;
-  color: #18b548;
-  background-color: #1c388c;
+  font-size: 35px;
+  color: #034216;
+  background-color: #dfe1e2b7;
+  max-width: 75%;
+  text-align: center;  
+}
+
+p{
+  margin: 0px;
+}
+
+p button{
+  margin-top: 30px;
 }
 
 #belepes{
