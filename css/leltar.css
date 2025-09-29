@@ -7,8 +7,7 @@ body{
 }
 
 main{
-    background-color: #f8f0f0;
-    border: 1px solid black;
+   /* background-color: #f8f0f0;*/
     padding: 35px;
     margin: 35px;
     margin-top: 0px;
@@ -19,7 +18,7 @@ header{
 }
 
 table.retn *{
-    border:  1px solid black;
+    border:  1px solid white;
 }
 
 header li{
@@ -32,8 +31,12 @@ header li.right{
 }
 
 .fel{
-    width: 50%;
+    border: 1px solid white;
+    width: calc(50%-1px);
     float: left;
+    color: white;
+    font: 32;
+    padding: 35px;
 }
 
 main::after, header::after {

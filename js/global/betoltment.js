@@ -11,13 +11,13 @@ export function betolt(){
             if(xhr.status === 200) {
                 dataJSONs[datagroup] = xhr.response;
             } else {
-                console.error("Hiba a fájl lekérésekor:", fname, xhr.status);
+              //  console.error("Hiba a fájl lekérésekor:", fname, xhr.status);
             }
 //console.log(dataJSONs.eszkozinlelt);
         };
 
         xhr.onerror = function () {
-            console.error("Hálózati hiba a fájlnál:", fname);
+           // console.error("Hálózati hiba a fájlnál:", fname);
         };
         xhr.send();
     }

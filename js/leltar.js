@@ -2,7 +2,7 @@ import { gl } from "./global/globaldata.js";
 import { dataJSONs } from "./global/constructionofdata.js";
 import { ment, betolt } from "./global/betoltment.js";
 
-betolt();
+//betolt();
 
 const logout = document.getElementById("logout");
 
