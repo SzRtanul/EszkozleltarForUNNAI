@@ -1,5 +1,5 @@
 export const endpoints = [
-    "gettable/users/profileview",
+    "gettable/public/eszkoz/0/50",
 ];
 
 export const qInserts = [

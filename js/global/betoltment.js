@@ -1,4 +1,4 @@
-import { gl } from "./globaldata.js";
+//import { gl } from "./globaldata.js";
 import { dataJSONs } from "./constructionofdata.js";
 
 export function betolt(){

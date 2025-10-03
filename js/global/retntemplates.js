@@ -23,12 +23,12 @@ const retEx = [
 ]
 
 export const retnCombinations = {
-    felh: retEx[0]("306"),
+    felh: retEx[0]("000"),
     userperson: 
         "getDataLength:retlist:retheadlist:personev:theade:tablerow:tbodyend:|||" +
         "00FFFFFF;30A---0102FFFF;30A---03FFFFFF;30A;0:1",
     profilev: "theade:profilev:tbodyend|||010002FF;309",
-    personev: retEx[0]("30A")
+  //  personev: retEx[0]("30A")
 }
 
 export const retnCombinationResults = {

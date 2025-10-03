@@ -2,7 +2,7 @@ import { whd } from "./queriessetup.js";
 
 export let eventTarget = new EventTarget();
 export const outsideEventMethStores = [];
-export const serverhost = "http://192.168.0.136:18081/";
+export const serverhost = "http://192.168.88.222:18081/";
 
 function doResetEventTarget(){
     eventTarget = new EventTarget();
@@ -166,7 +166,8 @@ async function getRest(honnan="", method="POST", db="", cAzon={}){
             break;
         default:
             fetchJSON["body"] = JSON.stringify({
-                token: Number(localStorage.getItem("token")) || 5,
+                token: localStorage.getItem("token") || "5",
+                dbthings: "",
                 CAzon: cAzon,
                 db: db,
                 //   ,CEdit: cEdit
@@ -177,7 +178,7 @@ async function getRest(honnan="", method="POST", db="", cAzon={}){
 }
 
 async function exampleREST(honnan="", method="POST", db="", cAzon={}){
-    const response = getRest(honnan, method, db, cAzon);
+    const response = await getRest(honnan, method, db, cAzon);
     return await response ? await response.text() : "err:HIBA: A szerver elérhetetlen.";
 }
 

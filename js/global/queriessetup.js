@@ -1,6 +1,5 @@
-import { formQs, qs } from "./queries.js";
 import { exportedMethods } from "./globaldata.js"
-import { endpoints, endpointswithdate } from "./endpoints.js";
+import { endpoints } from "./endpoints.js";
 
 export const endpointsResults = [
 
@@ -29,7 +28,7 @@ async function doQueryUpdates(){
     for(let i = 0; i < endpoints.length; i++){
         linmeth = endpoints[i].split(":");
         const foszlam = endpointsResults.push("")-1;
-        promises.push(QEnds(endpointsResults, linmeth[0]+"/0", linmeth[1] || "POST", foszlam));
+        promises.push(QEnds(endpointsResults, linmeth[0]+"", linmeth[1] || "POST", foszlam));
     }
     
     console.log("Szeretem én ezt?: ");
@@ -39,6 +38,7 @@ async function doQueryUpdates(){
         await Promise.all(
             promises.map(p => withTimeout(p, 5000)) // 5 másodperces limit mindegyikre
         );
+        console.log(endpointsResults)
     }
     catch{
         console.log("Hiba történt az adatok lekérése során.")
