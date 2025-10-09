@@ -219,8 +219,8 @@ function whataf(
         }
     }
     else if(retnrows[3] != 0){
-            fullText += retnrows[3](...resPlit.split(columnSep));
-            outResBefNums.push(fullText.length)
+        fullText += retnrows[3](...resPlit.split(columnSep));
+        outResBefNums.push(fullText.length)
     }
     return fullText;
 }

@@ -2,7 +2,7 @@ import { whd } from "./queriessetup.js";
 
 export let eventTarget = new EventTarget();
 export const outsideEventMethStores = [];
-export const serverhost = "http://192.168.88.222:18081/";
+export const serverhost = "http://192.168.45.53:18081/";
 
 function doResetEventTarget(){
     eventTarget = new EventTarget();
@@ -88,10 +88,16 @@ function doUrlapAllapotFrissites(mezok, szoveg){
     }
 }
 
-async function getCryptoHash(text){
+function getCryptoHash(text){
     /*const buffer = await crypto.subtle.digest("SHA-512", new TextEncoder().encode(text));
     return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, "0")).join("")*/
-    const buffer = await crypto.subtle.digest("SHA-512", new TextEncoder().encode(text));
+    const sab = new SharedArrayBuffer(4); // 4 byte-os megosztott buffer
+    const int32 = new Int32Array(sab);
+    let buffer = "";
+
+    crypto.subtle.digest("SHA-512", new TextEncoder().encode(text))
+        .then(r => { buffer = r; Atomics.store(int32, 0, 1); Atomics.notify(int32, 0); });
+    Atomics.wait(int32, 0, 0);
     return btoa(String.fromCharCode(...new Uint8Array(buffer)));
 }
 
@@ -124,6 +130,34 @@ async function getUrlapJSONs(urlap){
     return await jsonValue;
 }
 
+let num = 65;//0x12345678;
+let buffer = new ArrayBuffer(4);
+let view = new DataView(buffer);
+
+function getDBThings(urlap){
+    const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
+    let columns = "";
+    let values = "";
+    for(const mezo of myUrlap){
+       // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
+        if(mezo.name && mezo.name.length > 0){
+            const text = 
+                mezo.type !== "checkbox" ? 
+                    (mezo.classList.contains("xhr") ? 
+                        getCryptoHash(mezo.value) : 
+                        mezo.value) : 
+                    mezo.checked
+            ;
+            num = text.length;
+            view.setUint32(0, num);
+
+            columns += mezo.name + ",";
+            values += String.fromCharCode(...new Uint8Array(buffer)) + text;
+        }
+    }
+    return "";
+}
+
 function getValueFromAll(Cname="", jsonValue={}, localAktuels={}){
     let oText = "";
     const mezoTagG = Cname.split("-");
@@ -147,7 +181,7 @@ function getValueFromAll(Cname="", jsonValue={}, localAktuels={}){
         oText.split(";")[Number(mezoTagG[2])] || "" : oText;
 }
 
-async function getRest(honnan="", method="POST", db="", cAzon={}){
+async function getRest(honnan="", method="POST", dbthings = ""){
     const fetchJSON = {
         method: method.toUpperCase(),
        /* wittCredentials: true,
@@ -167,18 +201,15 @@ async function getRest(honnan="", method="POST", db="", cAzon={}){
         default:
             fetchJSON["body"] = JSON.stringify({
                 token: localStorage.getItem("token") || "5",
-                dbthings: "",
-                CAzon: cAzon,
-                db: db,
-                //   ,CEdit: cEdit
+                dbthings: dbthings
             })
         break;
     }
     return await fetch(serverhost + honnan, fetchJSON).catch(error => { return null; });
 }
 
-async function exampleREST(honnan="", method="POST", db="", cAzon={}){
-    const response = await getRest(honnan, method, db, cAzon);
+async function exampleREST(honnan="", method="POST", dbthings=""){
+    const response = await getRest(honnan, method, dbthings);
     return await response ? await response.text() : "err:HIBA: A szerver elérhetetlen.";
 }
 

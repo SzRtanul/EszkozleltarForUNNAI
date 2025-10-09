@@ -31,5 +31,32 @@ export const templates = {
         ret+= "</tr>";
         return ret;
     },
-    tbodyend: () => "</tbody>"
+    tbodyend: () => "</tbody>",
+    //With Custom Column names
+    theadeEszkozList: () =>{
+        return templates.theade(
+            "Eszköz Azonosító",
+            "Eszköznév",
+            "Márka",
+            "Darabszám"
+        );
+    },
+    theadeTeremList: () =>{
+        return templates.theade(
+            "Terem száma", 
+            "Terem",
+            "Terem típusa"
+        );
+    },
+    theadeLeltarList: () =>{
+        return templates.theade(
+            "Terem száma", 
+            "Terem",
+            "Eszköz leltári száma",
+            "Eszköz",
+            "Márka",
+            "Darabszám"
+        );
+    },
+    optionList: (...args) => "<option value=" + args[0] + ">"+ args[1] +" - " + args[2] +"</option>"
 };

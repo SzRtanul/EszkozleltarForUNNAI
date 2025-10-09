@@ -19,11 +19,16 @@ export const retnCombinationTemplates = {
 const retEx = [
     (data, theade="theade") => theade + ":tablerow:tbodyend|||010002FF;" + data,
     (data)=>"theadevcslist:tablerow:tbodyend|||FFFFFFFF;F---FFFFFFFF;F---010002FF;" + data,
-    (sendQ, data, h1="") => retEx[0](data, "")
+    (sendQ, data, h1="") => retEx[0](data, ""),
+    (data) => "optionList|||00FFFFFF;"+data,
 ]
 
 export const retnCombinations = {
-    felh: retEx[0]("000"),
+    felh: retEx[0]("F"),
+    eszkozlist: retEx[0]("000", "theadeEszkozList"),
+    teremlist: retEx[0]("001", "theadeTeremList"),
+    leltarlist: retEx[0]("002", "theadeLeltarList"),
+    optionEszkozList: retEx[3]("000"),
     userperson: 
         "getDataLength:retlist:retheadlist:personev:theade:tablerow:tbodyend:|||" +
         "00FFFFFF;30A---0102FFFF;30A---03FFFFFF;30A;0:1",
