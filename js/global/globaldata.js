@@ -101,41 +101,43 @@ function getCryptoHash(text){
     return btoa(String.fromCharCode(...new Uint8Array(buffer)));
 }
 
-async function getUrlapJSONs(urlap){
+function qTextReform(qtext="", jsonValue){
+    let dbFro = "";
+    const fr = qtext.split('\\-');
+    for(let i = 0; i < fr.length; i++){
+        if(fr[i].startsWith('$')){
+            fr[i] = jsonValue[fr[i].replace("$", "")];
+        }
+        dbFro += fr[i];
+    }
+    return dbFro;
+}
+
+function getUrlapJSONs(urlap){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
     const jsonValue = {};
     for(const mezo of myUrlap){
        // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
         if(mezo.name && mezo.name.length > 0){
-            if(!mezo.classList.contains("woap")){
-                jsonValue[mezo.name] = 
-                    mezo.type !== "checkbox" ? 
-                        (mezo.classList.contains("xhr") ? 
-                            await getCryptoHash(mezo.value) : 
-                            mezo.value) : 
-                        mezo.checked
-                ;
-            }
-            else{
-                let jsonMezoField = JSON.stringify(jsonValue);
-                jsonMezoField = jsonMezoField.substring(0, jsonMezoField.length - 1) +
-                    `${Object.keys(jsonValue).length > 0 ? "," : ""}`+
-                    `"${mezo.name}":${mezo.type !== "checkbox" ?
-                            mezo.value || null : mezo.checked}}`;
-                console.log(jsonMezoField);
-                jsonValue = JSON.parse(jsonMezoField);
-            }
+            jsonValue[mezo.name] = 
+                mezo.type !== "checkbox" ? 
+                    (mezo.classList.contains("xhr") ? 
+                        getCryptoHash(mezo.value) : 
+                        mezo.value) : 
+                    mezo.checked
+            ;
         }
     }
-    return await jsonValue;
+    return jsonValue;
 }
 
 let num = 65;//0x12345678;
 let buffer = new ArrayBuffer(4);
 let view = new DataView(buffer);
 
-function getDBThings(urlap){
+function getDBThings(urlap, mode=0, JSONValue){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
+    let fullText = "";
     let columns = "";
     let values = "";
     for(const mezo of myUrlap){
@@ -148,14 +150,25 @@ function getDBThings(urlap){
                         mezo.value) : 
                     mezo.checked
             ;
-            num = text.length;
-            view.setUint32(0, num);
-
-            columns += mezo.name + ",";
-            values += String.fromCharCode(...new Uint8Array(buffer)) + text;
+            if(mezo.classList.contains("mez")){
+                num = text.length;
+                view.setUint32(0, num);
+                if(mode == 0){
+                    columns += mezo.name + ",";
+                    values += String.fromCharCode(...new Uint8Array(buffer)) + text;
+                }
+                else if(mode > 0){
+                    values += mezo.name + "=" + String.fromCharCode(...new Uint8Array(buffer)) + text + (mode > 1 ? " and " : ", ");
+                }
+            }
+            if(mezo.classList.contains("settr")){
+                JSONValue[mezo.name] = text;
+            }
         }
     }
-    return "";
+    fullText=columns+"\0"+values;
+    console.log("Full: " + fullText)
+    return fullText;
 }
 
 function getValueFromAll(Cname="", jsonValue={}, localAktuels={}){
@@ -224,5 +237,7 @@ export const exportedMethods = {
     getUrlapJSONs: getUrlapJSONs,
     getValueFromAll: getValueFromAll,
     getCryptoHash: getCryptoHash,
+    getDBThings: getDBThings,
+    qTextReform: qTextReform,
     exampleREST: exampleREST,
 };

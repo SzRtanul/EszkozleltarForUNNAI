@@ -1,6 +1,9 @@
+import { eventTarget } from "./global/globaldata.js";
 import { exportedQMethods } from "./global/queriessetup.js";
 import { exportedRetnMethods } from "./global/events.js"
 import { exportedMethods } from "./global/globaldata.js";
+import { qInserts } from "./global/endpoints.js";
+import { utJSON } from "./global/actuelthings.js";
 
 let num = 65;//0x12345678;
 let buffer = new ArrayBuffer(4);
@@ -37,46 +40,35 @@ async function doKuld(e){
     if(!(typeof urlap === "object")){
         return 0;
     };
-    const jsonValue = await exportedMethods.getUrlapJSONs(urlap);
     const allapotKijelzok = urlap.getElementsByClassName("allapot");
-    const fvalue = urlap.getAttribute("value") || "callquery";
     const fname = urlap.getAttribute("name") || false;
     //const haveName = fname ? true : false;
     let sikeresKeres = false;
-    for(const btn of urlap.querySelectorAll("*:not(.urlap):not(.retn) .kuld, .kuldG")){
+    const kuldButtons = urlap.querySelectorAll("[runsclick*='0']")
+    for(const btn of kuldButtons){
         btn.setAttribute("disabled", "");
     }
     // urlap.classList.add("disable");
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
-console.log("ONYE")
-    // Adatfeldolgozás
     {
-console.log(urlap.getAttribute("usqF"));
-        const usesDB = formDRef[Number(urlap.getAttribute("usqF"))].split(/[^0-9]/);
-console.log("F: " + usesDB.length)
-        const fbol = usesDB.length == 1;
-console.log(usesDB);
-        const ddtxt = exportedQMethods.qTextReform(
-            (fbol || (usesDB.length>1 && usesDB[0] == 0)) ?
-            formQs[Number(usesDB[usesDB.length>1?1:0])] : noRefreshQs[Number(usesDB[1])], jsonValue)
-        ;
-        const tr = exportedQMethods.qTextReform(fvalue, jsonValue);
-        //jsonValue["ca"].datum = 2;
-        //
-        // ExampleRest;;
-        //
-console.log("ddtx: " + ddtxt);
-        const response = await exportedMethods.exampleREST(
-            tr, urlap.getAttribute("method") || "post",
-            ddtxt, jsonValue
-        );
-        if(fbol) addOrEditFormQ(Number(usesDB[0]), jsonValue, fname, response, fvalue);
-        console.log("Response:\n" + response);
-        console.log("JSONValue:")
-        console.log(jsonValue)
+        const usesDB = urlap.getAttribute("usqF")?.split(/[^0-9]/);
+        console.log(usesDB);
+        if(!(typeof usesDB === "number")){
+            return 0;
+        };
+        const fbol = usesDB.length > 0;
+        const ut = urlap.getAttribute("utjson");
+        const JSONValue = !isNaN(ut) ? utJSON[ut] : {};
+        const ddtxt = exportedMethods.getDBThings(urlap, usesDB[0], JSONValue);
+        const tr =  exportedMethods.qTextReform(qInserts[usesDB[1], JSONValue]);
+        const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
+       // if(fbol) addOrEditFormQ(Number(usesDB[0]), jsonValue, fname, response, fvalue);
+console.log("Response:\n" + response);
+console.log("JSONValue:")
+console.log(jsonValue)
         exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
         // urlap.classList.remove("disable");
-        for(const btn of urlap.querySelectorAll("*:not(.urlap):not(.retn) .kuld, .kuldG")){
+        for(const btn of kuldButtons){
             btn.removeAttribute("disabled");
         }
     
@@ -89,19 +81,8 @@ console.log("ddtx: " + ddtxt);
             }
 console.log("SLUCK!")
             eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
-                new CustomEvent("urlapS"+urlap.getAttribute("action"), 
-                    {detail: 
-                        {
-                            // urlapID: fullID, // ??????????? NOT IN SCOPE
-                            response: response,
-                        }
-                    }
-                ) : MyEvent
+                new CustomEvent("urlapS"+urlap.getAttribute("action"), {detail: { response: response }}) : MyEvent
             );
-            addEvents();
-    
-            // Add to updateList
-            //await doFrissit();
             exportedMethods.doEnvAutoJumpJelenet(urlap, "NextToIfSuccess");  
         }
     }
@@ -119,11 +100,17 @@ const runnable = [
 function doRun(e, eType = ""){
     const runs = e.target.getAttribute("runs"+eType) || "";
     for(let i = 0; i < runs.length; i++){
-        runnable[runs.charCodeAt(i)](e);
+       // console.log("Ruin: " + runs.charCodeAt(i));
+        runnable[runs.charCodeAt(i)-1](e);
     }
     console.log("yeeee: "+ e.target.classList);
 }
 
-document.addEventListener("click", (e) => {
-    
-});
+function eventSample(eventtype = "click"){
+    document.addEventListener(eventtype, (e) => {
+        doRun(e, eventtype);
+    });
+}
+
+eventSample();
+eventSample("Enter");

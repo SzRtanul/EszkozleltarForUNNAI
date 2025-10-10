@@ -7,5 +7,8 @@ export const endpoints = [
 ];
 
 export const qInserts = [
-    ""
+    "insert/\\\-$schema\\\-/\\\-$table\\\-",
+    "gettable/\\\-$schema\\\-/\\\-$table\\\-",
+    "update/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
+    "delete/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-"
 ];
