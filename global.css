@@ -1,3 +1,9 @@
+form[disabled] [type='submit']{
+    pointer-events: none;
+    opacity: 0.5;
+    background-color: red;
+}
+
 .content{
   background-color: #1c388c7f;
 }

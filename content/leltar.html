@@ -19,52 +19,59 @@
         <div class="fel content2">
             <!---->
             <h5>Eszköz hozzáadása</h5>
-            <table class="urlap" eljaras="eszkhozad">
-                <tbody>
-                    <tr>
-                        <td>Eszköz neve: </td>
-                        <td><input type="text" name="nev"></td>
-                    </tr>
-                    <tr>
-                        <td><button class="kuld" runsclick="&#x01;">Hozzáad</button></td>
-                    </tr>
-                </tbody>
-            </table>
+           <form action="" runssubmit="&#x01" usqF="1-2" utjson="1">
+                <table class="urlap" eljaras="eszkhozad">
+                    <tbody>
+                        <tr>
+                            <td>Eszköz neve: </td>
+                            <td><input type="text" name="nev" class="mez"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="Hozzáad"></td>
+                        </tr>
+                    </tbody>
+                </table>
+           </form>
             <!---->
             <h5>Új eszköz leltárba vétele</h5>
-            <table class="urlap" eljaras="eszkhozad">
-                <tbody>
-                    <tr>
-                        <th>Eszköz</th>
-                        <th>Új leltári szám</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select class="retn" cjust="optionEszkozList" name="eszkozID" id="">
-                                <option value="0">Tábla</option>
-                                <option value="1">Kréta</option>
-                            </select>
-                        </td>
-                        <td><input type="text" name="nev"></td>
-                    </tr>
-                    <tr>
-                        <td><button class="kuld" runsclick="&#x0;">Hozzáad</button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <form action="">
+                <table class="urlap" eljaras="eszkhozad">
+                    <tbody>
+                        <tr>
+                            <th>Eszköz</th>
+                            <th>Új leltári szám</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select class="retn" cjust="optionEszkozList" name="eszkozID" id="">
+                                    <option value="0">Tábla</option>
+                                    <option value="1">Kréta</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="nev"></td>
+                        </tr>
+                        <tr>
+                            <td><button class="kuld" runsclick="&#x0;">Hozzáad</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
             <!---->
             <h5>Terem típus hozzáadása</h5>
-            <table class="urlap" eljaras="teremhozad">
-                <tbody>
-                    <tr>
-                        <td>Típus elnevezése: </td>
-                        <td><input type="text" name="nev"></td>
-                    </tr>
-                    <tr>
-                        <td><button class="kuld" runsclick="&#x0;">Hozzáad</button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <form action="" runssubmit="&#x01;">
+                <table class="urlap" eljaras="teremhozad">
+                    <tbody>
+                        <tr>
+                            <td>Típus elnevezése: </td>
+                            <td><input type="text" name="nev"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="button" value="Aktuel" runsclick="&#x01;"></td>
+                            <td><input type="submit" value="Elküld"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
             <!---->
             <h5>Terem hozzáadása</h5>
             <table class="urlap" eljaras="teremhozaad">

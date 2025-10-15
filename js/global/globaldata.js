@@ -2,7 +2,7 @@ import { whd } from "./queriessetup.js";
 
 export let eventTarget = new EventTarget();
 export const outsideEventMethStores = [];
-export const serverhost = "http://192.168.45.53:18081/";
+export const serverhost = "http://localhost:3000/EszkozleltarForUNNAI/";
 
 function doResetEventTarget(){
     eventTarget = new EventTarget();
@@ -91,7 +91,7 @@ function doUrlapAllapotFrissites(mezok, szoveg){
 function getCryptoHash(text){
     /*const buffer = await crypto.subtle.digest("SHA-512", new TextEncoder().encode(text));
     return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, "0")).join("")*/
-    const sab = new SharedArrayBuffer(4); // 4 byte-os megosztott buffer
+    const sab = new SharedArrayBuffer(4);
     const int32 = new Int32Array(sab);
     let buffer = "";
 
@@ -131,12 +131,16 @@ function getUrlapJSONs(urlap){
     return jsonValue;
 }
 
-let num = 65;//0x12345678;
-let buffer = new ArrayBuffer(4);
-let view = new DataView(buffer);
+let num = 0;//0x12345678;
+const buffer = new ArrayBuffer(4);
+const view = new DataView(buffer);
+const txtenc = new TextEncoder();
+
+
 
 function getDBThings(urlap, mode=0, JSONValue){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
+    //const myUrlap = urlap.elements;
     let fullText = "";
     let columns = "";
     let values = "";
@@ -151,14 +155,21 @@ function getDBThings(urlap, mode=0, JSONValue){
                     mezo.checked
             ;
             if(mezo.classList.contains("mez")){
-                num = text.length;
+                num = txtenc.encode(text).length;
+                console.log("NUM: " + num)
                 view.setUint32(0, num);
                 if(mode == 0){
                     columns += mezo.name + ",";
-                    values += String.fromCharCode(...new Uint8Array(buffer)) + text;
+                    const num32ui = new Uint8Array(buffer);
+                   // console.log("Num32UI: " + num32ui)
+                    num32ui.reverse();
+                    values += "\x01" + String.fromCharCode(...num32ui) + text;
                 }
                 else if(mode > 0){
-                    values += mezo.name + "=" + String.fromCharCode(...new Uint8Array(buffer)) + text + (mode > 1 ? " and " : ", ");
+                    const num32ui = new Uint8Array(buffer);
+                   // console.log("Num32UI: " + num32ui)
+                    num32ui.reverse();
+                    values += mezo.name + "=" + "\x01" + String.fromCharCode(...num32ui) + text + (mode > 1 ? " and " : ", ");
                 }
             }
             if(mezo.classList.contains("settr")){
@@ -166,6 +177,7 @@ function getDBThings(urlap, mode=0, JSONValue){
             }
         }
     }
+    if(columns.length>0) columns = columns.substring(0, columns.length-1);
     fullText=columns+"\0"+values;
     console.log("Full: " + fullText)
     return fullText;
