@@ -1,0 +1,14 @@
+@base http://localhost:13000/EszkozleltarForUNNAI/
+
+###
+//POST {{base}}gettable/public/eszkoz
+###
+POST http://localhost:13000/EszkozleltarForUNNAI/update/public/eszkoz/177
+//header
+Content-Type: application/json
+
+//body
+{
+    "token": "5",
+    "dbthings": "\u0000nev\u0000\u0001\u0005\u0000\u0000\u0000ergo5"
+}
