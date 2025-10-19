@@ -2,7 +2,7 @@ import { whd } from "./queriessetup.js";
 
 export let eventTarget = new EventTarget();
 export const outsideEventMethStores = [];
-export const serverhost = "http://localhost:3000/EszkozleltarForUNNAI/";
+export const serverhost = "http://localhost:13000/EszkozleltarForUNNAI/";
 
 function doResetEventTarget(){
     eventTarget = new EventTarget();
@@ -169,7 +169,7 @@ function getDBThings(urlap, mode=0, JSONValue){
                     const num32ui = new Uint8Array(buffer);
                    // console.log("Num32UI: " + num32ui)
                     num32ui.reverse();
-                    values += mezo.name + "=" + "\x01" + String.fromCharCode(...num32ui) + text + (mode > 1 ? " and " : ", ");
+                    values += mezo.name + "\x01" + "\x01" + String.fromCharCode(...num32ui) + text;
                 }
             }
             if(mezo.classList.contains("settr")){
