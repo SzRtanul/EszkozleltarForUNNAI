@@ -1,13 +1,23 @@
 export const utJSON = [ // Láthatatlan mezők
     {
-        schema: "public",
-        table: "eszkoz",
-    },
-    {
-        schema: "public",
-        table: "eszkoz",
-        row: "177"
-    },
+        row: "1"
+    }
+];
+
+export const utschema = [
+    "public"
+];
+
+export const uttable = [
+    "eszkoz",
+    "marka",
+    "teremtipus",
+    "terem",
+    "termek",
+    //
+    // 5.
+    //
+    ""
 ];
 
 export const ActuelThings = [

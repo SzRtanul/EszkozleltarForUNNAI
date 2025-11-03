@@ -12,3 +12,23 @@ Content-Type: application/json
     "token": "5",
     "dbthings": "\u0000nev\u0000\u0001\u0005\u0000\u0000\u0000ergo5"
 }
+###
+POST http://localhost:13000/EszkozleltarForUNNAI/insert/public/eszkoz
+//header
+Content-Type: application/json
+
+//body
+{
+    "token": "5",
+    "dbthings": "\u0000nev\u0000\u0001\u0001\u0005\u0000\u0000\u0000ergo5"
+}
+###
+POST http://localhost:13000/EszkozleltarForUNNAI/insert/public/eszkoz
+//header
+Content-Type: application/json
+
+//body
+{
+    "token": "5",
+    "dbthings": "\u0000nev\u0000\u0000\u0000\u0000\u0000('ergo5')"
+}

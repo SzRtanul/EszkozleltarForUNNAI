@@ -3,7 +3,7 @@ import { exportedQMethods } from "./global/queriessetup.js";
 import { exportedRetnMethods } from "./global/events.js"
 import { exportedMethods } from "./global/globaldata.js";
 import { qInserts } from "./global/endpoints.js";
-import { utJSON } from "./global/actuelthings.js";
+import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let num = 65;//0x12345678;
@@ -58,9 +58,12 @@ async function doKuld(e){
     };*/
     //const fbol = usesDB.length > 0;
     const ut = urlap.getAttribute("utjson") || "na";
-    console.log(ut)
-    const JSONValue = !isNaN(ut) ? utJSON[ut] : {};
+    console.log("UT: " + ut)
+    const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
+    if(usesDB[2]) JSONValue["schema"] = utschema[Number(usesDB[2])];
+    if(usesDB[3]) JSONValue["table"] = uttable[Number(usesDB[3])];
     const ddtxt = exportedMethods.getDBThings(urlap, usesDB[0], JSONValue);
+    console.log("HUUUU2232:")
     console.log(JSONValue);
     console.log(ddtxt);
     //console.log(qInserts);
@@ -93,25 +96,28 @@ function kiscica(e){
     console.log("Ez működhet.")
 }
 
+
+
 const runnable = [
     doKuld,
-    kiscica
+    kiscica,
+    
 ];
 
 function doRun(e, eType = ""){
-    console.log("runs"+eType)
+ //   console.log("runs"+eType)
     const runs = e.target.getAttribute("runs"+eType) || "";
-    console.log(runs);
+//    console.log(runs);
     for(let i = 0; i < runs.length; i++){
-        console.log("Ruin: " + runs.charCodeAt(i));
+ //       console.log("Ruin: " + runs.charCodeAt(i));
         runnable[runs.charCodeAt(i)-1](e);
     }
 }
 
 function eventSample(eventtype = "click"){
-    console.log("Run it!")
+  //  console.log("Run it!")
     document.addEventListener(eventtype, (e) => {
-        console.log("EJ")
+  //      console.log("EJ")
         doRun(e, eventtype);
     });
 }

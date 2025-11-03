@@ -4,11 +4,14 @@ export const endpoints = [
     "gettable/public/leltarview/0/50",
     "gettable/public/marka",
     "gettable/public/teremtipus",
+    // 5.
+    
 ];
 
 export const qInserts = [
     "insert/\\\-$schema\\\-/\\\-$table\\\-",
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",
+    "gettable/\\\-$schema\\\-/\\\-$table\\\-",
     "update/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
-    "delete/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-"
+    "delete/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
 ];

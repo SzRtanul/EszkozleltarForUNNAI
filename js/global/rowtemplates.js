@@ -58,5 +58,5 @@ export const templates = {
             "Darabszám"
         );
     },
-    optionList: (...args) => "<option value=" + args[0] + ">"+ args[1] +" - " + args[2] +"</option>"
+    optionList: (...args) => "<option value=" + args[0] + ">"+ args[1]+"</option>"
 };

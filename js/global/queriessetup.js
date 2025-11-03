@@ -2,13 +2,12 @@ import { exportedMethods } from "./globaldata.js"
 import { endpoints } from "./endpoints.js";
 import { ActuelThings } from "./actuelthings.js";
 
-export const endpointsResults = [
-
-];
+export const endpointsResults = [];
+export const ActuelThingsResults = [];
 
 export const whd = [
     endpointsResults,
-    //ActuelThings
+    ActuelThingsResults
 ];
 
 async function QEnds(array, ltext, method, number){
@@ -24,6 +23,7 @@ function withTimeout(promise, ms) {
 
 async function doQueryUpdates(){
     endpointsResults.length = 0;
+    ActuelThingsResults.length = 0;
     let promises = [];
     let linmeth = "";
 
@@ -31,6 +31,10 @@ async function doQueryUpdates(){
         linmeth = endpoints[i].split(":");
         const foszlam = endpointsResults.push("")-1;
         promises.push(QEnds(endpointsResults, linmeth[0]+"", linmeth[1] || "POST", foszlam));
+    }
+
+    for(const key in ActuelThings){
+        ActuelThingsResults.push(ActuelThings[key]());
     }
     
     console.log("Szeretem én ezt?: ");
