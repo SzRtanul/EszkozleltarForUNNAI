@@ -92,16 +92,21 @@ console.log("SLUCK!")
     }
 }
 
+// Mi
+
 function kiscica(e){
     console.log("Ez működhet.")
 }
 
-
+function changeview(e){
+    // e.value
+    // .querySelector(".naga");
+}
 
 const runnable = [
     doKuld,
     kiscica,
-    
+    changeview
 ];
 
 function doRun(e, eType = ""){
@@ -124,4 +129,5 @@ function eventSample(eventtype = "click"){
 
 eventSample();
 //eventSample("Enter");
-eventSample("submit")
+eventSample("submit");
+eventSample("change");
