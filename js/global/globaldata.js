@@ -171,6 +171,13 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
                     num32ui.reverse();
                     values += mezo.name + "=" +  (mezo.classList.contains("woap") ? text : '\'' + text.replaceAll('\'', '\'\'') + '\'') + ',';
                 }
+                else if(mode == 2){
+                    //columns += mezo.name + ",";
+                    const num32ui = new Uint8Array(buffer);
+                   // console.log("Num32UI: " + num32ui)
+                    num32ui.reverse();
+                    values += (mezo.classList.contains("woap") ? text : '\'' + text.replaceAll('\'', '\'\'') + '\'') + ',';
+                }
             }
             if(mezo.classList.contains("settr")){
                 JSONValue[mezo.name] = text;
@@ -189,7 +196,12 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     const num32ui = new Uint8Array(buffer);
     // console.log("Num32UI: " + num32ui)
     num32ui.reverse();
-    fullText= mode == 0 ? columns + "\x00" + String.fromCharCode(...num32ui) + values.substring(0, values.length-1)+")" : String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
+    if(mode == 0) 
+        fullText = columns + "\x00" + String.fromCharCode(...num32ui) + values.substring(0, values.length-1)+")"
+    ;
+    if((mode >>> 0) -1 < 2){
+        fullText = String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
+    }
     console.log("Full: " + fullText)
     return fullText;
 }

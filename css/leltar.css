@@ -2,6 +2,15 @@
     background-color: green;
 }
 
+form{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+form>div{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
 html, body{
      margin: 0px;
     padding: 0px;
