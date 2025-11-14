@@ -20,15 +20,15 @@
             <!---->
             <h5>Elnevezések hozzáadása</h5>
             <form action="" runssubmit="&#x01;" usqF="2-6-0-5" utjson="0">
-                <span>Kategória kiválasztása:</span>
-                <select name="table" class="settr">
-                    <option value="eszkoz">Eszköznév</option>
-                    <option value="marka">Márka</option>
-                    <option value="teremtipus">Teremtípus</option>
-                    <option value="elart">Elart</option>
-                </select>
                 <div>
-                    <span>Eszköz elnevezése: </span>
+                    <label>Kategória kiválasztása:</label>
+                    <select name="table" class="settr">
+                        <option value="eszkoz">Eszköznév</option>
+                        <option value="marka">Márka</option>
+                        <option value="teremtipus">Teremtípus</option>
+                        <option value="elart">Elart</option>
+                    </select>
+                    <label>Eszköz elnevezése: </label>
                     <input type="text" name="nev" class="mez woap">
                 </div>
                 <p><input type="submit" value="Hozzáad"></p>
@@ -37,14 +37,14 @@
             <!---->
             <h5>Termék hozzáadása</h5>
             <form action="" runssubmit="&#x01;" usqF="0-0-0-4">
-                <span>Eszköznév:</span>
-                <select name="eszkozid" class="retn mez" cjust="optionEszkozList"></select>
                 <div>
-                    <span>Termék elnevezése: </span>
+                    <label>Eszköznév:</label>
+                    <select name="eszkozid" class="retn mez" cjust="optionEszkozList"></select>
+                    <label>Termék elnevezése: </label>
                     <input type="text" name="nev" class="mez">
-                </div>
-                    <span>Márka: </span>
+                    <label>Márka: </label>
                     <select name="markaid" class="retn mez" cjust="optionMarkaList"></select>
+                </div>
                 <p><input type="submit" value="Elküld"></p>
                 <span class="allapot"></span>
             </form>
@@ -52,46 +52,51 @@
             <h5>Terem hozzáadása</h5>
             <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
                 <div>
-                    <span>Terem neve:</span> 
+                    <label>Terem neve:</label> 
                     <input type="text" name="nev" class="mez">
-                    <span>Terem azonosító:</span>
+                    <label>Terem azonosító:</label>
                     <input type="text" name="id" class="mez">
-                </div>
-                    <span>Terem típusa:</span>
+                    <label>Terem típusa:</label>
                     <select class="retn mez woap" cjust="optionTeremTipusList" eljaras="" name="teremtipusID">
                         <option value="0">Osztályterem</option>
                         <option value="1">Tornaterem</option>
                     </select>
+                </div>
                 <p><input type="submit" value="Hozzáad"></td><td class="allapot"></td></p>
+                <span class="allapot"></span>
             </form>
             <!---->
             <h5>Új termék leltárba vétele</h5>
             <form action="" runssubmit="&#x01;">
-                <span>Termék</span>
-                <select class="retn" cjust="optionEszkozList" name="eszkozID" id="">
-                    <option value="0">Tábla</option>
-                    <option value="1">Kréta</option>
-                </select>
                 <div>
-                    <span>Új leltári szám</span>
+                    <label>Termék</label>
+                    <select class="retn" cjust="optionEszkozList" name="eszkozID" id="">
+                        <option value="0">Tábla</option>
+                        <option value="1">Kréta</option>
+                    </select>
+                    <label>Új leltári szám</label>
                     <input type="text" name="nev">
                 </div>
-                <p><button class="kuld" runsclick="&#x0;">Hozzáad</button></p>
+                <p><input type="submit" value="Hozzáad"></p>
+                <span class="allapot"></span>
             </form>
             <!---->
             <h5>Eszköz hozzáadása teremhez</h5>
             <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
-                <span>Terem</span>
-                <select name="teremID" id="" class="retn" cjust="optionTeremList">
-                    <option value="0">0 - 7.b</option>
-                    <option value="1">1 - 5.a</option>
-                </select>
-                <span>Eszköz</span>
-                <select name="eszkozinleltID" cjust="optionInLeltarList" id="" class="retn">
-                    <option value="0">120-Tábla</option>
-                    <option value="0">122-Kréta-5db</option>
-                </select>
-                <p><input type="submit"></p>
+                <div>
+                    <label>Terem</label>
+                    <select name="teremID" id="" class="retn" cjust="optionTeremList">
+                        <option value="0">0 - 7.b</option>
+                        <option value="1">1 - 5.a</option>
+                    </select>
+                    <label>Eszköz</label>
+                    <select name="eszkozinleltID" cjust="optionInLeltarList" id="" class="retn">
+                        <option value="0">120-Tábla</option>
+                        <option value="0">122-Kréta-5db</option>
+                    </select>
+                </div>
+                <p><input type="submit" value="Hozzáad"></p>
+                <span class="allapot"></span>
             </form>
         </div>
 
