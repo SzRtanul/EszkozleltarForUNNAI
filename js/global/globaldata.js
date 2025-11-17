@@ -143,7 +143,7 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     //const myUrlap = urlap.elements;
     let fullText = "";
     let columns = "";
-    let values = mode == 0 ? "(" : "";
+    let values = "";
     for(const mezo of myUrlap){
        // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
         if(mezo.name && mezo.name.length > 0){
@@ -159,7 +159,9 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
                 console.log("NUM: " + num)
                 view.setUint32(0, num);
                 if(mode == 0){
+                    console.log("NUUUUMKIRÁÁÁÁÁÁÁLY!")
                     columns += mezo.name + ",";
+                    console.log(columns)
                     const num32ui = new Uint8Array(buffer);
                    // console.log("Num32UI: " + num32ui)
                     num32ui.reverse();
@@ -190,19 +192,20 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
 
 
-    num = txtenc.encode(values).length;
+    num = txtenc.encode(values).length-1;
     console.log("NUM: " + num)
     view.setUint32(0, mode == 0 ? num : num - 1);
     const num32ui = new Uint8Array(buffer);
     // console.log("Num32UI: " + num32ui)
     num32ui.reverse();
-    if(mode == 0) 
-        fullText = columns + "\x00" + String.fromCharCode(...num32ui) + values.substring(0, values.length-1)+")"
-    ;
-    if((mode >>> 0) -1 < 2){
+    if(mode == 0){
+        console.log(((mode - 1) >>> 0));
+        fullText = columns + "\x00" + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
+    } 
+    if((mode - 1) >>> 0 < 2){
         fullText = String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
     }
-    console.log("Full: " + fullText)
+    console.log("Full: " + fullText);
     return fullText;
 }
 

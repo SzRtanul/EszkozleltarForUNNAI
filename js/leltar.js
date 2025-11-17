@@ -5,6 +5,90 @@ import { exportedMethods } from "./global/globaldata.js";
 import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 
+const retns = {
+    
+};
+
+const retnsInner = {
+
+};
+
+const urlapInner = {
+
+};
+
+await exportedQMethods.doQueryUpdates();
+
+class Retn extends HTMLElement {
+  connectedCallback() {
+    const shadow = this.attachShadow({mode: 'open'});
+    const cjust = this.getAttribute("cjust");
+    const name = this.getAttribute("fref");
+    shadow.innerHTML = 
+    `<link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="../css/leltar.css">
+    <div></div>`;
+    const div = shadow.querySelector("div");
+    if(name) {
+        if(urlapInner[name])urlapInner[name].push(div);
+        else{
+            urlapInner[name] = [div];
+        } 
+    }
+    if(!cjust) return;
+    const retn = retns[cjust];
+    eventSample("click", shadow);
+    //eventSample("Enter", shadow);
+    eventSample("submit", shadow);
+    eventSample("change", shadow);
+    if(retn){
+        console.log("Fa")
+        div.innerHTML = retn;
+        retnsInner.perec.push(div);
+    }
+    else{
+        console.log("Nem fa");
+        retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+        div.innerHTML = retns[cjust];
+        retnsInner[cjust] = [div];
+    }
+    console.log(retnsInner)
+  }
+}
+
+class RetnP extends HTMLElement {
+  connectedCallback() {
+    const cjust = this.getAttribute("cjust");
+    const name = this.getAttribute("fref");
+    const div = this.parentElement;
+    if(name) {
+        if(urlapInner[name])urlapInner[name].push(div);
+        else{
+            urlapInner[name] = [div];
+        } 
+    }
+    if(!cjust) return;
+    const retn = retns[cjust];
+    if(retn){
+        console.log("Fa")
+        div.innerHTML = retn;
+        retnsInner.perec.push(div);
+    }
+    else{
+        console.log("Nem fa");
+        retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+        div.innerHTML = retns[cjust];
+        retnsInner[cjust] = [div];
+    }
+    console.log(retnsInner)
+    this.remove();
+  }
+}
+customElements.define('retn-sh', Retn);
+customElements.define('retn-p', RetnP);
+
+
+
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let num = 65;//0x12345678;
 let buffer = new ArrayBuffer(4);
@@ -17,13 +101,16 @@ console.log(str);
 
 const logout = document.getElementById("logout");
 
+const test = document.querySelector("form");
+console.log("Itt:")
+console.log(test.attributes);
+
 logout.addEventListener("click", ()=>{
     window.location.pathname = "";
 });
-
+/*
 export async function UIUpdate(){
     console.log("UPDATING UI1")
-    await exportedQMethods.doQueryUpdates();
     console.log("UPDATING UI2")
     const listofretns = document.querySelectorAll("[cjust].retn:not([cjust=''])");
     console.log(listofretns);
@@ -32,21 +119,23 @@ export async function UIUpdate(){
     //addEvents();
     console.log("UPDATING UI4")
 }
-
-UIUpdate();
-
+*/
 //Kuld
 async function doKuld(e){
     e.preventDefault();
-    console.log("EE:")
-    console.log(e)
+    console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+    console.log(e);
     const urlap = e.target;
-    
+    const attrs = {};
+    for(const attr of urlap.attributes){
+        attrs[attr.nodeName] = attr.nodeValue;
+    }
+    console.log(attrs);
     if(!(typeof urlap === "object")){
         return 0;
     };
     const allapotKijelzok = urlap.getElementsByClassName("allapot");
-    const fname = urlap.getAttribute("name") || false;
+   // const fname = urlap.getAttribute("name") || false;
     //const haveName = fname ? true : false;
     let sikeresKeres = false;
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
@@ -81,8 +170,10 @@ console.log(JSONValue)
         console.log("FESZ");
         // await UIUpdate();
         console.log("UFFESZ");
-        for(const retn of document.querySelectorAll(`[name="${fname}"].retn[cjust]:not([cjust=''])`)){
-            exportedRetnMethods.doUjratolt(retn, tres);
+        if(attrs.name){
+            for(const retn of document.querySelectorAll(`[name="${attrs.name}"].retn[cjust]:not([cjust=''])`)){
+                exportedRetnMethods.doUjratolt(retn, tres);
+            }
         }
 console.log("SLUCK!")
         eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
@@ -110,7 +201,7 @@ const runnable = [
 ];
 
 function doRun(e, eType = ""){
- //   console.log("runs"+eType)
+//    console.log("runs"+eType)
     const runs = e.target.getAttribute("runs"+eType) || "";
 //    console.log(runs);
     for(let i = 0; i < runs.length; i++){
@@ -119,10 +210,11 @@ function doRun(e, eType = ""){
     }
 }
 
-function eventSample(eventtype = "click"){
+function eventSample(eventtype = "click", environment=document){
   //  console.log("Run it!")
-    document.addEventListener(eventtype, (e) => {
-  //      console.log("EJ")
+    environment.addEventListener(eventtype, (e) => {
+        e.stopPropagation();
+        console.log(e.target.attributes);
         doRun(e, eventtype);
     });
 }

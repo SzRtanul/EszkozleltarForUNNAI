@@ -3,7 +3,7 @@ const boreSplit = '<p class="inv">elva</p>';
 
 const tempex = [
     (args, koszbe="")=>{
-        let ret = "<thead><tr>"+ koszbe +"</tr><tr>";
+        let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
         for(let i = 0; i < args.length; i++){
             ret+="<th>"+args[i]+"</th>";
         }
@@ -21,6 +21,10 @@ const tempex = [
 ];
 
 export const templates = {
+    table: (retr="") => {
+        console.log(retr);
+        return "<table>" +retr+ "</table>";
+    },
     theade: (...args) => tempex[0](args),
     tbodybef: () => "<tbody>",
     tablerow: (...args) => {
@@ -31,7 +35,7 @@ export const templates = {
         ret+= "</tr>";
         return ret;
     },
-    tbodyend: () => "</tbody>",
+    tbodyend: () => "</tbody></table>",
     //With Custom Column names
     theadeEszkozList: () =>{
         return templates.theade(

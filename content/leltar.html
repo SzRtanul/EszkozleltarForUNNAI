@@ -9,152 +9,116 @@
 </head>
 <body>
     <header>
-        <ul>
-            <li><img src="../resources/images/sulilogo_2025__tenyleg_150x150_korfeher.png" alt="Logó"></li>
-            <li><h3>Újhartyáni Német Nemzetiségi Általános Iskola</h3></li>
-            <li class="right"><button id="logout">Kijelentkezés</button></li>
-        </ul>
+        <div class="l">
+            <span><img src="../resources/images/sulilogo_2025__tenyleg_150x150_korfeher.png" alt="Logó"></span>
+            <h3>Újhartyáni Német Nemzetiségi Általános Iskola</h3>
+        </div>
+        <div class="right">
+            <button id="logout" class="right">Kijelentkezés</button>
+        </div>
     </header>
     <main class="">
-        <div class="fel content2">
-            <!---->
-            <h5>Elnevezések hozzáadása</h5>
-            <form action="" runssubmit="&#x01;" usqF="2-6-0-5" utjson="0">
+        <div class="fel content urlapok">
+            <!--ELNEVEZÉS-->
+            <form action="" runssubmit="&#x01;" usqF="0-0-0-0">
+                <h5>Elnevezések hozzáadása</h5>
                 <div>
                     <label>Kategória kiválasztása:</label>
                     <select name="table" class="settr">
                         <option value="eszkoz">Eszköznév</option>
                         <option value="marka">Márka</option>
-                        <option value="teremtipus">Teremtípus</option>
-                        <option value="elart">Elart</option>
+                        <option value="helyisegtipus">Teremtípus</option>
+                        <option value="leltaresemenytipus">Leltáreseménytípus</option>
                     </select>
                     <label>Eszköz elnevezése: </label>
-                    <input type="text" name="nev" class="mez woap">
+                    <input type="text" name="nev" class="mez">
                 </div>
-                <p><input type="submit" value="Hozzáad"></p>
+                <p><input type="submit" value="Hozzáad" class=""></p>
                 <span class="allapot"></span>
            </form>
-            <!---->
-            <h5>Termék hozzáadása</h5>
+            <!--TERMÉK-->
             <form action="" runssubmit="&#x01;" usqF="0-0-0-4">
+                <h5>Termék hozzáadása</h5>
                 <div>
                     <label>Eszköznév:</label>
-                    <select name="eszkozid" class="retn mez" cjust="optionEszkozList"></select>
-                    <label>Termék elnevezése: </label>
-                    <input type="text" name="nev" class="mez">
-                    <label>Márka: </label>
-                    <select name="markaid" class="retn mez" cjust="optionMarkaList"></select>
+                    <select name="eszkozid" class="mez">
+                        <retn-p  cjust="optionEszkozList"></retn-p>
+                    </select>
+                    <label>Márka:</label>
+                    <select name="markaid" class="mez">
+                        <retn-p  cjust="optionMarkaList"></retn-p>
+                    </select>
+                    <label>Termék típus:</label>
+                    <input type="text" name="tipus" class="mez">
                 </div>
                 <p><input type="submit" value="Elküld"></p>
                 <span class="allapot"></span>
             </form>
             <!--TEREM-->
-            <h5>Terem hozzáadása</h5>
             <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
+                <h5>Helyiség hozzáadása</h5>
                 <div>
-                    <label>Terem neve:</label> 
+                    <label>Helyiség azonosító:</label>
+                    <input type="text" name="chid" class="mez">
+                    <label>Helyiség típusa:</label>
+                    <select name="teremtipusID" class="mez woap">
+                        <retn-p cjust="optionTeremTipusList"></retn-p>
+                    </select>
+                    <label>Helyiség neve(opcionális):</label> 
                     <input type="text" name="nev" class="mez">
-                    <label>Terem azonosító:</label>
-                    <input type="text" name="id" class="mez">
-                    <label>Terem típusa:</label>
-                    <select class="retn mez woap" cjust="optionTeremTipusList" eljaras="" name="teremtipusID">
-                        <option value="0">Osztályterem</option>
-                        <option value="1">Tornaterem</option>
-                    </select>
-                </div>
-                <p><input type="submit" value="Hozzáad"></td><td class="allapot"></td></p>
-                <span class="allapot"></span>
-            </form>
-            <!---->
-            <h5>Új termék leltárba vétele</h5>
-            <form action="" runssubmit="&#x01;">
-                <div>
-                    <label>Termék</label>
-                    <select class="retn" cjust="optionEszkozList" name="eszkozID" id="">
-                        <option value="0">Tábla</option>
-                        <option value="1">Kréta</option>
-                    </select>
-                    <label>Új leltári szám</label>
-                    <input type="text" name="nev">
                 </div>
                 <p><input type="submit" value="Hozzáad"></p>
                 <span class="allapot"></span>
             </form>
-            <!---->
-            <h5>Eszköz hozzáadása teremhez</h5>
-            <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
+            <!--LELTÁRBA-->
+            <form action="" runssubmit="&#x01;">
+                <h5>Új termék leltárba vétele</h5>
                 <div>
-                    <label>Terem</label>
-                    <select name="teremID" id="" class="retn" cjust="optionTeremList">
-                        <option value="0">0 - 7.b</option>
-                        <option value="1">1 - 5.a</option>
+                    <label>Termék</label>
+                    <select name="eszkozID" class="mez">
+                        <retn-p cjust="optionEszkozList"></retn-p>
+                    </select>
+                    <label>Új leltári szám</label>
+                    <input name="nev" type="text" class="mez">
+                </div>
+                <p><input type="submit" value="Hozzáad"></p>
+                <span class="allapot"></span>
+            </form>
+            <!--HOZZÁRENDEL-->
+            <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
+                <h5>Eszköz hozzáadása teremhez</h5>
+                <div>
+                    <label>Helyiség</label>
+                    <select name="teremID" class="mez">
+                        <retn-p  cjust="optionTeremList"></retn-p>
                     </select>
                     <label>Eszköz</label>
-                    <select name="eszkozinleltID" cjust="optionInLeltarList" id="" class="retn">
-                        <option value="0">120-Tábla</option>
-                        <option value="0">122-Kréta-5db</option>
+                    <select name="eszkozinleltID" class="mez">
+                        <retn-p cjust="optionInLeltarList" id=""></retn-p>
                     </select>
                 </div>
                 <p><input type="submit" value="Hozzáad"></p>
                 <span class="allapot"></span>
             </form>
         </div>
-
-
+        <!--TÁBLÁZATOK-->
         <div class="fel content2">
-            <h5>Eszközlista</h5>
-            <table class="retn" cjust="eszkozlist">
-                <thead>
-                    <tr>
-                        <th>Eszköz neve</th>
-                        <th>Darabszám</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Tábla</td>
-                        <td>5db</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h5>Teremlista</h5>
-            <table class="retn" cjust="teremlist">
-                <thead>
-                    <tr>
-                        <th>Terem azonosító</th>
-                        <th>Terem</th>
-                        <th>Terem típusa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>112</td>
-                        <td>5.b</td>
-                        <td>Osztályterem</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h5>Leltár</h5>
-            <table class="retn" cjust="leltarlist">
-                <thead>
-                    <tr>
-                        <th>Terem azonosító</th>
-                        <th>Terem</th>
-                        <th>Eszköz leltári száma</th>
-                        <th>Eszköz neve</th>
-                        <th>Darabszám</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>112</td>
-                        <td>8.b</td>
-                        <td>120</td>
-                        <td>Tábla</td>
-                        <td>1db</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div>
+                <h5>Eszközlista</h5>
+                <retn-sh cjust="eszkozlist"></retn-sh>
+            </div>
+            <div>
+                <h5>Terméklista</h5>
+                <retn-sh cjust="termeklist"></retn-sh>
+            </div>
+            <div>
+                <h5>Teremlista</h5>
+                <retn-sh cjust="teremlist"></retn-sh>
+            </div>
+            <div>
+                <h5>Leltár</h5>
+                <retn-sh cjust="leltarlist"></retn-sh>
+            </div>
         </div>
     </main>
     <script type="module" src="../js/leltar.js"></script>

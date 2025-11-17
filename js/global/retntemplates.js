@@ -54,7 +54,3 @@ export const staticQueryWithJSONs = [
     0,
     exmplJSONs[0],
 ];
-
-
-
-

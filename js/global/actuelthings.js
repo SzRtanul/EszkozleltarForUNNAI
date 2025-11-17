@@ -5,7 +5,10 @@ export const utJSON = [ // Láthatatlan mezők
 ];
 
 export const utschema = [
-    "public"
+    "public",
+    "leltar",
+    "epulet",
+    "megnevezes"
 ];
 
 export const uttable = [

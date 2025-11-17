@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,15 +17,17 @@
         </div>
     </main>
     <div id="loginModal" class="center-all modal">
-        <div class="urlap modal-content login-panel">
+        <div class="modal-content login-panel">
             <button class="close">X</button>
-            <ul>
-                <li>Felhasználónév</li>
-                <li><input type="text" name="username"></li>
-                <li>Jelszó</li>
-                <li><input type="password" name="password"></li>
-                <li><button class="kuld" id="login">Belépés</button></li>
-            </ul>
+            <form>
+                <label>Felhasználónév</label>
+                <input type="text" name="username">
+                <label>Jelszó</label>
+                <input type="password" name="password">
+                <div>
+                </div>
+                <p><input id="login" type="button" value="Belépés" class="but"></p>
+            </form>
         </div>
     </div>
     <script type="module" src="index.js"></script>

@@ -4,13 +4,40 @@ form[disabled] [type='submit']{
     background-color: red;
 }
 
-.content{
-  background-color: #1c388c7f;
+.content, .content2{
+    background-color: #1c388cb0;
 }
 
-.content2{
-  background-color: #1c388cb0;
+.urlapok{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
+
+form{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 18px;
+}
+form>div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+form>div>label{
+    /*
+    float:right;
+    justify-self: end;
+    */
+    margin-right: 18px;
+}
+form>p>input{
+    float: right;
+}
+form *:not(div){
+    margin: 2.5px;
+}
+
+
 
 body{
   padding: 0;

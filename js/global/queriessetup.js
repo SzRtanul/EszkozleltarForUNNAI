@@ -44,10 +44,12 @@ async function doQueryUpdates(){
         await Promise.all(
             promises.map(p => withTimeout(p, 5000)) // 5 másodperces limit mindegyikre
         );
+        console.log("YEEEEEY")
         console.log(endpointsResults)
     }
-    catch{
+    catch(e){
         console.log("Hiba történt az adatok lekérése során.")
+        
     }
     console.log("Nem.");
 }
