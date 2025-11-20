@@ -4,6 +4,7 @@ import { exportedRetnMethods } from "./global/events.js"
 import { exportedMethods } from "./global/globaldata.js";
 import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
+import { formDRef } from "./global/retntemplates.js";
 
 const retns = {
     
@@ -44,7 +45,7 @@ class Retn extends HTMLElement {
     if(retn){
         console.log("Fa")
         div.innerHTML = retn;
-        retnsInner.perec.push(div);
+        retnsInner[cjust].push(div);
     }
     else{
         console.log("Nem fa");
@@ -72,7 +73,7 @@ class RetnP extends HTMLElement {
     if(retn){
         console.log("Fa")
         div.innerHTML = retn;
-        retnsInner.perec.push(div);
+        retnsInner[cjust].push(div);
     }
     else{
         console.log("Nem fa");
@@ -128,19 +129,21 @@ async function doKuld(e){
     const urlap = e.target;
     const attrs = {};
     for(const attr of urlap.attributes){
+        console.log("EIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+        console.log(attr.nodeName);
+        console.log(attr.nodeValue)
         attrs[attr.nodeName] = attr.nodeValue;
     }
     console.log(attrs);
-    if(!(typeof urlap === "object")){
-        return 0;
-    };
+    if(!(typeof urlap === "object")){ return 0; };
     const allapotKijelzok = urlap.getElementsByClassName("allapot");
    // const fname = urlap.getAttribute("name") || false;
     //const haveName = fname ? true : false;
     let sikeresKeres = false;
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
-    
-    const usesDB = urlap.getAttribute("usqF")?.split(/[^0-9]/);
+    const usqF = Number(attrs["usqf"]);
+    console.log("usqF: " + usqF + " : " + attrs["usqf"]);
+    const usesDB = !isNaN(usqF) ? formDRef[usqF]?.split(/[^0-9]/) : [];
     console.log(usesDB);
     /*if(!(typeof usesDB[0] === "number")){
         return 0;

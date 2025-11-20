@@ -12,15 +12,23 @@ export const utschema = [
 ];
 
 export const uttable = [
-    "eszkoz",
-    "marka",
-    "teremtipus",
-    "terem",
+    "ceg",
     "termek",
+    "beszerzes",
+    "emelet",
+    "helyiseg",
     //
     // 5.
     //
-    "elart"
+    "leltar",
+    "leltaresemeny",
+    "fal",
+    "tagozat",
+    "osztaly",
+    //
+    // 10.
+    //
+    "terem",
 ];
 
 export const ActuelThings = [

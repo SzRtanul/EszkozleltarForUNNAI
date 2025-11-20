@@ -18,88 +18,229 @@
         </div>
     </header>
     <main class="">
-        <div class="fel content urlapok">
-            <!--ELNEVEZÉS-->
-            <form action="" runssubmit="&#x01;" usqF="0-0-0-0">
-                <h5>Elnevezések hozzáadása</h5>
-                <div>
-                    <label>Kategória kiválasztása:</label>
-                    <select name="table" class="settr">
-                        <option value="eszkoz">Eszköznév</option>
-                        <option value="marka">Márka</option>
-                        <option value="helyisegtipus">Teremtípus</option>
-                        <option value="leltaresemenytipus">Leltáreseménytípus</option>
-                    </select>
-                    <label>Eszköz elnevezése: </label>
-                    <input type="text" name="nev" class="mez">
-                </div>
-                <p><input type="submit" value="Hozzáad" class=""></p>
-                <span class="allapot"></span>
-           </form>
-            <!--TERMÉK-->
-            <form action="" runssubmit="&#x01;" usqF="0-0-0-4">
-                <h5>Termék hozzáadása</h5>
-                <div>
-                    <label>Eszköznév:</label>
-                    <select name="eszkozid" class="mez">
-                        <retn-p  cjust="optionEszkozList"></retn-p>
-                    </select>
-                    <label>Márka:</label>
-                    <select name="markaid" class="mez">
-                        <retn-p  cjust="optionMarkaList"></retn-p>
-                    </select>
-                    <label>Termék típus:</label>
-                    <input type="text" name="tipus" class="mez">
-                </div>
-                <p><input type="submit" value="Elküld"></p>
-                <span class="allapot"></span>
+        <div class="fel content">
+            <h4>Leltár</h4>
+            <div class="urlapok">
+                <!--ELNEVEZÉS-->
+                <form action="" runssubmit="&#x01;" usqF="0">
+                    <h5>Elnevezések hozzáadása</h5>
+                    <div>
+                        <label>Kategória kiválasztása</label>
+                        <select name="table" class="settr">
+                            <option value="eszkoz">Eszköznév</option>
+                            <option value="marka">Márka</option>
+                            <option value="helyisegtipus">Teremtípus</option>
+                            <option value="leltaresemenytipus">Leltáreseménytípus</option>
+                        </select>
+                        <label>Eszköz elnevezése</label>
+                        <input type="text" name="nev" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad" class=""></p>
+                    <span class="allapot"></span>
             </form>
-            <!--TEREM-->
-            <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
-                <h5>Helyiség hozzáadása</h5>
-                <div>
-                    <label>Helyiség azonosító:</label>
-                    <input type="text" name="chid" class="mez">
-                    <label>Helyiség típusa:</label>
-                    <select name="teremtipusID" class="mez woap">
-                        <retn-p cjust="optionTeremTipusList"></retn-p>
-                    </select>
-                    <label>Helyiség neve(opcionális):</label> 
-                    <input type="text" name="nev" class="mez">
-                </div>
-                <p><input type="submit" value="Hozzáad"></p>
-                <span class="allapot"></span>
+            <!--CÉG-->
+            <form action="" runssubmit="&#x01;" usqF="1">
+                    <h5>Cég hozzáadása</h5>
+                    <div>
+                        <label>Cég neve</label>
+                        <input type="text" name="nev" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáadás" class=""></p>
+                    <span class="allapot"></span>
             </form>
-            <!--LELTÁRBA-->
-            <form action="" runssubmit="&#x01;">
-                <h5>Új termék leltárba vétele</h5>
-                <div>
-                    <label>Termék</label>
-                    <select name="eszkozID" class="mez">
-                        <retn-p cjust="optionEszkozList"></retn-p>
-                    </select>
-                    <label>Új leltári szám</label>
-                    <input name="nev" type="text" class="mez">
-                </div>
-                <p><input type="submit" value="Hozzáad"></p>
-                <span class="allapot"></span>
-            </form>
-            <!--HOZZÁRENDEL-->
-            <form action="" usqF="1-3-0-3" utjson="0" runssubmit="&#x01;">
-                <h5>Eszköz hozzáadása teremhez</h5>
-                <div>
-                    <label>Helyiség</label>
-                    <select name="teremID" class="mez">
-                        <retn-p  cjust="optionTeremList"></retn-p>
-                    </select>
-                    <label>Eszköz</label>
-                    <select name="eszkozinleltID" class="mez">
-                        <retn-p cjust="optionInLeltarList" id=""></retn-p>
-                    </select>
-                </div>
-                <p><input type="submit" value="Hozzáad"></p>
-                <span class="allapot"></span>
-            </form>
+                <!--ESZKÖZ-->
+                <form action="" runssubmit="&#x01;" usqF="2">
+                    <h5>Termék hozzáadása</h5>
+                    <div>
+                        <label>Eszköznév</label>
+                        <select name="eszkozid" class="mez">
+                            <retn-p  cjust="optionEszkozList"></retn-p>
+                        </select>
+                        <label>Márka</label>
+                        <select name="markaid" class="mez">
+                            <retn-p  cjust="optionMarkaList"></retn-p>
+                        </select>
+                        <label>Típus</label>
+                        <input type="text" name="tipus" class="mez">
+                    </div>
+                    <p><input type="submit" value="Elküld"></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--BESZERZÉS-->
+                <form action="" usqF="3" runssubmit="&#x01;">
+                    <h5>Beszerzés hozzáadása</h5>
+                    <div>
+                        <label>Termék</label>
+                        <select name="termekID" class="mez">
+                            <retn-p  cjust="optionTermekList"></retn-p>
+                        </select>
+                        <label for="">Gyártás éve</label>
+                        <input type="number" name="gyartaseve" id="" class="mez">
+                        <label for="">Cég</label>
+                        <select name="cegID" id=""  class="mez">
+                            <retn-p cjust="optionCegList"></retn-p>
+                        </select>
+                        <label for="">Darabszám</label>
+                        <input type="number" name="mennyiseg" id="" class="mez">
+                        <label for="">Darabár</label>
+                        <input type="text" name="darabar" id="" class="mez">
+                        <label for="">Bérelt (Havi lebontás)</label>
+                        <input type="checkbox" name="haviberlet" id="" class="mez">
+                        <label for="">Rendelés dátuma</label>
+                        <input type="datetime-local" name="beszdat" id="" class="mez">
+                        <label for="">Átvétel dátuma</label>
+                        <input type="datetime-local" name="atvetel" id="" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+                 <!--EMELET-->
+                <form action="" usqF="4" runssubmit="&#x01;">
+                    <h5>Emelet hozzáadása</h5>
+                    <div>
+                        <label for="">Szint</label>
+                        <input type="number" name="szint" id="" class="mez">
+                        <label for="">Elnevezés (opcionális)</label>
+                        <input type="text" name="elnevezes" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--TEREM-->
+                <form action="" usqF="5" runssubmit="&#x01;">
+                    <h5>Helyiség hozzáadása</h5>
+                    <div>
+                        <label>Helyiség azonosító</label>
+                        <input type="text" name="chid" class="mez">
+                        <label>Helyiség típusa</label>
+                        <select name="helyisegtipusID" class="mez woap">
+                            <retn-p cjust="optionTeremTipusList"></retn-p>
+                        </select>
+                        <label>Emelet</label>
+                        <select name="emeletID" class="mez woap">
+                            <retn-p cjust="optionEmeletList"></retn-p>
+                        </select>
+                        <label for="">X kordináta(px)</label>
+                        <input type="text" name="x" class="mez">
+                        <label for="">Y kordináta(px)</label>
+                        <input type="text" name="y" class="mez">
+                        <label for="">Szélesség</label>
+                        <input type="text" name="width" class="mez">
+                        <label for="">Hosszúság</label>
+                        <input type="text" name="height" class="mez">
+                        <label>Helyiség neve(opcionális)</label> 
+                        <input type="text" name="nev" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--LELTÁR-->
+                <form action="" usqF="6" runssubmit="&#x01;">
+                    <h5>Termék hozzáadása helyiséghez</h5>
+                    <div>
+                        <label>Helyiség</label>
+                        <select name="helyisegID" class="mez">
+                            <retn-p cjust="optionHelyisegList"></retn-p>
+                        </select>
+                        <label>Termék</label>
+                        <select name="beszerzesID" class="mez">
+                            <retn-p cjust="optionEszkozList"></retn-p>
+                        </select>
+                        <label for="">Darabszám</label>
+                        <input name="mennyiseg" type="text" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--LELTÁRESEMÉNY-->
+                <form action="" usqF="8" runssubmit="&#x01;">
+                    <h5>Leltáresemény hozzáadása</h5>
+                    <div>
+                        <label>Beszerzés</label>
+                        <select name="beszerzesID" class="mez">
+                            <retn-p cjust="optionBeszerzesList"></retn-p>
+                        </select>
+                        <label>Leltáresemény típus</label>
+                        <select name="leltaresemenytipusID" class="mez">
+                            <retn-p cjust="optionLeltarEsemenyTipusList"></retn-p>
+                        </select>
+                        <label for="">Darabszám</label>
+                        <input name="mennyiseg" type="text" class="mez">
+                        <label for="">Darabszám</label>
+                        <input name="mikor" type="datetime-local" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+            </div>
+            <h4>Épület</h4>
+            <div class="urlapok">
+                <!--FAL-->
+                <form action="" usqF="7" runssubmit="&#x01;">
+                    <h5>Alakzat pont hozzáadása helyiséghez</h5>
+                    <div>
+                        <label for="">Helyiség</label>
+                        <select name="helyisegid" id="">
+                            <retn-p cjust="optionHelyisegList"></retn-p>
+                        </select>
+                        <label for="">X kordináta(px)</label>
+                        <input type="text" name="x" class="mez">
+                        <label for="">Y kordináta(px)</label>
+                        <input type="text" name="y" class="mez">
+                        <label for="">Sorrend pontszám</label>
+                        <input type="number" name="helyisegid" id="" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+            </div>
+            <div class="urlap">
+                <h4>Osztály</h4>
+                <!--TAGOZAT-->
+                <form action="" usqF="9" runssubmit="&#x01;">
+                    <h5>Tagozat hozzáadása</h5>
+                    <div>
+                        <label for="">Betű jelölés</label>
+                        <input type="text" name="betujel" class="mez">
+                        <label for="">Elvégzéshez szükséges idő</label>
+                        <input type="number" name="hossz" placeholder="Év" class="mez">
+                        <label for="">Tagozat neve</label>
+                        <input type="text" name="tagozatmegnevezes" id="" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--OSZTÁLY-->
+                <form action="" usqF="10" runssubmit="&#x01;">
+                    <h5>Osztály hozzáadása</h5>
+                    <div>
+                        <label for="">Tagozat</label>
+                        <select name="tagozatid" id="" class="mez">
+                            <retn-p cjust="optionTagozatList"></retn-p>
+                        </select>
+                        <label for="">Kezdés éve</label>
+                        <input type="number" name="kezdev" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--TEREM-->
+                <form action="" usqF="11" runssubmit="&#x01;">
+                    <h5>Teremkiosztás hozzáadása</h5>
+                    <div>
+                        <label for="">Osztály</label>
+                        <select name="helyisegid" id="" class="mez">
+                            <retn-p cjust="optionOsztalyList"></retn-p>
+                        </select>
+                        <label for="">Helyiség</label>
+                        <select name="helyisegid" id="" class="mez">
+                            <retn-p cjust="optionHelyisegList"></retn-p>
+                        </select>
+                    </div>
+                    <p><input type="submit" value="Hozzáad"></p>
+                    <span class="allapot"></span>
+                </form>
+            </div>
         </div>
         <!--TÁBLÁZATOK-->
         <div class="fel content2">

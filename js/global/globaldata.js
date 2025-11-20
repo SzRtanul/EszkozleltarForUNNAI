@@ -152,33 +152,34 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
                     (mezo.classList.contains("xhr") ? 
                         getCryptoHash(mezo.value) : 
                         mezo.value) : 
-                    mezo.checked
+                    mezo.checked+""
             ;
             if(mezo.classList.contains("mez")){
                 num = txtenc.encode(text).length;
-                console.log("NUM: " + num)
+                console.log("NUM: " + num);
                 view.setUint32(0, num);
                 if(mode == 0){
-                    console.log("NUUUUMKIRÁÁÁÁÁÁÁLY!")
+                    console.log("NUUUUMKIRÁÁÁÁÁÁÁLY!");
                     columns += mezo.name + ",";
-                    console.log(columns)
+                    console.log(columns);
                     const num32ui = new Uint8Array(buffer);
-                   // console.log("Num32UI: " + num32ui)
+                   // console.log("Num32UI: " + num32ui);
                     num32ui.reverse();
-                    values += "\'" + text.replaceAll("\'", "\'\'") + "\',";
+                    console.log(text)
+                    values += "\'" + text?.replaceAll("\'", "\'\'") + "\',";
                 }
                 else if(mode == 1){
                     const num32ui = new Uint8Array(buffer);
                    // console.log("Num32UI: " + num32ui)
                     num32ui.reverse();
-                    values += mezo.name + "=" +  (mezo.classList.contains("woap") ? text : '\'' + text.replaceAll('\'', '\'\'') + '\'') + ',';
+                    values += mezo.name + "=" +  (mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',';
                 }
                 else if(mode == 2){
                     //columns += mezo.name + ",";
                     const num32ui = new Uint8Array(buffer);
                    // console.log("Num32UI: " + num32ui)
                     num32ui.reverse();
-                    values += (mezo.classList.contains("woap") ? text : '\'' + text.replaceAll('\'', '\'\'') + '\'') + ',';
+                    values += (mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',';
                 }
             }
             if(mezo.classList.contains("settr")){

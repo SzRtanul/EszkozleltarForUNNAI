@@ -36,12 +36,18 @@ form{
     border: 1px solid black;
 }
 
-form select, form input{
-    max-width: 120px;
+form select, form input:not([type="datetime-local"]){
+    /*
+    */
+    max-width: 160px;
+}
+
+form input[type="date"]{
+    width: 120px !important;
 }
 
 html, body{
-     margin: 0px;
+    margin: 0px;
     padding: 0px;
 }
 body{
@@ -59,12 +65,17 @@ header{
     background-color: #fefefee0;
 }
 
+header{
+    display: flex;
+}
+
 header>.l{
     /*
     padding: 16px;
     */
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 table *{

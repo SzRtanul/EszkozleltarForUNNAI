@@ -19,6 +19,9 @@ form{
     grid-template-columns: 1fr;
     padding: 18px;
 }
+form label::after{
+    content: ":";
+}
 form>div{
     display: grid;
     grid-template-columns: 1fr 1fr;
