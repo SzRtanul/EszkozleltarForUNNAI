@@ -124,17 +124,17 @@ export async function UIUpdate(){
 //Kuld
 async function doKuld(e){
     e.preventDefault();
-    console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
-    console.log(e);
+console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+console.log(e);
     const urlap = e.target;
     const attrs = {};
     for(const attr of urlap.attributes){
-        console.log("EIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-        console.log(attr.nodeName);
-        console.log(attr.nodeValue)
+console.log("EIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+console.log(attr.nodeName);
+console.log(attr.nodeValue)
         attrs[attr.nodeName] = attr.nodeValue;
     }
-    console.log(attrs);
+console.log(attrs);
     if(!(typeof urlap === "object")){ return 0; };
     const allapotKijelzok = urlap.getElementsByClassName("allapot");
    // const fname = urlap.getAttribute("name") || false;
@@ -142,40 +142,41 @@ async function doKuld(e){
     let sikeresKeres = false;
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
     const usqF = Number(attrs["usqf"]);
-    console.log("usqF: " + usqF + " : " + attrs["usqf"]);
+console.log("usqF: " + usqF + " : " + attrs["usqf"]);
     const usesDB = !isNaN(usqF) ? formDRef[usqF]?.split(/[^0-9]/) : [];
-    console.log(usesDB);
+console.log(usesDB);
     /*if(!(typeof usesDB[0] === "number")){
         return 0;
     };*/
     //const fbol = usesDB.length > 0;
     const ut = urlap.getAttribute("utjson") || "na";
-    console.log("UT: " + ut)
+console.log("UT: " + ut)
     const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
     if(usesDB[2]) JSONValue["schema"] = utschema[Number(usesDB[2])];
     if(usesDB[3]) JSONValue["table"] = uttable[Number(usesDB[3])];
     const ddtxt = exportedMethods.getDBThings(urlap, usesDB[0], JSONValue);
-    console.log("HUUUU2232:")
-    console.log(JSONValue);
-    console.log(ddtxt);
-    //console.log(qInserts);
-    console.log()
+console.log("HUUUU2232:")
+console.log(JSONValue);
+console.log(ddtxt);
+//console.log(qInserts);
+console.log()
     const tr =  exportedMethods.qTextReform(qInserts[usesDB[1]], JSONValue);
-    console.log(tr);
+console.log(tr);
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
     // if(fbol) addOrEditFormQ(Number(usesDB[0]), jsonValue, fname, response, fvalue);
 console.log("Response:\n" + response);
-console.log("JSONValue:")
-console.log(JSONValue)
+console.log("JSONValue:");
+console.log(JSONValue);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
 
     if(!sikeresKeres){
-        console.log("FESZ");
-        // await UIUpdate();
-        console.log("UFFESZ");
-        if(attrs.name){
-            for(const retn of document.querySelectorAll(`[name="${attrs.name}"].retn[cjust]:not([cjust=''])`)){
-                exportedRetnMethods.doUjratolt(retn, tres);
+        await exportedQMethods.doQueryUpdates();
+        for(const cjust in retns){
+console.log("Bejön")
+            retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+            for(const inner of retnsInner[cjust]){
+console.log("És bejön")
+                inner.innerHTML = retns[cjust];
             }
         }
 console.log("SLUCK!")
