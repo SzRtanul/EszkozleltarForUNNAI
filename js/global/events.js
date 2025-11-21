@@ -142,7 +142,7 @@ function whataf(
     const eleje = wherebef[0];
     if(resHaveThead && retnrows[1] != 0){
         outResBefNums[0] = true;
-        fullText = retnrows[1](...befretns.slice(eleje, wherebef[1]), ...resPlit.slice(0, leptek));
+        fullText = retnrows[1](resPlit.slice(0, leptek), ...befretns.slice(eleje, wherebef[1]));
         outResBefNums.push(fullText.length); // ALAMÉAEA
     }
     if(error == 0 && retnrows[0] != 0){
@@ -208,7 +208,7 @@ function whataf(
                     resultsBef[resLast] += szen;
                 }
             }
-            fullText += retnrows[0](...resultsBef, ...resPlit.slice(i, i + leptek));
+            fullText += retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef);
             outResBefNums.push(fullText.length)
         }
         // tfoot
@@ -219,8 +219,9 @@ function whataf(
         }
     }
     else if(retnrows[3] != 0){
-        fullText += retnrows[3](...resPlit.split(columnSep));
+        fullText += retnrows[3](resPlit.split(columnSep));
         outResBefNums.push(fullText.length)
     }
+//    console.log(fullText);
     return fullText;
 }

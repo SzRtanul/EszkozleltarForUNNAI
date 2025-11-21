@@ -16,7 +16,7 @@ function doMindenhezHozzaad(mikhez, methods=[], eventID="", parameters=[], event
         ){
             const eventcharchain = (elem.getAttribute(eventID+"Event") ?? eventtipus) || "";
             const eventtypeslist = eventcharchain.split(';') ?? [];
-            for(let i = 0; i<eventtypeslist.length; i++){
+            for(let i = 0; i < eventtypeslist.length; i++){
                 //console.log(eventtypeslist[i])
                 elem.addEventListener(eventtypeslist[i], async function(e){
                     let both = true;
@@ -25,7 +25,7 @@ function doMindenhezHozzaad(mikhez, methods=[], eventID="", parameters=[], event
                         const parame = await methods[i](e, ...pr);
                         both = typeof parame === "boolean" ? parame : true;
                     }
-                   // console.log(eventtypeslist[i])
+// console.log(eventtypeslist[i])
                 });
             }
             if(!elem.dataset.events) elem.dataset.events = "";
@@ -156,28 +156,27 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
             ;
             if(mezo.classList.contains("mez")){
                 num = txtenc.encode(text).length;
-                console.log("NUM: " + num);
+console.log("NUM: " + num);
                 view.setUint32(0, num);
-                if(mode == 0){
-                    console.log("NUUUUMKIRÁÁÁÁÁÁÁLY!");
+                if(text.length > 0 && mode == 0){
+console.log("NUUUUMKIRÁÁÁÁÁÁÁLY!");
                     columns += mezo.name + ",";
-                    console.log(columns);
+console.log(columns);
                     const num32ui = new Uint8Array(buffer);
                    // console.log("Num32UI: " + num32ui);
                     num32ui.reverse();
-                    console.log(text)
+console.log(text)
                     values += "\'" + text?.replaceAll("\'", "\'\'") + "\',";
                 }
                 else if(mode == 1){
                     const num32ui = new Uint8Array(buffer);
-                   // console.log("Num32UI: " + num32ui)
+// console.log("Num32UI: " + num32ui)
                     num32ui.reverse();
                     values += mezo.name + "=" +  (mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',';
                 }
                 else if(mode == 2){
-                    //columns += mezo.name + ",";
                     const num32ui = new Uint8Array(buffer);
-                   // console.log("Num32UI: " + num32ui)
+// console.log("Num32UI: " + num32ui)
                     num32ui.reverse();
                     values += (mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',';
                 }
@@ -194,19 +193,19 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
 
 
     num = txtenc.encode(values).length-1;
-    console.log("NUM: " + num)
+console.log("NUM: " + num)
     view.setUint32(0, mode == 0 ? num : num - 1);
     const num32ui = new Uint8Array(buffer);
     // console.log("Num32UI: " + num32ui)
     num32ui.reverse();
     if(mode == 0){
-        console.log(((mode - 1) >>> 0));
+console.log(((mode - 1) >>> 0));
         fullText = columns + "\x00" + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
     } 
     if((mode - 1) >>> 0 < 2){
         fullText = String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
     }
-    console.log("Full: " + fullText);
+console.log("Full: " + fullText);
     return fullText;
 }
 

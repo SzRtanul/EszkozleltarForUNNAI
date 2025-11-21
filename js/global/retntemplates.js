@@ -25,7 +25,7 @@ export const retnCombinationTemplates = {
 };
 
 const retEx = [
-    (data, theade="theade", trow="tablerow") => theade + ":"+ trow +":tbodyend|||010002FF;" + data,
+    (data, theade="theade", trow="trow", tend="tbodyend") => theade + ":"+ trow +":"+ tend +"|||010002FF;" + data,
     (data)=>"theadevcslist:tablerow:tbodyend|||FFFFFFFF;F---FFFFFFFF;F---010002FF;" + data,
     (sendQ, data, h1="") => retEx[0](data, ""),
     (data) => "optionList|||00FFFFFF;"+data,
@@ -33,7 +33,7 @@ const retEx = [
 
 export const retnCombinations = {
     felh: retEx[0]("F"),
-    eszkozlist: retEx[0]("000", "theadeEszkozList"),
+    eszkozlist: retEx[0]("000", "theadeEszkozList", "trowEszkozList"),
     teremlist: retEx[0]("001", "theadeTeremList"),
     termeklist: retEx[0]("005"),
     leltarlist: retEx[0]("002", "theadeLeltarList"),

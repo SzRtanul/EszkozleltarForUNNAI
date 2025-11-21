@@ -14,7 +14,7 @@ form[disabled] [type='submit']{
     justify-content: center;
 }
 
-form{
+form, form>div[cgrid="1"]{
     display: grid;
     grid-template-columns: 1fr;
     padding: 18px;
@@ -22,7 +22,12 @@ form{
 form label::after{
     content: ":";
 }
-form>div{
+form input:not(.settr):not(.mez):not([type="submit"]), form select:not(.settr):not(.mez){
+    pointer-events:none;
+    background:#AAA;
+    color:#F5F5F5;
+}
+form>div, form>div[cgrid="2"]{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -40,7 +45,9 @@ form *:not(div){
     margin: 2.5px;
 }
 
-
+td button{
+    margin: 4px;
+}
 
 body{
   padding: 0;

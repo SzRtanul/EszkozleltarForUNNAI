@@ -21,46 +21,62 @@ const tempex = [
 ];
 
 export const templates = {
-    table: (retr="") => {
+    // Defaults
+    table: (args, retr="") => {
         console.log(retr);
         return "<table>" +retr+ "</table>";
     },
-    theade: (...args) => tempex[0](args),
-    tbodybef: () => "<tbody>",
-    tablerow: (...args) => {
-        let ret = "<tr>";
+    theade: (args) => tempex[0](args),
+    tbodybef: (args) => "<tbody>",
+    trow: (args, egyeb="") => {
+        let ret = "<tr class='retnrow'>";
         for(let i = 0; i < args.length; i++){
             ret+="<td>"+args[i]+"</td>";
         }
-        ret+= "</tr>";
+        ret+= egyeb + "</tr>";
         return ret;
     },
-    tbodyend: () => "</tbody></table>",
-    //With Custom Column names
-    theadeEszkozList: () =>{
+    tbodyend: (args) => "</tbody></table>",
+    optionList: (args) => "<option value=" + args[0] + ">"+ args[1]+"</option>",
+    // Customs
+    theadeEszkozList: (args) => { 
         return templates.theade(
-            "Eszköz Azonosító",
-            "Eszköznév",
-            "Márka",
-            "Darabszám"
+            [
+                "Eszköz Azonosító",
+                "Eszköznév",
+              /*  "Márka",
+                "Darabszám"*/
+            ]
         );
     },
-    theadeTeremList: () =>{
+    theadeTeremList: (args) => {
         return templates.theade(
-            "Terem száma", 
-            "Terem",
-            "Terem típusa"
+            [
+                "Terem száma", 
+                "Terem",
+                "Terem típusa"
+            ]
         );
     },
-    theadeLeltarList: () =>{
+    theadeLeltarList: (args) => {
         return templates.theade(
-            "Terem száma", 
-            "Terem",
-            "Eszköz leltári száma",
-            "Eszköz",
-            "Márka",
-            "Darabszám"
+            [
+                "Terem száma", 
+                "Terem",
+                "Eszköz leltári száma",
+                "Eszköz",
+                "Márka",
+                "Darabszám"
+            ]
         );
     },
-    optionList: (...args) => "<option value=" + args[0] + ">"+ args[1]+"</option>"
+    trowEszkozList: (args) => {
+        return templates.trow(
+            args,
+            `
+                <td><button runsclick="\x04" value="megnevezes/eszkoz/${args[0]}">Törlés</button></td>
+                <td><button runsclick="\x05" value="und/und/${args[0]}">Változtatás</button></td>
+            `
+        );
+    },
 };

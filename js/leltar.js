@@ -45,15 +45,15 @@ class Retn extends HTMLElement {
     if(retn){
         console.log("Fa")
         div.innerHTML = retn;
-        retnsInner[cjust].push(div);
+        if(!this.hasAttribute("no")) retnsInner[cjust].push(div);
     }
     else{
         console.log("Nem fa");
         retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
         div.innerHTML = retns[cjust];
-        retnsInner[cjust] = [div];
+        if(!this.hasAttribute("no")) retnsInner[cjust] = [div];
     }
-    console.log(retnsInner)
+//    console.log(retnsInner)
   }
 }
 
@@ -71,17 +71,17 @@ class RetnP extends HTMLElement {
     if(!cjust) return;
     const retn = retns[cjust];
     if(retn){
-        console.log("Fa")
+//        console.log("Fa")
         div.innerHTML = retn;
         retnsInner[cjust].push(div);
     }
     else{
-        console.log("Nem fa");
+//        console.log("Nem fa");
         retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
         div.innerHTML = retns[cjust];
         retnsInner[cjust] = [div];
     }
-    console.log(retnsInner)
+//    console.log(retnsInner)
     this.remove();
   }
 }
@@ -183,8 +183,20 @@ console.log("SLUCK!")
         eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
             new CustomEvent("urlapS" + urlap.getAttribute("action"), {detail: { response: response }}) : MyEvent
         );
-        exportedMethods.doEnvAutoJumpJelenet(urlap, "NextToIfSuccess");  
+        exportedMethods.doEnvAutoJumpJelenet(urlap, "NextToIfSuccess");
     }
+}
+
+function doDelete(e){
+    console.log("Flááke")
+    exportedMethods.exampleREST("delete/"+e.target.value, "POST", "");
+    const del = e.target.closest(".retnrow");
+    if(del) del.remove();
+    else console.log("A törlés nem sikeres.")
+}
+
+function doUpdate(e){
+
 }
 
 // Mi
@@ -201,7 +213,9 @@ function changeview(e){
 const runnable = [
     doKuld,
     kiscica,
-    changeview
+    changeview,
+    doDelete,
+    doUpdate
 ];
 
 function doRun(e, eType = ""){
@@ -209,7 +223,7 @@ function doRun(e, eType = ""){
     const runs = e.target.getAttribute("runs"+eType) || "";
 //    console.log(runs);
     for(let i = 0; i < runs.length; i++){
- //       console.log("Ruin: " + runs.charCodeAt(i));
+       console.log("Ruin: " + runs.charCodeAt(i));
         runnable[runs.charCodeAt(i)-1](e);
     }
 }
