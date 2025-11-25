@@ -1,3 +1,5 @@
+import { urlapok } from "./rowftemplates.js";
+
 // RETNNNNNNNNNNNNNNNNNN
 const boreSplit = '<p class="inv">elva</p>';
 
@@ -74,8 +76,8 @@ export const templates = {
         return templates.trow(
             args,
             `
+                <td class="film">` + urlapok.eszkozUpd(args, "12") + `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">Módosítás</button></td>
                 <td><button runsclick="\x04" value="megnevezes/eszkoz/${args[0]}">Törlés</button></td>
-                <td><button runsclick="\x05" value="und/und/${args[0]}">Változtatás</button></td>
             `
         );
     },

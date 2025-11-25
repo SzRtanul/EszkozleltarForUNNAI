@@ -66,3 +66,11 @@ input[type="text"], input[type="number"], input[type="password"], select, button
 .urlap li{
     list-style-type: none;
 }
+/* This SCENE */
+.scene{
+    display: none;
+}
+
+.sceneI{
+    display: inherit;
+}

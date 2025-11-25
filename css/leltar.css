@@ -50,6 +50,7 @@ html, body{
     margin: 0px;
     padding: 0px;
 }
+
 body{
     background-color: #1c388c;
 }
@@ -78,7 +79,19 @@ header>.l{
     align-items: center;
 }
 
-table *{
+.cancel{
+    background-color: #ff1b1b;
+}
+
+.aktuel{
+    background-color: yellow;
+}
+
+input[type="submit"]{
+    background-color: green;
+}
+
+table *:not(form *){
     border:  1px solid white;
 }
 

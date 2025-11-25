@@ -1,27 +1,41 @@
-const urlapok = {
-    mezek1: ""
-}
-
-const defUrlap = (value="", fields="", felirat="Hozzáad") => `
-<form runssubmit="\x01" value="${value}">
+const defUrlap = (id="", value="", fields="", kuldFelirat="Hozzáad") => `
+<form runssubmit="\x01" usqf="${value}" nextTo="" class="scene scen scen1">
     <div>
         <label>Id</label>
-        <input type="number" name="id" value="" disabled class="mez">
+        <input type="number" name="row" value="${id}" disabled class="settr">
     </div>
     ${fields}
-    <p><input type="sumbit" value="${felirat}" class="but"></p>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="${kuldFelirat}" class="but">
+    </p>
     <span class="allapot"></span>
 </form>
 `
 
 const mez = {
-    input: (name="", type="text", placeholder="") => "<input type='"+type+"' name='" + name + "' placeholder='"+ placeholder +"' class='mez'>",
-    select: (name="", cjust="") => {
+    input: (def="", name="", placeholder="", type="text") =>
+        "<input type='"+type+"' name='" + name + "' value='" + def + "' placeholder='"+ placeholder +"' class='mez'>",
+    select: (def="", name="", cjust="") => {
         return `
-<select name="${name}" class="mez">
+<select name="${name}" value="${def}" class="mez">
     <retn-p no cjust="${cjust}"></retn-p>
 </select>`
     },
     label: (felirat="") => "<label for=''>" + felirat + "</label>"
 }
 
+const mezok = [
+    (args) => {
+        return mez.input(args[1], "nev", "Eszköz neve");
+    },
+];
+
+export const urlapok = {
+    eszkozUpd: (args="", usqf="")=>{
+        return defUrlap(args[0], usqf, mezok[0](args));
+    }
+}

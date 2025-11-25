@@ -170,7 +170,7 @@ console.log(JSONValue);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
 
     if(!sikeresKeres){
-        await exportedQMethods.doQueryUpdates();
+/*        await exportedQMethods.doQueryUpdates();
         for(const cjust in retns){
 console.log("Bejön")
             retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
@@ -179,7 +179,7 @@ console.log("És bejön")
                 inner.innerHTML = retns[cjust];
             }
         }
-console.log("SLUCK!")
+*/console.log("SLUCK!")
         eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
             new CustomEvent("urlapS" + urlap.getAttribute("action"), {detail: { response: response }}) : MyEvent
         );
@@ -210,12 +210,33 @@ function changeview(e){
     // .querySelector(".naga");
 }
 
+function doFilm(e){
+    const hovas = e.target.getAttribute("nextTo")?.split(';');
+    const film = e.target.closest(".film");
+    if(film  && hovas){
+        for(let i = 0; i < hovas.length; i++){
+            const hova = hovas[i].split(':');
+            const hol = hova[1];
+            const tipus = hova[0];
+            if(hova?.length > 1){
+                for(const jel of film.querySelectorAll("."+tipus + ".sceneI")){
+                    jel.classList.remove("sceneI");
+                }
+                for(const jel of film.getElementsByClassName(tipus+hol)){
+                    jel.classList.add("sceneI");
+                }
+            }
+        }
+    }
+}
+
 const runnable = [
     doKuld,
     kiscica,
     changeview,
     doDelete,
-    doUpdate
+    doUpdate,
+    doFilm
 ];
 
 function doRun(e, eType = ""){
