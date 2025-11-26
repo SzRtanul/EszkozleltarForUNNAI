@@ -29,7 +29,7 @@ export const uttable = [
     // 10.
     //
     "terem",
-    "eszkoz"
+    "eszkoz_v"
 ];
 
 export const ActuelThings = [

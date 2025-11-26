@@ -96,7 +96,6 @@ let buffer = new ArrayBuffer(4);
 let view = new DataView(buffer);
 view.setUint32(0, num); // 4 bájt beírása
 
-// Most konvertáljuk bájtonként "karakterré"
 let str = String.fromCharCode(...new Uint8Array(buffer));
 console.log(str);
 
@@ -121,70 +120,59 @@ export async function UIUpdate(){
     console.log("UPDATING UI4")
 }
 */
-//Kuld
-async function doKuld(e){
-    e.preventDefault();
-console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
-console.log(e);
-    const urlap = e.target;
-    const attrs = {};
-    for(const attr of urlap.attributes){
-console.log("EIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-console.log(attr.nodeName);
-console.log(attr.nodeValue)
-        attrs[attr.nodeName] = attr.nodeValue;
-    }
-console.log(attrs);
-    if(!(typeof urlap === "object")){ return 0; };
-    const allapotKijelzok = urlap.getElementsByClassName("allapot");
-   // const fname = urlap.getAttribute("name") || false;
-    //const haveName = fname ? true : false;
-    let sikeresKeres = false;
-    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
-    const usqF = Number(attrs["usqf"]);
-console.log("usqF: " + usqF + " : " + attrs["usqf"]);
-    const usesDB = !isNaN(usqF) ? formDRef[usqF]?.split(/[^0-9]/) : [];
-console.log(usesDB);
-    /*if(!(typeof usesDB[0] === "number")){
-        return 0;
-    };*/
-    //const fbol = usesDB.length > 0;
-    const ut = urlap.getAttribute("utjson") || "na";
-console.log("UT: " + ut)
-    const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
-    if(usesDB[2]) JSONValue["schema"] = utschema[Number(usesDB[2])];
-    if(usesDB[3]) JSONValue["table"] = uttable[Number(usesDB[3])];
-    const ddtxt = exportedMethods.getDBThings(urlap, usesDB[0], JSONValue);
-console.log("HUUUU2232:")
-console.log(JSONValue);
-console.log(ddtxt);
-//console.log(qInserts);
-console.log()
-    const tr =  exportedMethods.qTextReform(qInserts[usesDB[1]], JSONValue);
-console.log(tr);
-    const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
-    // if(fbol) addOrEditFormQ(Number(usesDB[0]), jsonValue, fname, response, fvalue);
-console.log("Response:\n" + response);
-console.log("JSONValue:");
-console.log(JSONValue);
-    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
 
+ async function doAfter(e, sikeresKeres){
     if(!sikeresKeres){
-/*        await exportedQMethods.doQueryUpdates();
+        await exportedQMethods.doQueryUpdates();
         for(const cjust in retns){
-console.log("Bejön")
             retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
             for(const inner of retnsInner[cjust]){
-console.log("És bejön")
                 inner.innerHTML = retns[cjust];
             }
         }
-*/console.log("SLUCK!")
+
         eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
             new CustomEvent("urlapS" + urlap.getAttribute("action"), {detail: { response: response }}) : MyEvent
         );
         exportedMethods.doEnvAutoJumpJelenet(urlap, "NextToIfSuccess");
     }
+}
+
+//Kuld
+async function doKuld(e){
+    e.preventDefault();
+console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+    const urlap = e.target;
+    const attrs = {};
+    for(const attr of urlap.attributes){
+        attrs[attr.nodeName] = attr.nodeValue;
+    }
+    if(!(typeof urlap === "object")){ return 0; };
+    const allapotKijelzok = urlap.getElementsByClassName("allapot");
+    //const fname = urlap.getAttribute("name") || false;
+    const fvalue = attrs["value"];
+    let sikeresKeres = false;
+    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
+    const usqF = Number(attrs["usqf"]);
+    const ut = urlap.getAttribute("utjson") || "na";
+    let ddtxt = "";
+    let tr = "";
+    if(fvalue){
+        const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
+        ddtxt = exportedMethods.getDBThings(urlap, usqF, JSONValue);
+        tr =  exportedMethods.qTextReform(fvalue, JSONValue);
+    }
+    else{
+        const usesDB = !isNaN(usqF) ? formDRef[usqF]?.split(/[^0-9]/) : [];
+        const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
+        if(usesDB[2]) JSONValue["schema"] = utschema[Number(usesDB[2])];
+        if(usesDB[3]) JSONValue["table"] = uttable[Number(usesDB[3])];
+        ddtxt = exportedMethods.getDBThings(urlap, usesDB[0], JSONValue);
+        tr =  exportedMethods.qTextReform(qInserts[usesDB[1]], JSONValue);
+    }
+    const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
+    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
+  //  doAfter(e, sikeresKeres, response);
 }
 
 function doDelete(e){

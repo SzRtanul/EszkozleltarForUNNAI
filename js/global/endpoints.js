@@ -1,5 +1,5 @@
 export const endpoints = [
-    "gettable/megnevezes/eszkoz",
+    "gettable/megnevezes/eszkoz_v",
     "gettable/public/terem",
     "gettable/public/leltar",
     "gettable/megnevezes/marka",

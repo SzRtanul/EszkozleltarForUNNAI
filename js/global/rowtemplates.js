@@ -1,7 +1,39 @@
-import { urlapok } from "./rowftemplates.js";
+import { mezok } from "./rowftemplates.js";
 
 // RETNNNNNNNNNNNNNNNNNN
 const boreSplit = '<p class="inv">elva</p>';
+
+const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Hozzáad") => `
+<form runssubmit="\x01" usqf="${usqf}" value="update/${value}" nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label>
+        <input type="number" value="${id}" disabled class="">
+        ${fields}
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="${kuldFelirat}" class="but">
+    </p>
+    <span class="allapot"></span>
+</form>
+`;
+
+const sampUpdate = (args, usqf="", value="", mezok="", kuldFelirat="Hozzáad")=>{
+    return `
+<td class="film">` + 
+    defUrlap(args[0], usqf, value, mezok, kuldFelirat) + 
+    `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Módosítás
+    </button>
+</td>`
+};
+
+const sampDelete = (schematableargs="") => {
+    return '<td><button runsclick="\x04" value="' + schematableargs + '">Törlés</button></td>'
+};
 
 const tempex = [
     (args, koszbe="")=>{
@@ -75,10 +107,14 @@ export const templates = {
     trowEszkozList: (args) => {
         return templates.trow(
             args,
-            `
-                <td class="film">` + urlapok.eszkozUpd(args, "12") + `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">Módosítás</button></td>
-                <td><button runsclick="\x04" value="megnevezes/eszkoz/${args[0]}">Törlés</button></td>
-            `
+            sampUpdate(args, "1", "megnevezes/eszkoz_v/"+args[0], mezok.nevUpd(args, "Eszköz neve")) +
+            sampDelete("megnevezes/eszkoz_v/"+args[0])
         );
     },
+    trowTermekList: (args) => {
+        return templates.trow(
+            args,
+            sampDelete("public/termek/"+args[0])
+        );
+    }
 };

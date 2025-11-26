@@ -13,7 +13,6 @@ export const formDRef = [
     // 10.
     "0-0-0-9",
     "0-0-0-10",
-    "1-3-3-11",
 
 ];
 
@@ -36,7 +35,7 @@ export const retnCombinations = {
     felh: retEx[0]("F"),
     eszkozlist: retEx[0]("000", "theadeEszkozList", "trowEszkozList"),
     teremlist: retEx[0]("001", "theadeTeremList"),
-    termeklist: retEx[0]("005"),
+    termeklist: retEx[0]("005", undefined, "trowTermekList"),
     leltarlist: retEx[0]("002", "theadeLeltarList"),
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("003"),

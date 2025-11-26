@@ -194,7 +194,7 @@ console.log(text)
 
     num = txtenc.encode(values).length-1;
 console.log("NUM: " + num)
-    view.setUint32(0, mode == 0 ? num : num - 1);
+    view.setUint32(0, num);
     const num32ui = new Uint8Array(buffer);
     // console.log("Num32UI: " + num32ui)
     num32ui.reverse();
