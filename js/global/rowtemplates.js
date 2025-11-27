@@ -71,6 +71,12 @@ export const templates = {
         return ret;
     },
     tbodyend: (args) => "</tbody></table>",
+    emelet: (args, helyisegek="")=>{
+        return "<div>" + helyisegek + "</div>"
+    },
+    helyiseg: (args) => {
+        return `<button class='polygon' style="width: ${args[2]}; height: ${args[3]}; clip-path: polygon(${args[4]});"></button>`
+    },
     optionList: (args) => "<option value=" + args[0] + ">"+ args[1]+"</option>",
     // Customs
     theadeEszkozList: (args) => { 
@@ -114,7 +120,9 @@ export const templates = {
     trowTermekList: (args) => {
         return templates.trow(
             args,
+            sampUpdate(args, "1", "public/termek/"+args[0], mezok.termekUpd(args)) +
             sampDelete("public/termek/"+args[0])
         );
-    }
+    },
+
 };

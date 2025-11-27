@@ -82,6 +82,7 @@ class RetnP extends HTMLElement {
         retnsInner[cjust] = [div];
     }
 //    console.log(retnsInner)
+    div.value=div.getAttribute("value");
     this.remove();
   }
 }
