@@ -136,7 +136,9 @@ const buffer = new ArrayBuffer(4);
 const view = new DataView(buffer);
 const txtenc = new TextEncoder();
 
-
+function getMez(mezo, text){
+    return text.length > 0 ? ((mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',') : "null,";
+}
 
 function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
@@ -155,30 +157,16 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
                     mezo.checked+""
             ;
             if(mezo.classList.contains("mez")){
-                num = txtenc.encode(text).length;
-console.log("NUM: " + num);
-                view.setUint32(0, num);
-                if(text.length > 0 && mode == 0){
-console.log("NUUUUMKIRÁÁÁÁÁÁÁLY!");
+                if(mode == 0){
                     columns += mezo.name + ",";
-console.log(columns);
-                    const num32ui = new Uint8Array(buffer);
-                   // console.log("Num32UI: " + num32ui);
-                    num32ui.reverse();
-console.log(text)
-                    values += "\'" + text?.replaceAll("\'", "\'\'") + "\',";
+                    values += getMez(mezo, text);
                 }
                 else if(mode == 1){
                     const num32ui = new Uint8Array(buffer);
-// console.log("Num32UI: " + num32ui)
-                    num32ui.reverse();
-                    values += mezo.name + "=" +  (mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',';
+                    values += mezo.name + "=" + getMez(mezo, text);
                 }
                 else if(mode == 2){
-                    const num32ui = new Uint8Array(buffer);
-// console.log("Num32UI: " + num32ui)
-                    num32ui.reverse();
-                    values += (mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',';
+                    values += getMez(mezo, text);
                 }
             }
             if(mezo.classList.contains("settr")){
@@ -191,9 +179,7 @@ console.log(text)
     }
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
 
-
     num = txtenc.encode(values).length-1;
-console.log("NUM: " + num)
     view.setUint32(0, num);
     const num32ui = new Uint8Array(buffer);
     // console.log("Num32UI: " + num32ui)
