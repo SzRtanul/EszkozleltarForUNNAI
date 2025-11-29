@@ -173,7 +173,7 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     }
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
-    doAfter(e, sikeresKeres, response);
+//    doAfter(e, sikeresKeres, response);
 }
 
 function doDelete(e){

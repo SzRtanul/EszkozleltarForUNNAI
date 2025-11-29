@@ -131,7 +131,7 @@ function getUrlapJSONs(urlap){
     return jsonValue;
 }
 
-let num = 0;//0x12345678;
+let num = 0; //0x12345678;
 const buffer = new ArrayBuffer(4);
 const view = new DataView(buffer);
 const txtenc = new TextEncoder();

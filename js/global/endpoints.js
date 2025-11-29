@@ -1,23 +1,22 @@
 export const endpoints = [
     "gettable/megnevezes/eszkoz_v",
-    "gettable/public/terem",
-    "gettable/public/leltar",
     "gettable/megnevezes/marka",
     "gettable/megnevezes/helyisegtipus",
+    "gettable/megnevezes/leltaresemenytipus",
+    "gettable/public/ceg",
     // 5.
     "gettable/public/termek",
-    "gettable/public/ceg",
-    "gettable/megnevezes/helyisegtipus",
+    "gettable/public/beszerzes",
     "gettable/epulet/emelet",
     "gettable/epulet/helyiseg",
+    "gettable/public/leltar",
     // 10.
-    "gettable/public/beszerzes",
-    "gettable/public/leltaresemenytipus",
+    "gettable/public/leltaresemeny",
+    "gettable/epulet/fal",
     "gettable/public/tagozat",
     "gettable/public/osztaly",
-    "gettable/public/terem",
+    "gettable/public/teremkiosztas",
     // 15.
-    "gettable/public/leltar",
     "gettable/epulet/tervrajz"
 ];
 

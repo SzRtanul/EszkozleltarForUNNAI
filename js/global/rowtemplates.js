@@ -35,6 +35,14 @@ const sampDelete = (schematableargs="") => {
     return '<td><button runsclick="\x04" value="' + schematableargs + '">Törlés</button></td>'
 };
 
+const nevUp = (args, endpoint="", megj="") => {
+    return templates.trow(
+        args,
+        sampUpdate(args, "1", endpoint, mezok.nevUpd(args, megj)) +
+        sampDelete(endpoint)
+    );
+};
+
 const tempex = [
     (args, koszbe="")=>{
         let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
@@ -127,11 +135,16 @@ export const templates = {
         );
     },
     trowEszkozList: (args) => {
-        return templates.trow(
-            args,
-            sampUpdate(args, "1", "megnevezes/eszkoz_v/"+args[0], mezok.nevUpd(args, "Eszköz neve")) +
-            sampDelete("megnevezes/eszkoz_v/"+args[0])
-        );
+        return nevUp(args, "megnevezes/eszkoz_v/"+args[0], "Eszköz neve");
+    },
+    trowMarkaList: (args) => {
+        return nevUp(args, "megnevezes/marka/"+args[0], "Márka");
+    },
+    trowHelyisegTipusList: (args) => {
+        return nevUp(args, "megnevezes/helyisegtipus/"+args[0], "Eszköz neve");
+    },
+    trowLeltarEsemenyTipusList: (args) => {
+        return nevUp(args, "megnevezes/leltaresemenytipus/"+args[0], "Eszköz neve");
     },
     trowTermekList: (args) => {
         return templates.trow(
