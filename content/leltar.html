@@ -114,7 +114,7 @@
                         <input type="text" name="chid" class="mez">
                         <label>Helyiség típusa</label>
                         <select name="helyisegtipusID" class="mez woap">
-                            <retn-p cjust="optionTeremTipusList"></retn-p>
+                            <retn-p cjust="optionHelyisegTipusList"></retn-p>
                         </select>
                         <label>Emelet</label>
                         <select name="emeletID" class="mez woap">
@@ -188,7 +188,7 @@
                         <label for="">Y kordináta(px)</label>
                         <input type="text" name="y" class="mez">
                         <label for="">Sorrend pontszám</label>
-                        <input type="number" name="helyisegid" id="" class="mez">
+                        <input type="number" name="sorrend" id="" class="mez">
                     </div>
                     <p><input type="submit" value="Hozzáad"></p>
                     <span class="allapot"></span>
@@ -259,6 +259,10 @@
             <div>
                 <h5>Leltár</h5>
                 <retn-sh cjust="leltarlist"></retn-sh>
+            </div>
+            <div>
+                <h5>Helyiség</h5>
+                <retn-sh cjust="tervrajz"></retn-sh>
             </div>
         </div>
     </main>

@@ -200,7 +200,7 @@ function whataf(
                     ;
                     let szen = "";
                     for(let qere = 0; qere<qruakArray.length; qere+=2){
-                        szen += "\n"+qere+". "+ actualBef.substring(
+                        szen += /*"\n"+qere+". "+ */actualBef.substring(
                             befrownums[usqT][qruakArray[qere]], 
                             befrownums[usqT][qruakArray[qere+1]]
                         );

@@ -48,7 +48,7 @@ class Retn extends HTMLElement {
         if(!this.hasAttribute("no")) retnsInner[cjust].push(div);
     }
     else{
-        console.log("Nem fa");
+        console.log("Nem fa: " + cjust);
         retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
         div.innerHTML = retns[cjust];
         if(!this.hasAttribute("no")) retnsInner[cjust] = [div];
@@ -173,7 +173,7 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     }
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
-  //  doAfter(e, sikeresKeres, response);
+    doAfter(e, sikeresKeres, response);
 }
 
 function doDelete(e){

@@ -62,6 +62,9 @@ export const templates = {
     },
     theade: (args) => tempex[0](args),
     tbodybef: (args) => "<tbody>",
+    divbef: (args) => "",
+    divbef: (args) => `<div>`,
+    divend: (args) => "</div>",
     trow: (args, egyeb="") => {
         let ret = "<tr class='retnrow'>";
         for(let i = 0; i < args.length; i++){
@@ -72,10 +75,23 @@ export const templates = {
     },
     tbodyend: (args) => "</tbody></table>",
     emelet: (args, helyisegek="")=>{
-        return "<div>" + helyisegek + "</div>"
+        return "<div style='position: relative;'>" + helyisegek + "</div>"
     },
     helyiseg: (args) => {
-        return `<button class='polygon' style="width: ${args[2]}; height: ${args[3]}; clip-path: polygon(${args[4]});"></button>`
+        return `<button 
+            class='helyiseg' 
+            style="
+                position: absolute; 
+                /*top: calc(${args[3]}px * var(--scale-v)); 
+                left: calc(${args[4]}px * var(--scale-v)); 
+                width: calc(${args[5]}px * var(--scale-v)); 
+                height: calc(${args[6]}px * var(--scale-v)); */
+                top: ${args[3]}px;
+                left: ${args[4]}px;
+                width: ${args[5]}px;
+                height: ${args[6]}px;
+                ${ args[9] != "null" ? "clip-path: polygon(" + args[9] + ");" : "" }
+            "></button>`
     },
     optionList: (args) => "<option value=" + args[0] + ">"+ args[1]+"</option>",
     // Customs
@@ -84,7 +100,7 @@ export const templates = {
             [
                 "Eszköz Azonosító",
                 "Eszköznév",
-              /*  "Márka",
+                /*  "Márka",
                 "Darabszám"*/
             ]
         );
@@ -124,5 +140,5 @@ export const templates = {
             sampDelete("public/termek/"+args[0])
         );
     },
-
+    
 };

@@ -7,7 +7,7 @@ export const endpoints = [
     // 5.
     "gettable/public/termek",
     "gettable/public/ceg",
-    "gettable/megnevezes/teremtipus",
+    "gettable/megnevezes/helyisegtipus",
     "gettable/epulet/emelet",
     "gettable/epulet/helyiseg",
     // 10.
@@ -18,6 +18,7 @@ export const endpoints = [
     "gettable/public/terem",
     // 15.
     "gettable/public/leltar",
+    "gettable/epulet/tervrajz"
 ];
 
 export const qInserts = [

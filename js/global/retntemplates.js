@@ -26,7 +26,7 @@ export const retnCombinationTemplates = {
 
 const retEx = [
     (data, theade="theade", trow="trow", tend="tbodyend") => theade + ":"+ trow +":"+ tend +"|||010002FF;" + data,
-    (data)=>"theadevcslist:tablerow:tbodyend|||FFFFFFFF;F---FFFFFFFF;F---010002FF;" + data,
+    (data)=>"",
     (sendQ, data, h1="") => retEx[0](data, ""),
     (data) => "optionList|||00FFFFFF;"+data,
 ]
@@ -37,11 +37,12 @@ export const retnCombinations = {
     teremlist: retEx[0]("001", "theadeTeremList"),
     termeklist: retEx[0]("005", undefined, "trowTermekList"),
     leltarlist: retEx[0]("002", "theadeLeltarList"),
+    tervrajz: "helyiseg:emelet|||00FFFFFF;010---01FFFFFF;008;0=1=1",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("003"),
     optionTermekList: retEx[3]("005"),
     optionCegList: retEx[3]("006"),
-    optionTeremTipusList: retEx[3]("007"),
+    optionHelyisegTipusList: retEx[3]("007"),
     optionEmeletList: retEx[3]("008"),
     optionHelyisegList: retEx[3]("009"),
     optionBeszerzesList: retEx[3]("00A"),
