@@ -76,6 +76,8 @@
                         </select>
                         <label for="">Gyártás éve</label>
                         <input type="number" name="gyartaseve" id="" class="mez">
+                        <label for="">Használt cikk</label>
+                        <input type="checkbox" name="hasznalt" id="" class="mez">
                         <label for="">Cég</label>
                         <select name="cegID" id=""  class="mez">
                             <retn-p cjust="optionCegList"></retn-p>
@@ -229,7 +231,7 @@
                     <h5>Teremkiosztás hozzáadása</h5>
                     <div>
                         <label for="">Osztály</label>
-                        <select name="helyisegid" id="" class="mez">
+                        <select name="osztalyid" id="" class="mez">
                             <retn-p cjust="optionOsztalyList"></retn-p>
                         </select>
                         <label for="">Helyiség</label>
@@ -309,6 +311,12 @@
             <div>
                 <h5>Tervrajz</h5>
                 <retn-sh cjust="tervrajz"></retn-sh>
+            </div>
+        </div>
+        <div class="fel content2">
+            <div>
+                <h5>Elosztás</h5>
+                <retn-sh cjust="customBeszerzesList"></retn-sh>
             </div>
         </div>
     </main>

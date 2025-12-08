@@ -28,7 +28,7 @@ export const uttable = [
     //
     // 10.
     //
-    "terem",
+    "teremkiosztas",
     "eszkoz_v"
 ];
 

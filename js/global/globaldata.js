@@ -154,7 +154,7 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
                     (mezo.classList.contains("xhr") ? 
                         getCryptoHash(mezo.value) : 
                         mezo.value) : 
-                    mezo.checked+""
+                    (mezo.checked ? 1 : 0) + ""
             ;
             if(mezo.classList.contains("mez")){
                 if(mode == 0){
@@ -162,7 +162,6 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
                     values += getMez(mezo, text);
                 }
                 else if(mode == 1){
-                    const num32ui = new Uint8Array(buffer);
                     values += mezo.name + "=" + getMez(mezo, text);
                 }
                 else if(mode == 2){
@@ -180,17 +179,20 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
 
     num = txtenc.encode(values).length-1;
+console.log("Text hossz: " + num);
     view.setUint32(0, num);
     const num32ui = new Uint8Array(buffer);
-    // console.log("Num32UI: " + num32ui)
+console.log("Num32UI: " + num32ui)
     num32ui.reverse();
-    if(mode == 0){
-console.log(((mode - 1) >>> 0));
-        fullText = columns + "\x00" + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
-    } 
-    if((mode - 1) >>> 0 < 2){
-        fullText = String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
-    }
+    
+    const bits = [...num32ui].map(b => b.toString(2).padStart(8, "0")).join(" ");
+console.log(bits);
+    const str = String.fromCharCode(...num32ui);
+    const decodedBytes = Uint8Array.from(str, c => c.charCodeAt(0));
+
+    const bitstream = [...decodedBytes].map(b => b.toString(2).padStart(8, "0")).join("");
+console.log(bitstream);
+        fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
 console.log("Full: " + fullText);
     return fullText;
 }
@@ -236,10 +238,7 @@ async function getRest(honnan="", method="POST", dbthings = ""){
         case "HEAD":
             break;
         default:
-            fetchJSON["body"] = JSON.stringify({
-                token: localStorage.getItem("token") || "5",
-                dbthings: dbthings
-            })
+            fetchJSON["body"] = dbthings;
         break;
     }
     return await fetch(serverhost + honnan, fetchJSON).catch(error => { return null; });

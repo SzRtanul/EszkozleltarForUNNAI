@@ -43,6 +43,16 @@ const nevUp = (args, endpoint="", megj="") => {
     );
 };
 
+const otherUpd = (args=[], endpoint, myUpd="", egyebbf="", egyebbh="") => {
+    return templates.trow(
+        args,
+        egyebbf +
+        sampUpdate(args, "1", endpoint, mezok[myUpd](args)) +
+        sampDelete(endpoint) +
+        egyebbh
+    );
+};
+
 const tempex = [
     (args, koszbe="")=>{
         let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
@@ -69,6 +79,15 @@ export const templates = {
         return "<table>" +retr+ "</table>";
     },
     theade: (args) => tempex[0](args),
+    divheade: (args) => {
+        let text = "<div>";
+        for(let i = 0; i < args.length; i++){
+            text += "<div>" + args[i] + "</div>";
+        }
+        text += "</div>";
+        return text;
+    },
+    megn: (args) => args[1],
     tbodybef: (args) => "<tbody>",
     divbef: (args) => "",
     divbef: (args) => `<div>`,
@@ -98,10 +117,11 @@ export const templates = {
                 left: ${args[4]}px;
                 width: ${args[5]}px;
                 height: ${args[6]}px;
-                ${ args[9] != "null" ? "clip-path: polygon(" + args[9] + ");" : "" }
+                ${ args[9] != "" ? "clip-path: polygon(" + args[9] + ");" : "" }
             "></button>`
     },
-    optionList: (args) => "<option value=" + args[0] + ">"+ args[1]+"</option>",
+    optionHead: ()=> "<option value=''></option>",
+    optionList: (args, text=args[1], id=0) => "<option value=" + args[id] + ">"+ text + "</option>",
     // Customs
     theadeEszkozList: (args) => { 
         return templates.theade(
@@ -134,6 +154,17 @@ export const templates = {
             ]
         );
     },
+    optionCegList: (args) => templates.optionList(args, args[1]),
+    optionTermekList: (args) => templates.optionList(args, args[1]),
+    optionBeszerzesList: (args) => templates.optionList(args, args[1]),
+    optionEmeletList: (args) => templates.optionList(args, args[1]),
+    optionHelyisegList: (args) => templates.optionList(args, args[1]),
+    optionLeltarList: (args) => templates.optionList(args, args[1]),
+    optionLeltarEsemenyList: (args) => templates.optionList(args, args[1]),
+    optionFalList: (args) => templates.optionList(args, args[1]),
+    optionTagozatList: (args) => templates.optionList(args, args[1]),
+    optionOsztalyList: (args) => templates.optionList(args, args[1]),
+    optionTeremKiosztasList: (args) => templates.optionList(args, args[1]),
     trowEszkozList: (args) => {
         return nevUp(args, "megnevezes/eszkoz_v/"+args[0], "Eszköz neve");
     },
@@ -146,6 +177,9 @@ export const templates = {
     trowLeltarEsemenyTipusList: (args) => {
         return nevUp(args, "megnevezes/leltaresemenytipus/"+args[0], "Eszköz neve");
     },
+    trowCegList: (args) => {
+        return otherUpd(args, "public/ceg/"+args[0], "cegUpd");
+    },
     trowTermekList: (args) => {
         return templates.trow(
             args,
@@ -153,5 +187,69 @@ export const templates = {
             sampDelete("public/termek/"+args[0])
         );
     },
-    
+    trowBeszerzesList: (args) => {
+        return otherUpd(
+            args,
+            "public/beszerzes/"+args[0],
+            "beszerzesUpd",
+`
+<td class="film"><button>Termék hozzáadása helyiséghez</button></td>
+<td class="film"><button>Leltár esemény regisztrálása</button></td>
+`
+        );
+    },
+    trowEmeletList: (args) => {
+        return otherUpd(args, "epulet/emelet/"+args[0], "emeletUpd");
+    },
+    trowHelyisegList: (args) => {
+        return otherUpd(args, "epulet/helyiseg/"+args[0], "helyisegUpd");
+    },
+    trowLeltarList: (args) => {
+        return otherUpd(args, "public/leltar/"+args[0], "leltarUpd");
+    },
+    trowLeltarEsemenyList: (args) => {
+        return otherUpd(args, "public/leltaresemeny/"+args[0], "leltarEsemenyUpd");
+    },
+    trowFalList: (args) => {
+        return otherUpd(args, "public/fal/"+args[0], "falUpd");
+    },
+    trowTagozatList: (args) => {
+        return otherUpd(args, "public/tagozat/"+args[0], "tagozatUpd");
+    },
+    trowOsztalyList: (args) => {
+        return otherUpd(args, "public/osztaly/"+args[0], "osztalyUpd");
+    },
+    trowTeremKiosztasList: (args) => {
+        return otherUpd(args, "public/teremkiosztas/"+args[0], "teremKiosztasUpd");
+    },
+    customBeszerzesList: (args, helyiseg, leltaresemeny, ...befilts) => {
+        let text = "<div>";
+        let c = 0;
+        console.log("TARRRRRR: " + helyiseg)
+        const befs = [ // i
+            1, 3
+        ];
+        const befous = [ // befilts
+            0, 1
+        ];
+        for(let i = 0; i < args.length; i++){
+            if(befs[c] > i) c++;
+            if(befs[c] == i) text += "<div>" + befilts[befous[c]] + "</div>"
+            else text += "<div>" + args[i] + "</div>";
+        }
+        text += `
+    <div>Hozzárendelés helyiséghez</div>
+    <div>Leltáresemény regisztrálása</div>
+</div>
+`;
+        return `
+<div>
+        ${text}
+        <h4>Helyiséghez hozzárendelve</h4>
+        ${helyiseg}
+        <h4>Leltáreseményben érintett</h4>
+        ${leltaresemeny}
+</div>
+        `;
+    }
 };

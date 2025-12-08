@@ -134,7 +134,8 @@ function whataf(
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);
-    const resPlit = replaceLast(responseInput.substring(2, responseInput.length), ":::\n", "").split(":::");
+    const frameBefLiminal = 2;
+    const resPlit = replaceLast(responseInput.substring(frameBefLiminal, responseInput.length), ":::\n", "").split(":::");
     const error = responseInput.startsWith("err:") ? 1 : 0;
     outResBefNums.push(false);
     outResBefNums.push(0);
@@ -157,70 +158,89 @@ function whataf(
                     qruak++;
                 }
                 else{
+                    let usqTrow=1;
+                    let usqTitem=0;
+                    let notHasNull=true;
+                    
+                    const actualRowNums = befrownums[usqT];
+                    const qruakArray = [];
+                    let memoryRef = actualRowNums[0];
+                    if(memoryRef) qruakArray.push(usqTrow);
+                    usqTrow++
+                    console.log("ActualRowNums: " + actualRowNums[0] + ":" + actualRowNums[2])
+
                     const actualBef = befretns[usqT];
-                    const resLast = resultsBef.push(
-                        befrownums[usqT][0] ? actualBef.substring(0, befrownums[usqT][1]) : ""
-                    )-1;
+                    const resLast = resultsBef.push("")-1;
+
                     const usLeptek = befusqs[usqT].charCodeAt(1);
                     const fra = befusqs[usqT].split(columnSep);
-                    const qruakArray = [];
-                    let memoryRef = false;
-                    const usqThaveHead = befrownums[usqT][0] ? 1 : 0;
-                    let usqTrow=0;
-                    let usqTitem=0;
+                    const usqThaveHead = actualRowNums[0] ? 1 : 0;
 
                     let checkResplit = "";
-                    const honnmedd= Math.floor(qruakLiminal / 2);
+                    const honnmedd = Math.floor(qruakLiminal / 2);
                     for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
-                        checkResplit += resPlit[i + befFilters[qruak]];
+                        const conc = resPlit[i + befFilters[qruak]];
+                        notHasNull = conc.length > 0;
+                        if(notHasNull) checkResplit += conc;
                     }
+                    console.log("TRAAAAAA: " + notHasNull + ":" + checkResplit);
                     const checkResplitLength = checkResplit.length;
-                    for(
-                       usqTrow = 0, usqTitem = usqThaveHead * usLeptek;
-                       usqTitem < fra.length-1;
-                       usqTrow++, usqTitem+=usLeptek
-                    ){
-                        let ortami = true;
-                        let checkFraParts = [];
-                        const brase = usqTitem;
-                        for(qruak = memqruak+honnmedd; qruak < qruakLiminal+1; qruak++){ // befFilters
-                            checkFraParts.push(fra[brase + befFilters[qruak]]);
-                        }
-                        const checkFra = checkFraParts.join("");
-                        ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
-                        if(ortami != memoryRef){
-                            qruakArray.push(usqTrow);
-                            //Szétválasztás, csoportosítás
-                            memoryRef = ortami;
+                    if(notHasNull){
+                        for(
+                           usqTrow, usqTitem = usqThaveHead * usLeptek;
+                           usqTitem < fra.length-1;
+                           usqTrow++, usqTitem+=usLeptek
+                        ){
+                            let ortami = true;
+                            let checkFraParts = [];
+                            const brase = usqTitem;
+                            for(qruak = memqruak+honnmedd; qruak < qruakLiminal+1; qruak++){ // befFilters
+                                checkFraParts.push(fra[brase + befFilters[qruak]]);
+                            }
+                            const checkFra = checkFraParts.join("");
+                            ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
+                            console.log("TRAAAAAA: " + checkFra + ":" + checkResplit);
+                            console.log(ortami)
+                            if(ortami != memoryRef){
+                                qruakArray.push(usqTrow);
+                                //Szétválasztás, csoportosítás
+                                memoryRef = ortami;
+                            }
                         }
                     }
-                    console.log("Vége")
-                    if(usqTrow>0 && qruakArray.length & 1 == 1) 
-                        qruakArray.push(usqTrow)
-                    ;
+                    console.log("Vége");
+                    if(usqTrow > 0 && qruakArray.length & 1 == 1){
+                        qruakArray.push(actualRowNums.length - 1);
+                    }
+                    else if (usqTrow < actualRowNums.length){
+                        for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
+                    }
                     let szen = "";
                     for(let qere = 0; qere<qruakArray.length; qere+=2){
+                        console.log("Krak: " + qruakArray[qere] +":"+ qruakArray[qere+1]);
                         szen += /*"\n"+qere+". "+ */actualBef.substring(
-                            befrownums[usqT][qruakArray[qere]], 
-                            befrownums[usqT][qruakArray[qere+1]]
+                            actualRowNums[qruakArray[qere]], 
+                            actualRowNums[qruakArray[qere+1]]
                         );
                     }
+                    console.log("Szen: " + szen);
                     resultsBef[resLast] += szen;
                 }
             }
             fullText += retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef);
-            outResBefNums.push(fullText.length)
+            outResBefNums.push(fullText.length);
         }
         // tfoot
         if(retnrows[2]!=0) {
             fullText += wherebef.length > 2 ? retnrows[2](
                 ...befretns.slice(wherebef[1], wherebef[2])
             ) : retnrows[2]();
+            outResBefNums.push(fullText.length);
         }
     }
     else if(retnrows[3] != 0){
         fullText += retnrows[3](resPlit.split(columnSep));
-        outResBefNums.push(fullText.length)
+        outResBefNums.push(fullText.length);
     }
 //    console.log(fullText);
     return fullText;
