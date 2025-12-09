@@ -233,7 +233,7 @@ export const templates = {
         let c = 0;
         console.log("TARRRRRR: " + helyiseg)
         const befs = [ // i
-            1, 3
+            
         ];
         const befous = [ // befilts
             0, 1
@@ -241,7 +241,7 @@ export const templates = {
         for(let i = 0; i < args.length; i++){
             console.log("C: " + c)
             if(c < befs.length && befs[c] < i) c++;
-            if(befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
+            if(c < befs.length && befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + args[i] + "</td>";
         }
         text += `
@@ -252,7 +252,7 @@ export const templates = {
         return `
 ${text}
 <tr>
-    <td colspan="${ "10" }">
+    <td colspan="${ "12" }">
         <h4>Helyiséghez hozzárendelve</h4>
         ${helyiseg}
         <h4>Leltáreseményben érintett</h4>
@@ -273,7 +273,7 @@ ${text}
         ];
         for(let i = 0; i < args.length; i++){
             if(c < befs.length && befs[c] < i) c++;
-            if(befs[c] == i) text += "<div class='tbord'>" + befilts[befous[c]] + "</div>"
+            if(c < befs.length && befs[c] == i) text += "<div class='tbord'>" + befilts[befous[c]] + "</div>"
             else text += "<div class='tbord'>" + args[i] + "</div>";
         }
         text += `

@@ -17,7 +17,8 @@ export const endpoints = [
     "gettable/public/osztaly",
     "gettable/public/teremkiosztas",
     // 15.
-    "gettable/epulet/tervrajz"
+    "gettable/epulet/tervrajz",
+    "gettable/public/beszerzesc_v"
 ];
 
 export const qInserts = [

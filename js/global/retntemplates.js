@@ -52,7 +52,7 @@ export const retnCombinations = {
     teremkiosztaslist: retEx[0]("00E", undefined, "trowTeremKiosztasList"),
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
     customBeszerzesList: "trow:theade:tbodyend:megn:customBeszerzesList:divheade:megnTermek|||" +
-    "---000102FF;008---000102FF;00A---06FFFFFF;005---03FFFFFF;004---040102FF;006;0=0=0:1=0=0:2=1=0:3=3=0",
+    "---000102FF;008---000102FF;00A---040102FF;010;0=0=0:1=0=0",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),
     optionHelyisegTipusList: retEx[3]("002"),
