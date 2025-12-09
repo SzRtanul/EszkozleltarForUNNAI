@@ -147,13 +147,18 @@ function whataf(
         outResBefNums.push(fullText.length); // ALAMÉAEA
     }
     if(error == 0 && retnrows[0] != 0){
+        console.log("Befilter:")
+        console.log(befFilters);
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i+=leptek){
             const resultsBef = [];
             let qruak=1;
             for(let usqT = 0; usqT < eleje; usqT++){ // befs
                 const memqruak = qruak;
                 const qruakLiminal = befFilters[qruak-1];  // FONTOS!
+                console.log(befretns[usqT])
+                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
                 if(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1)){
+                    console.log("BLEEEEH;")
                     resultsBef.push(befretns[usqT]);
                     qruak++;
                 }
@@ -165,19 +170,25 @@ function whataf(
                     const actualRowNums = befrownums[usqT];
                     const qruakArray = [];
                     let memoryRef = actualRowNums[0];
-                    if(memoryRef) qruakArray.push(usqTrow);
-                    usqTrow++
-                    console.log("ActualRowNums: " + actualRowNums[0] + ":" + actualRowNums[2])
+                    if(memoryRef){
+                        qruakArray.push(usqTrow);
+                        usqTrow++;
+                    }
+                    //usqTrow++
+//                    console.log("ActualRowNums: " + actualRowNums[0] + ":" + actualRowNums[2])
 
                     const actualBef = befretns[usqT];
+//                    console.log("actual")
                     const resLast = resultsBef.push("")-1;
 
                     const usLeptek = befusqs[usqT].charCodeAt(1);
                     const fra = befusqs[usqT].split(columnSep);
-                    const usqThaveHead = actualRowNums[0] ? 1 : 0;
+                    const usqThaveHead = befusqs[usqT][0] == "T" ? 1 : 0;
 
                     let checkResplit = "";
                     const honnmedd = Math.floor(qruakLiminal / 2);
+                    console.log(qruakLiminal)
+                    console.log("CRA: " + qruak)
                     for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
                         const conc = resPlit[i + befFilters[qruak]];
                         notHasNull = conc.length > 0;
@@ -194,8 +205,11 @@ function whataf(
                             let ortami = true;
                             let checkFraParts = [];
                             const brase = usqTitem;
-                            for(qruak = memqruak+honnmedd; qruak < qruakLiminal+1; qruak++){ // befFilters
-                                checkFraParts.push(fra[brase + befFilters[qruak]]);
+                            console.log("usqItem: " + usqTitem +""+usqThaveHead)
+                            //console.log("CRAt: " + qruak);
+                            for(qruak = memqruak+honnmedd; qruak < memqruak + qruakLiminal-1; qruak++){ // befFilters
+                                checkFraParts.push(fra[Number(brase + befFilters[qruak])]);
+                                console.log("GRA: " + brase + ":" + befFilters[qruak] +":"+ Number(brase+befFilters[qruak]))
                             }
                             const checkFra = checkFraParts.join("");
                             ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
@@ -206,7 +220,13 @@ function whataf(
                                 //Szétválasztás, csoportosítás
                                 memoryRef = ortami;
                             }
+                            qruak++;
                         }
+ //                       console.log("CRA: " + qruak)
+                    }
+                    else{
+                        console.log("ELLEN;");
+                        qruak += qruakLiminal;
                     }
                     console.log("Vége");
                     if(usqTrow > 0 && qruakArray.length & 1 == 1){
@@ -223,7 +243,7 @@ function whataf(
                             actualRowNums[qruakArray[qere+1]]
                         );
                     }
-                    console.log("Szen: " + szen);
+//                    console.log("Szen: " + szen);
                     resultsBef[resLast] += szen;
                 }
             }

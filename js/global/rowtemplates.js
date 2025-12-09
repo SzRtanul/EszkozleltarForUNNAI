@@ -80,16 +80,17 @@ export const templates = {
     },
     theade: (args) => tempex[0](args),
     divheade: (args) => {
-        let text = "<div>";
+        let text = "<div class='fleft tbord'>";
         for(let i = 0; i < args.length; i++){
-            text += "<div>" + args[i] + "</div>";
+            text += "<div class='tbord'>" + args[i] + "</div>";
         }
         text += "</div>";
         return text;
     },
     megn: (args) => args[1],
+    megnTermek: (args) => args[3],
     tbodybef: (args) => "<tbody>",
-    divbef: (args) => "",
+    //divbef: (args) => "",
     divbef: (args) => `<div>`,
     divend: (args) => "</div>",
     trow: (args, egyeb="") => {
@@ -99,6 +100,9 @@ export const templates = {
         }
         ret+= egyeb + "</tr>";
         return ret;
+    },
+    trowPro: () =>{
+        return "";
     },
     tbodyend: (args) => "</tbody></table>",
     emelet: (args, helyisegek="")=>{
@@ -223,7 +227,9 @@ export const templates = {
         return otherUpd(args, "public/teremkiosztas/"+args[0], "teremKiosztasUpd");
     },
     customBeszerzesList: (args, helyiseg, leltaresemeny, ...befilts) => {
-        let text = "<div>";
+        console.log("Befilts:");
+        console.log(befilts)
+        let text = "<tr class='retnrow'>";
         let c = 0;
         console.log("TARRRRRR: " + helyiseg)
         const befs = [ // i
@@ -233,13 +239,46 @@ export const templates = {
             0, 1
         ];
         for(let i = 0; i < args.length; i++){
-            if(befs[c] > i) c++;
-            if(befs[c] == i) text += "<div>" + befilts[befous[c]] + "</div>"
-            else text += "<div>" + args[i] + "</div>";
+            console.log("C: " + c)
+            if(c < befs.length && befs[c] < i) c++;
+            if(befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
+            else text += "<td>" + args[i] + "</td>";
         }
         text += `
-    <div>Hozzárendelés helyiséghez</div>
-    <div>Leltáresemény regisztrálása</div>
+    <td class='tbord'>Hozzárendelés helyiséghez</td>
+    <td class='tbord'>Leltáresemény regisztrálása</td>
+</tr>
+`;
+        return `
+${text}
+<tr>
+    <td colspan="${ "10" }">
+        <h4>Helyiséghez hozzárendelve</h4>
+        ${helyiseg}
+        <h4>Leltáreseményben érintett</h4>
+        ${leltaresemeny}
+        <hr>
+    </td>
+</tr>`;
+    },
+    custom2BeszerzesList: (args, helyiseg, leltaresemeny, ...befilts) => {
+        let text = "<div class='retnrow fleft tbord'>";
+        let c = 0;
+        console.log("TARRRRRR: " + helyiseg)
+        const befs = [ // i
+            1, 3
+        ];
+        const befous = [ // befilts
+            0, 1
+        ];
+        for(let i = 0; i < args.length; i++){
+            if(c < befs.length && befs[c] < i) c++;
+            if(befs[c] == i) text += "<div class='tbord'>" + befilts[befous[c]] + "</div>"
+            else text += "<div class='tbord'>" + args[i] + "</div>";
+        }
+        text += `
+    <div class='tbord'>Hozzárendelés helyiséghez</div>
+    <div class='tbord'>Leltáresemény regisztrálása</div>
 </div>
 `;
         return `
@@ -249,6 +288,7 @@ export const templates = {
         ${helyiseg}
         <h4>Leltáreseményben érintett</h4>
         ${leltaresemeny}
+        <hr>
 </div>
         `;
     }

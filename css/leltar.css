@@ -24,6 +24,16 @@ background-color: #1c388c7f;
 */
 }
 
+.fleft{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tbord{
+    border: 1px solid white;
+    padding: 4px;
+}
+
 .content2{
   display: flex;
   flex-wrap: nowrap;
