@@ -112,8 +112,15 @@ input[type="submit"]{
     background-color: green;
 }
 
-table *:not(form *){
+/*table *:not(form *){
+    }*/
+    
+td, th{
     border:  1px solid white;
+    padding: 5px;
+}
+td > h4, td table{
+    margin-left: 14px;
 }
 
 header li{

@@ -51,8 +51,10 @@ export const retnCombinations = {
     osztalylist: retEx[0]("00D", undefined, "trowOsztalyList"),
     teremkiosztaslist: retEx[0]("00E", undefined, "trowTeremKiosztasList"),
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
-    customBeszerzesList: "trow:theade:tbodyend:megn:customBeszerzesList:divheade:megnTermek|||" +
-    "---000102FF;008---000102FF;00A---040102FF;010;0=0=0:1=0=0",
+    customBeszerzesList: 
+        "trow:theade:tbodyend:megn:customBeszerzesList:" +
+        "divheade:trowleHelyiseg:trowleLeltarEsemeny|||" +
+        "03FFFFFF;003---000102FF;009---070102FF;00A;0=0=2---040102FF;010;1=0=1:2=0=0",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),
     optionHelyisegTipusList: retEx[3]("002"),
