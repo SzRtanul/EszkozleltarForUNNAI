@@ -205,7 +205,7 @@ export const templates = {
     trowOsztalyList: (args) =>otherUpd(args, "public/osztaly/"+args[0], "osztalyUpd"),
     trowTeremKiosztasList: (args) => otherUpd(args, "public/teremkiosztas/"+args[0], "teremKiosztasUpd"),
     trowleLeltarEsemeny: (args, ...befilts) => templates.trow(args, "", befilts, [2], [0]),
-    customBeszerzesList: (args, helyiseg, leltaresemeny, ...befilts) => {
+    customBeszerzesList: (args, helyiseg, leltaresemeny, hhead, lehead, tend, ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
         let text = "<tr class='retnrow'>";
@@ -228,24 +228,36 @@ export const templates = {
     <td>Leltáresemény regisztrálása</td>
 </tr>
 `;
-        return `
-${text}
-<tr>
-    <td colspan="${ args.length }">
-        <h4>Helyiséghez hozzárendelve</h4>
-        ${helyiseg}
-        <h4>Leltáreseményben érintett</h4>
-        ${leltaresemeny}
-        <hr>
-    </td>
-</tr>`;
+        console.log(helyiseg.length);
+        console.log(leltaresemeny.length);
+        console.log(tend);
+
+        const bon = ((helyiseg.length > 0 ? 1 : 0) & 1) ^ ((((leltaresemeny.length > 0 ? 1 : 0) & 1) << 1));
+        let both = bon;
+        console.log("Bon: "+bon);
+        let kieg = "";
+        if(both > 0){
+            kieg += '<tr><td colspan="'+ args.length + '">';
+            if((both & 1) != 0){
+                kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg + tend + "";
+            }
+            console.log("Azon!");
+            console.log(bon);
+            console.log(both & 2)
+            console.log((both & 2) != 0);
+            if((both & 2) != 0){
+                kieg += "<h4>Leltáreseményben érintett</h4><hr>" + lehead + leltaresemeny + tend + "";
+            }
+            kieg+= '</td></tr>';
+        }
+        console.log("HJ: " + lehead + leltaresemeny + "</tbody></table>")
+        return text + kieg;
     },
-    customLeltarList: (args, beszerzes, ...befilts) => {
+    customLeltarList: (args, beszerzes, bhead, tend, ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
         let text = "<tr class='retnrow'>";
         let c = 0;
-        console.log("TARRRRRR: " + helyiseg)
         const befs = [ // i
             
         ];
@@ -258,19 +270,15 @@ ${text}
             if(c < befs.length && befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + args[i] + "</td>";
         }
-        text += `
-    <td>Hozzárendelés helyiséghez</td>
-    <td>Leltáresemény regisztrálása</td>
-</tr>
-`;
-        return `
-${text}
-<tr>
-    <td colspan="${ args.length }">
-        <h4>Hozzárendelt tárgyak</h4>
-        ${beszerzes}
-        <hr>
-    </td>
-</tr>`;
+        text += `</tr>`;
+        let kieg = "";
+        if(beszerzes.length > 0){
+            kieg+= 
+                '<tr><td colspan="'+ args.length +'">' +
+                '<h4>Hozzárendelt tárgyak</h4><hr>' + 
+                bhead + beszerzes + tend + 
+                '</td></tr>';
+        }
+        return text + kieg;
     },
 };

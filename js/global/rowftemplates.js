@@ -78,6 +78,4 @@ export const mezok = {
         return mez.label("Osztály") + mez.select(args[1], "osztalyID", "optionOsztalyList") +
             mez.label("Helyiség") + mez.select(args[2], "helyisegID", "optionHelyisegList");
     },
-    
-
 }

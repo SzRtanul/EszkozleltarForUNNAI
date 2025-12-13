@@ -55,7 +55,9 @@ function doUjratolt(cjust="", responseInput=0){
                 templeLast++;
             }
             else{
-                break;
+                templeUsq.push("F\x01");
+                templeLast++;
+                //break;
             }
             if(cja.length>13){
                 const materia = cja.substring(13, cja.length).split(":_"); // retnrowType selecter(választó)
@@ -228,11 +230,13 @@ function whataf(
                         console.log("ELLEN;");
                         qruak += qruakLiminal;
                     }
-                    console.log("Vége");
                     if(usqTrow > 0 && qruakArray.length & 1 == 1){
+                        console.log("KRU")
                         qruakArray.push(actualRowNums.length - 1);
                     }
-                    else if (usqTrow < actualRowNums.length){
+                    else if (usqTrow < actualRowNums.length - 1){
+                        /*+ (actualRowNums[0] ? 0 : 1) */
+                        console.log("KRUe")
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
                     let szen = "";
@@ -243,23 +247,27 @@ function whataf(
                             actualRowNums[qruakArray[qere+1]]
                         );
                     }
-//                    console.log("Szen: " + szen);
+                    //                    console.log("Szen: " + szen);
                     resultsBef[resLast] += szen;
+                    console.log(szen);
+                    console.log(usqTrow)
+                    console.log(actualRowNums)
+                    console.log("Vége");
                 }
             }
             fullText += retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef);
             outResBefNums.push(fullText.length);
         }
-        // tfoot
-        if(retnrows[2]!=0) {
-            fullText += wherebef.length > 2 ? retnrows[2](
-                ...befretns.slice(wherebef[1], wherebef[2])
-            ) : retnrows[2]();
-            outResBefNums.push(fullText.length);
-        }
     }
     else if(retnrows[3] != 0){
         fullText += retnrows[3](resPlit.split(columnSep));
+        outResBefNums.push(fullText.length);
+    }
+    // tfoot
+    if(retnrows[2]!=0) {
+        fullText += wherebef.length > 2 ? retnrows[2](
+            ...befretns.slice(wherebef[1], wherebef[2])
+        ) : retnrows[2]();
         outResBefNums.push(fullText.length);
     }
 //    console.log(fullText);
