@@ -1,3 +1,29 @@
+export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít") => 
+`<form runssubmit="\x01" usqf="${usqf}" value="update/${value}" nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label>
+        <input type="number" value="${id}" disabled class="">
+        ${fields}
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="${kuldFelirat}" class="but">
+    </p>
+    <span class="allapot"></span>
+</form>`;
+
+export const insUrlap = (fields="", kuldFelirat="Hozzáad") => 
+`<div>
+    ${fields}
+</div>
+<p>
+    <input type="submit" value="${kuldFelirat}" class="but">
+</p>
+<span class="allapot"></span>`;
+
 const mez = {
     input: (def="", name="", isWoap=false, type="text", placeholder="") =>
         "<input type='"+type+"' name='" + name + "' value='" + def + "' placeholder='"+ placeholder +"' class='mez"+(isWoap ? " woap" : "")+"'>",
