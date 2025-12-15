@@ -31,4 +31,10 @@ export const qInserts = [
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",
     "update/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
-    "delete/\\\-$schema
+    "delete/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
+    //
+    // 5.
+    //
+    "methscal/\\\-$schema\\\-/\\\-$table\\\-",
+    "meth/\\\-$schema\\\-/\\\-$table\\\-",
+];
