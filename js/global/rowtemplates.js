@@ -257,4 +257,9 @@ export const templates = {
         if(beszerzes.length > 0){
             kieg+= 
                 '<tr><td colspan="'+ args.length +'">' +
-                '<h4>Hozzárendelt tárgyak</h4><hr
+                '<h4>Hozzárendelt tárgyak</h4><hr>' + bhead + beszerzes + tend
+                '</td></tr>';
+        }
+        return text + kieg;
+    }
+}
