@@ -1,21 +1,20 @@
-export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít") => 
-`<form runssubmit="\x01" usqf="${usqf}" value="update/${value}" nextTo="" class="scene scen scen1">
+export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít", inS=false) => 
+`<form runssubmit="\x01" usqf="${usqf}" value="${inS ? "insert" : "update" }/${value}" nextTo="" class="scene scen scen1">
     <div>
-        <label>Id</label>
-        <input type="number" value="${id}" disabled class="">
+        ${!inS ? '<label>Id</label><input type="number" value="' + id + '" disabled class="">' : ''}
         ${fields}
     </div>
     <p>
-        <button type="button" class="aktuel">
+        ${!inS ? `<button type="button" class="aktuel">
             <img src="" class="">
         </button>
-        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>
+        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>` : ''}
         <input type="submit" value="${kuldFelirat}" class="but">
     </p>
     <span class="allapot"></span>
 </form>`;
 
-export const insUrlap = (fields="", kuldFelirat="Hozzáad") => 
+export const insUrlap = (fields="", kuldFelirat="Hozzáad") =>
 `<div>
     ${fields}
 </div>
@@ -25,6 +24,8 @@ export const insUrlap = (fields="", kuldFelirat="Hozzáad") =>
 <span class="allapot"></span>`;
 
 const mez = {
+    dinput: (def="", name="", isWoap=false, type="text", placeholder="") =>
+        "<input type='"+type+"' name='" + name + "' value='" + def + "' placeholder='"+ placeholder +"' class='mez"+(isWoap ? " woap" : "")+"' disabled>",
     input: (def="", name="", isWoap=false, type="text", placeholder="") =>
         "<input type='"+type+"' name='" + name + "' value='" + def + "' placeholder='"+ placeholder +"' class='mez"+(isWoap ? " woap" : "")+"'>",
     select: (def="", name="", cjust="", isWoap=true) => {
@@ -73,14 +74,16 @@ export const mezok = {
             mez.label("Hosszúság(px)") + mez.input(args[5], "height", true) +
             mez.label("Helyiség neve(opcionális)") + mez.input(args[7], "nev");
     },
-    leltarUpd: (args=[]) => {
-        return mez.label("Beszerzés") + mez.select(args[2], "beszerzesID", "optionBeszerzesList", true) +
+    leltarUpd: (args=[], isD=false) => {
+        return mez.label("Beszerzés") + 
+            (isD ? mez.dinput(args[0], "beszerzesID", true) : mez.select(args[2], "beszerzesID", "optionBeszerzesList", true)) /* Kompatibilitás */ +
             mez.label("Helyiség") + mez.select(args[1], "helyisegID", "optionHelyisegTipusList", true) +
             mez.label("Darabszám") + mez.input(args[3], "mennyiseg", true) +
             mez.label("Hozzáadás dátuma") + mez.input(args[4], "hozzaadva", false, "datetime-local");
     },
-    leltarEsemenyUpd: (args=[]) => {
-        return mez.label("Beszerzés") + mez.select(args[1], "beszerzesID", "optionBeszerzesList") +
+    leltarEsemenyUpd: (args=[], isD=false) => {
+        return mez.label("Beszerzés") +
+        (isD ? mez.dinput(args[0], "beszerzesID", true) : mez.select(args[1], "beszerzesID", "optionBeszerzesList")) +
             mez.label("Leltáresemény típus") + mez.select(args[3], "leltaresemenytipusID", "optionLeltarEsemenyTipusList") +
             mez.label("Darabszám") + mez.input(args[2], "mennyiseg", true) +
             mez.label("Dátum") + mez.input(args[4], "mikor", true);

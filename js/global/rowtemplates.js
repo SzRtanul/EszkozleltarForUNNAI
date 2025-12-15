@@ -205,9 +205,12 @@ export const templates = {
             if(c < befs.length && befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + args[i] + "</td>";
         }
+        // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
         text += `
     <td>Hozzárendelés helyiséghez</td>
     <td>Leltáresemény regisztrálása</td>
+    <td>Beszerzés Frissítése</td>
+    <td>Beszerzés Törlése</td>
 </tr>
 `;
         console.log(helyiseg.length);
@@ -252,7 +255,13 @@ export const templates = {
             if(c < befs.length && befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + args[i] + "</td>";
         }
-        text += `</tr>`;
+        // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
+        text += `
+            <td></td>
+            <td>Helyiség adatainak frissítése</td>
+            <td>Helyiség törlése</td>
+            <td>Leltárbejegyzés Hozzáadása</td>
+        </tr>`;
         let kieg = "";
         if(beszerzes.length > 0){
             kieg+= 
