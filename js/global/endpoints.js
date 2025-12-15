@@ -18,7 +18,12 @@ export const endpoints = [
     "gettable/public/teremkiosztas",
     // 15.
     "gettable/epulet/tervrajz",
-    "gettable/public/beszerzesc_v"
+    "gettable/public/beszerzesc_v",
+    "gettable/public/leltarc_v",
+    "gettable/public/leltarec_v",
+    "gettable/epulet/helyisegc_v",
+    // 20.
+    "gettable/public/beszerzesc_elh_v",
 ];
 
 export const qInserts = [
@@ -26,10 +31,4 @@ export const qInserts = [
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",
     "update/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
-    "delete/\\\-$schema\\\-/\\\-$table\\\-/\\\-$row\\\-",
-    //
-    // 5.
-    //
-    "methscal/\\\-$schema\\\-/\\\-$table\\\-",
-    "meth/\\\-$schema\\\-/\\\-$table\\\-",
-];
+    "delete/\\\-$schema

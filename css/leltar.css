@@ -112,8 +112,15 @@ input[type="submit"]{
     background-color: green;
 }
 
-table *:not(form *){
+/*table *:not(form *){
+    }*/
+    
+td, th{
     border:  1px solid white;
+    padding: 5px;
+}
+td > h4, td table{
+    margin-left: 14px;
 }
 
 header li{
@@ -141,11 +148,4 @@ header img{
     border: 1px solid white;
     color: white;
     font: 32;
-    padding: 35px;
-}
-
-main::after, header::after {
-  content: "";
-  display: block;
-  clear: both;
-}
+    padding: 35

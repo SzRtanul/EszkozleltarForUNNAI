@@ -5,6 +5,7 @@ import { exportedMethods } from "./global/globaldata.js";
 import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef } from "./global/retntemplates.js";
+import { mezok, insUrlap } from "./global/rowftemplates.js";
 
 const retns = {
     
@@ -86,8 +87,17 @@ class RetnP extends HTMLElement {
     this.remove();
   }
 }
+
+class MezP extends HTMLElement{
+    connectedCallback() {
+        const name = this.getAttribute("mez");
+        this.outerHTML = insUrlap(mezok[name](), "Hozzáad")
+    }
+}
+
 customElements.define('retn-sh', Retn);
 customElements.define('retn-p', RetnP);
+customElements.define('mez-p', MezP);
 
 
 
@@ -239,15 +249,4 @@ function doRun(e, eType = ""){
 }
 
 function eventSample(eventtype = "click", environment=document){
-  //  console.log("Run it!")
-    environment.addEventListener(eventtype, (e) => {
-        e.stopPropagation();
-        console.log(e.target.attributes);
-        doRun(e, eventtype);
-    });
-}
-
-eventSample();
-//eventSample("Enter");
-eventSample("submit");
-eventSample("change");
+  /

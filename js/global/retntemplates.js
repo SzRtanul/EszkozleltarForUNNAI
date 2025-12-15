@@ -51,8 +51,15 @@ export const retnCombinations = {
     osztalylist: retEx[0]("00D", undefined, "trowOsztalyList"),
     teremkiosztaslist: retEx[0]("00E", undefined, "trowTeremKiosztasList"),
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
-    customBeszerzesList: "trow:theade:tbodyend:megn:customBeszerzesList:divheade:megnTermek|||" +
-    "---000102FF;008---000102FF;00A---040102FF;010;0=0=0:1=0=0",
+    customBeszerzesList: 
+        "trow:theade:tbodyend:megn:customBeszerzesList:" +
+        "divheade:trowleHelyiseg:trowleLeltarEsemeny|||" +
+        "03FFFFFF;003---00FFFFFF;011---07FFFFFF;00A;0=0=2"+
+        "---FF01FFFF;011---FF01FFFF;00A---FFFF02FF;0FF---040102FF;010;1=0=0:2=0=0:3:4:5",
+    customLeltarList: 
+        "trow:theade:tbodyend:megn:customLeltarList:" +
+        "divheade:|||" +
+        "00FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF---040102FF;013;0=0=0:1:2",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),
     optionHelyisegTipusList: retEx[3]("002"),
@@ -69,23 +76,4 @@ export const retnCombinations = {
     optionTeremList: retEx[3]("00E", "optionTeremKiosztasList"),
     userperson: 
         "getDataLength:retlist:retheadlist:personev:theade:tablerow:tbodyend:|||" +
-        "00FFFFFF;30A---0102FFFF;30A;0=1=2:_0---03FFFFFF;30A;0:1",
-    profilev: "theade:profilev:tbodyend|||010002FF;309",
-  //  personev: retEx[0]("30A")
-}
-
-export const retnCombinationResults = {
-
-};
-
-// QUERRRRRRRRRRRRRRRRRRY
-const exmplJSONs= [{
-        limit: 50,
-        site: 0
-    }
-];
-
-export const staticQueryWithJSONs = [
-    0,
-    exmplJSONs[0],
-];
+        "00FFFFFF;30A---0102FFFF;30A;0=1=2:_0---03FFFFFF;30A;0
