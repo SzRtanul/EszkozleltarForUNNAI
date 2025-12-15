@@ -23,6 +23,7 @@ export const endpoints = [
     "gettable/public/leltarec_v",
     "gettable/epulet/helyisegc_v",
     // 20.
+    "gettable/public/beszerzesc_elh_v",
 ];
 
 export const qInserts = [

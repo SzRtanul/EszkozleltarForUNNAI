@@ -1,26 +1,8 @@
-import { mezok } from "./rowftemplates.js";
+import { mezok, defUrlap } from "./rowftemplates.js";
 
 // RETNNNNNNNNNNNNNNNNNN
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
-
-const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Hozzáad") => `
-<form runssubmit="\x01" usqf="${usqf}" value="update/${value}" nextTo="" class="scene scen scen1">
-    <div>
-        <label>Id</label>
-        <input type="number" value="${id}" disabled class="">
-        ${fields}
-    </div>
-    <p>
-        <button type="button" class="aktuel">
-            <img src="" class="">
-        </button>
-        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>
-        <input type="submit" value="${kuldFelirat}" class="but">
-    </p>
-    <span class="allapot"></span>
-</form>
-`;
 
 const sampUpdate = (args, usqf="", value="", mezok="", kuldFelirat="Hozzáad")=>{
     return `
