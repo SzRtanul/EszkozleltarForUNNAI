@@ -4,34 +4,34 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
 
-const sampUpdate = (args, usqf="", value="", mezok="", kuldFelirat="Hozzáad")=>{
+const sampUpdate = (args, usqf="", value="", mezok="", insD, kuldFelirat="", gombfelirat="Módosítás")=>{
     return `
 <td class="film">` + 
-    defUrlap(args[0], usqf, value, mezok, kuldFelirat) + 
+    defUrlap(args[0], usqf, value, mezok, kuldFelirat, insD) + 
     `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">
-        Módosítás
+        ${gombfelirat}
     </button>
 </td>`
 };
 
-const sampDelete = (schematableargs="") => {
-    return '<td><button runsclick="\x04" value="' + schematableargs + '">Törlés</button></td>'
+const sampDelete = (schematableargs="", gombfelirat="Törlés") => {
+    return '<td><button runsclick="\x04" value="' + schematableargs + '">'+ gombfelirat +'</button></td>'
 };
 
+const udMezC = (args=[], endpoint, mezok="", ufg, df, ufk) => {
+    return sampUpdate(args, "1", endpoint, mezok, undefined, ufk, ufg) +
+        sampDelete(endpoint, df);
+}
+
 const nevUp = (args, endpoint="", megj="") => {
-    return templates.trow(
-        args,
-        sampUpdate(args, "1", endpoint, mezok.nevUpd(args, megj)) +
-        sampDelete(endpoint)
-    );
+    return templates.trow(args, udMezC(args, "1", endpoint, mezok.nevUpd(args, megj)));
 };
 
 const otherUpd = (args=[], endpoint, myUpd="", egyebbf="", egyebbh="") => {
     return templates.trow(
         args,
         egyebbf +
-        sampUpdate(args, "1", endpoint, mezok[myUpd](args)) +
-        sampDelete(endpoint) +
+        udMezC(args, "1", endpoint, mezok[myUpd](args)) +
         egyebbh
     );
 };
@@ -169,11 +169,10 @@ export const templates = {
     trowLeltarEsemenyTipusList: (args) => nevUp(args, "megnevezes/leltaresemenytipus/"+args[0], "Eszköz neve"),
     trowCegList: (args) => otherUpd(args, "public/ceg/"+args[0], "cegUpd"),
     trowTermekList: (args) => otherUpd(args, "public/termek/" + args[0], "termekUpd"),
-    trowBeszerzesList: (args) => otherUpd
-(
-    args,
-    "public/beszerzes/"+args[0],
-    "beszerzesUpd",
+    trowBeszerzesList: (args) => otherUpd(
+        args,
+        "public/beszerzes/"+args[0],
+        "beszerzesUpd",
 `
 <td class="film"><button>Termék hozzáadása helyiséghez</button></td>
 <td class="film"><button>Leltár esemény regisztrálása</button></td>
@@ -187,11 +186,19 @@ export const templates = {
     trowOsztalyList: (args) =>otherUpd(args, "public/osztaly/"+args[0], "osztalyUpd"),
     trowTeremKiosztasList: (args) => otherUpd(args, "public/teremkiosztas/"+args[0], "teremKiosztasUpd"),
     trowleLeltarEsemeny: (args, ...befilts) => templates.trow(args, "", befilts, [2], [0]),
-    customBeszerzesList: (args, helyiseg, leltaresemeny, hhead, lehead, tend, ...befilts) => {
+    theadeBeszerzesList: (args) => {
+        const bef = `
+<tr>
+        <td colspan="${args.length}">${defUrlap(0, "0", "", mezok.beszerzesUpd(), "Hozzáad", true)}</td>
+</tr>`;
+        return templates.theade(args);
+    },
+    customBeszerzesList: (a, helyiseg, leltaresemeny, hhead, lehead, tend, ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
         let text = "<tr class='retnrow'>";
         let c = 0;
+        const endpoint = "";
         console.log("TARRRRRR: " + helyiseg)
         const befs = [ // i
             
@@ -199,18 +206,41 @@ export const templates = {
         const befous = [ // befilts
             0, 1
         ];
-        for(let i = 0; i < args.length; i++){
+        for(let i = 0; i < a.length; i++){
             console.log("C: " + c)
             if(c < befs.length && befs[c] < i) c++;
-            if(c < befs.length && befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
-            else text += "<td>" + args[i] + "</td>";
+            if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
+            else text += "<td>" + a[i] + "</td>";
         }
         // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
         text += `
-    <td>Hozzárendelés helyiséghez</td>
-    <td>Leltáresemény regisztrálása</td>
-    <td>Beszerzés Frissítése</td>
-    <td>Beszerzés Törlése</td>
+    ${
+        sampUpdate(
+            a, "0",
+            "public/leltar/"+a[0],
+            mezok.leltarUpd(a, true),
+            true, "Hozzáad",
+            "Termék hozzárendelése Helyiséghez"
+        )
+    }
+    ${
+        sampUpdate(
+            a, "0", 
+            "public/leltaresemeny/"+a[0],
+            mezok.leltarEsemenyUpd(a, true),
+            true, "Hozzáad",
+            "Leltáresemény hozzáadása"
+        )
+    }
+    ${
+        udMezC(
+            a, 
+            "public/beszerzes/" + a[0],
+            mezok.beszerzesUpd(a),
+            "Beszerzés Módosítása",
+            "Beszerzés Törlése"
+        )
+    }
 </tr>
 `;
         console.log(helyiseg.length);
@@ -222,7 +252,7 @@ export const templates = {
         console.log("Bon: "+bon);
         let kieg = "";
         if(both > 0){
-            kieg += '<tr><td colspan="'+ args.length + '">';
+            kieg += '<tr><td colspan="'+ a.length + '">';
             if((both & 1) != 0){
                 kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg + tend + "";
             }
@@ -238,7 +268,7 @@ export const templates = {
         console.log("HJ: " + lehead + leltaresemeny + "</tbody></table>")
         return text + kieg;
     },
-    customLeltarList: (args, beszerzes, bhead, tend, ...befilts) => {
+    customLeltarList: (a, beszerzes, bhead, tend, ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
         let text = "<tr class='retnrow'>";
@@ -249,15 +279,15 @@ export const templates = {
         const befous = [ // befilts
             0, 1
         ];
-        for(let i = 0; i < args.length; i++){
+        for(let i = 0; i < a.length; i++){
             console.log("C: " + c)
             if(c < befs.length && befs[c] < i) c++;
-            if(c < befs.length && befs[c] == i) text += "<td>"/* + args[i] + ": " */+ befilts[befous[c]] + "</td>"
-            else text += "<td>" + args[i] + "</td>";
+            if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
+            else text += "<td>" + a[i] + "</td>";
         }
         // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
         text += `
-            <td></td>
+            <td>${""}</td>
             <td>Helyiség adatainak frissítése</td>
             <td>Helyiség törlése</td>
             <td>Leltárbejegyzés Hozzáadása</td>
@@ -265,7 +295,7 @@ export const templates = {
         let kieg = "";
         if(beszerzes.length > 0){
             kieg+= 
-                '<tr><td colspan="'+ args.length +'">' +
+                '<tr><td colspan="'+ a.length +'">' +
                 '<h4>Hozzárendelt tárgyak</h4><hr>' + 
                 bhead + beszerzes + tend + 
                 '</td></tr>';

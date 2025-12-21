@@ -7,8 +7,8 @@ export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Friss
     <p>
         ${!inS ? `<button type="button" class="aktuel">
             <img src="" class="">
-        </button>
-        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>` : ''}
+        </button>` : ''}
+        <button type="button" class="cancel" runsclick="\x06" nextTo="scen:0">Mégse</button>
         <input type="submit" value="${kuldFelirat}" class="but">
     </p>
     <span class="allapot"></span>
