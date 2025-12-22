@@ -27,10 +27,31 @@ form input:not(.settr):not(.mez):not([type="submit"]), form select:not(.settr):n
     background:#AAA;
     color:#F5F5F5;
 }
-form>div, form>div[cgrid="2"]{
+form>div, form>div[cgrid="2"], .jfgrid{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+.jfgrid{
+    /*
+    justify-items: stretch;
+    align-items: stretch;
+    grid-auto-rows: 1fr;
+    */
+    gap: 4px;
+}
+.jfgrid > div > button{
+    width: 100%;
+    height: 100%;
+    margin: unset;
+    padding: 4px 10px;
+    /*
+    min-width: 0;
+    min-height: 0;
+    display: block;
+   */
+}
+
 form>div>label{
     /*
     float:right;

@@ -4,34 +4,34 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
 
-const sampUpdate = (args, usqf="", value="", mezok="", insD, kuldFelirat="", gombfelirat="Módosítás")=>{
+const sampUpdate = (id=-1, usqf="", value="", mezok="", insD, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
     return `
-<td class="film">` + 
-    defUrlap(args[0], usqf, value, mezok, kuldFelirat, insD) + 
+<${ctn} class="film">` + 
+    defUrlap(id, usqf, value, mezok, kuldFelirat, insD) + 
     `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">
         ${gombfelirat}
     </button>
-</td>`
+</${ctn}>`
 };
 
-const sampDelete = (schematableargs="", gombfelirat="Törlés") => {
-    return '<td><button runsclick="\x04" value="' + schematableargs + '">'+ gombfelirat +'</button></td>'
+const sampDelete = (schematableargs="", gombfelirat="Törlés", ctn="td") => {
+    return '<'+ctn+'><button runsclick="\x04" value="' + schematableargs + '">'+ gombfelirat +'</button></' + ctn + '>';
 };
 
-const udMezC = (args=[], endpoint, mezok="", ufg, df, ufk) => {
-    return sampUpdate(args, "1", endpoint, mezok, undefined, ufk, ufg) +
-        sampDelete(endpoint, df);
+const udMezC = (id, endpoint, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
+    return sampUpdate(id, "1", endpoint, mezok, undefined, ufk, ufg, cntnr) +
+        sampDelete(endpoint, df, cntnr);
 }
 
 const nevUp = (args, endpoint="", megj="") => {
-    return templates.trow(args, udMezC(args, "1", endpoint, mezok.nevUpd(args, megj)));
+    return templates.trow(args, udMezC(args[0], endpoint, mezok.nevUpd(args, megj)));
 };
 
 const otherUpd = (args=[], endpoint, myUpd="", egyebbf="", egyebbh="") => {
     return templates.trow(
         args,
         egyebbf +
-        udMezC(args, "1", endpoint, mezok[myUpd](args)) +
+        udMezC(args[0], endpoint, mezok[myUpd](args)) +
         egyebbh
     );
 };
@@ -185,15 +185,75 @@ export const templates = {
     trowTagozatList: (args) => otherUpd(args, "public/tagozat/"+args[0], "tagozatUpd"),
     trowOsztalyList: (args) =>otherUpd(args, "public/osztaly/"+args[0], "osztalyUpd"),
     trowTeremKiosztasList: (args) => otherUpd(args, "public/teremkiosztas/"+args[0], "teremKiosztasUpd"),
-    trowleLeltarEsemeny: (args, ...befilts) => templates.trow(args, "", befilts, [2], [0]),
-    theadeBeszerzesList: (args) => {
+    trowleLeltarList: (a) => templates.trow(
+        a,
+        udMezC(
+            [a[0], a[1]],
+            "public/leltar",
+            mezok.leltarUpd(
+                [a[0], a[1]], 
+                true
+            )
+        )
+    ),
+    trowleLeltarEsemenyList: (a, ...befilts) => templates.trow(
+        a,
+        udMezC(
+            [a[0], a[1]],
+            "public/leltar",
+            mezok.leltarUpd(
+                [a[0], a[1]], 
+                true
+            )
+        ),
+        befilts, 
+        [2], [0]
+    ),
+    trowleBeszerzesList: (a) => templates.trow(
+        a,
+        udMezC(
+            [a[0], a[1]],
+            "public/leltaresemeny",
+            mezok.leltarUpd(
+                [a[0], a[1]], 
+                true
+            )
+        )
+    ),
+    theadeBeszerzesCList: (args) => {
         const bef = `
 <tr>
-        <td colspan="${args.length}">${defUrlap(0, "0", "", mezok.beszerzesUpd(), "Hozzáad", true)}</td>
+    ${
+        sampUpdate(
+            a[0], "0",
+            "public/leltar/"+a[0],
+            mezok.leltarUpd(a, true),
+            true, "Hozzáad",
+            "Termék hozzárendelése Helyiséghez"
+        )
+    }
 </tr>`;
-        return templates.theade(args);
+        return bef + templates.theade(args);
     },
-    customBeszerzesList: (a, helyiseg, leltaresemeny, hhead, lehead, tend, ...befilts) => {
+    theadeLeltareCList: (args) => {
+        const bef = `
+<tr>
+    ${
+        sampUpdate(
+            a[0], "0",
+            "public/leltar/"+a[0],
+            mezok.leltarUpd(a, true),
+            true, "Hozzáad",
+            "Termék hozzárendelése Helyiséghez"
+        )
+    }
+</tr>`;
+        return bef + templates.theade(args);
+    },
+    //
+    // 1. customBeszerzesList
+    //
+    customBeszerzesList: (a, helyiseg, leltaresemeny, hhead="", lehead="", tend="", ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
         let text = "<tr class='retnrow'>";
@@ -212,35 +272,39 @@ export const templates = {
             if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + a[i] + "</td>";
         }
-        // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
         text += `
-    ${
-        sampUpdate(
-            a, "0",
-            "public/leltar/"+a[0],
-            mezok.leltarUpd(a, true),
-            true, "Hozzáad",
-            "Termék hozzárendelése Helyiséghez"
-        )
-    }
-    ${
-        sampUpdate(
-            a, "0", 
-            "public/leltaresemeny/"+a[0],
-            mezok.leltarEsemenyUpd(a, true),
-            true, "Hozzáad",
-            "Leltáresemény hozzáadása"
-        )
-    }
-    ${
-        udMezC(
-            a, 
-            "public/beszerzes/" + a[0],
-            mezok.beszerzesUpd(a),
-            "Beszerzés Módosítása",
-            "Beszerzés Törlése"
-        )
-    }
+    <td class="jfgrid">
+        ${
+            sampUpdate(
+                a[0], "0",
+                "public/leltar/"+a[0],
+                mezok.leltarUpd(a, true),
+                true, "Hozzáad",
+                "Termék hozzárendelése Helyiséghez",
+                "div"
+            )
+        }
+        ${
+            sampUpdate(
+                a[0], "0", 
+                "public/leltaresemeny/"+a[0],
+                mezok.leltarEsemenyUpd(a, true),
+                true, "Hozzáad",
+                "Leltáresemény hozzáadása",
+                "div"
+            )
+        }
+        ${
+            udMezC(
+                a[0],
+                "public/beszerzes/" + a[0],
+                mezok.beszerzesUpd(a),
+                "Beszerzés Módosítása",
+                "Beszerzés Törlése",
+                undefined, "div"
+            )
+        }
+    </td>
 </tr>
 `;
         console.log(helyiseg.length);
@@ -268,6 +332,9 @@ export const templates = {
         console.log("HJ: " + lehead + leltaresemeny + "</tbody></table>")
         return text + kieg;
     },
+    //
+    // 2. customLeltarList
+    //
     customLeltarList: (a, beszerzes, bhead, tend, ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
@@ -287,11 +354,29 @@ export const templates = {
         }
         // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
         text += `
-            <td>${""}</td>
-            <td>Helyiség adatainak frissítése</td>
-            <td>Helyiség törlése</td>
-            <td>Leltárbejegyzés Hozzáadása</td>
-        </tr>`;
+    <td class="jfgrid">
+        ${
+            sampUpdate(
+                a, "0", 
+                "public/leltaresemeny/"+a[0],
+                mezok.leltarEsemenyUpd(a, true),
+                true, "Hozzáad",
+                "Leltárbejegyzés Hozzáadása",
+                "div"
+            )
+        }
+        ${
+            udMezC(
+                a, 
+                "public/beszerzes/" + a[0],
+                mezok.beszerzesUpd(a),
+                "Helyiség adatainak frissítése",
+                "Helyiség Törlése",
+                undefined, "div"
+            )
+        }
+    </td>
+</tr>`;
         let kieg = "";
         if(beszerzes.length > 0){
             kieg+= 

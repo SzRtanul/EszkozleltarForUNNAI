@@ -53,13 +53,13 @@ export const retnCombinations = {
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
     customBeszerzesList: 
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
-        "divheade:trowleHelyiseg:trowleLeltarEsemeny|||" +
-        "03FFFFFF;003---00FFFFFF;011---07FFFFFF;00A;0=0=2"+
+        "trowleLeltarList:trowleLeltarEsemenyList|||" +
+        "03FFFFFF;003---05FFFFFF;011---06FFFFFF;00A;0=0=2"+
         "---FF01FFFF;011---FF01FFFF;00A---FFFF02FF;0FF---040102FF;010;1=0=0:2=0=0:3:4:5",
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
-        "divheade:|||" +
-        "00FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF---040102FF;013;0=0=0:1:2",
+        "trowleBeszerzesList:|||" +
+        "05FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF---040102FF;013;0=0=0:1:2",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),
     optionHelyisegTipusList: retEx[3]("002"),
