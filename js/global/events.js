@@ -2,7 +2,7 @@ import { whd } from "./queriessetup.js";
 import { retnCombinations } from "./retntemplates.js";
 import { templates } from "./rowtemplates.js";
 
-const columnSep = ":::";
+const columnSep = "\x00";
 
 export const exportedRetnMethods = {
     doFrissit: doFrissit,
@@ -137,7 +137,7 @@ function whataf(
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);
     const frameBefLiminal = 2;
-    const resPlit = replaceLast(responseInput.substring(frameBefLiminal, responseInput.length), ":::\n", "").split(":::");
+    const resPlit = /*replaceLast(*/responseInput.substring(frameBefLiminal, responseInput.length)/*, columnSep + "\n", "")*/.split(columnSep);
     const error = responseInput.startsWith("err:") ? 1 : 0;
     outResBefNums.push(false);
     outResBefNums.push(0);

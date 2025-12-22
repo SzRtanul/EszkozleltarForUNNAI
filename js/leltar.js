@@ -7,6 +7,9 @@ import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
 
+const szt = "szét\x00kell\x00választani";
+console.log(szt.split("\x00"));
+
 const retns = {
     
 };
