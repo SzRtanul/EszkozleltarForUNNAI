@@ -61,7 +61,7 @@ export const templates = {
         console.log(retr);
         return "<table>" +retr+ "</table>";
     },
-    theade: (args) => tempex[0](args),
+    theade: (args, koszbe) => tempex[0](args, koszbe),
     divheade: (args) => {
         let text = "<div class='fleft tbord'>";
         for(let i = 0; i < args.length; i++){
@@ -211,44 +211,27 @@ export const templates = {
     ),
     trowleBeszerzesList: (a) => templates.trow(
         a,
+        "<td class='g1 jfgrid'>" +
         udMezC(
             [a[0], a[1]],
             "public/leltaresemeny",
             mezok.leltarUpd(
                 [a[0], a[1]], 
                 true
-            )
-        )
+            ),
+            undefined,
+            undefined,
+            undefined,
+            "div"
+        ) + "</td>"
     ),
-    theadeBeszerzesCList: (args) => {
-        const bef = `
-<tr>
-    ${
-        sampUpdate(
-            a[0], "0",
-            "public/leltar/"+a[0],
-            mezok.leltarUpd(a, true),
-            true, "Hozzáad",
-            "Termék hozzárendelése Helyiséghez"
-        )
-    }
-</tr>`;
-        return bef + templates.theade(args);
+    theadleBeszerzesList: (a) => {
+        const bef = `<td colspan="${a.length-1}"></td>`;
+        return templates.theade(a);
     },
-    theadeLeltareCList: (args) => {
-        const bef = `
-<tr>
-    ${
-        sampUpdate(
-            a[0], "0",
-            "public/leltar/"+a[0],
-            mezok.leltarUpd(a, true),
-            true, "Hozzáad",
-            "Termék hozzárendelése Helyiséghez"
-        )
-    }
-</tr>`;
-        return bef + templates.theade(args);
+    theadleHelyisegList: (a) => {
+        const bef = `<td colspan="${a.length-1}"></td>`;
+        return templates.theade(a);
     },
     //
     // 1. customBeszerzesList
@@ -273,7 +256,7 @@ export const templates = {
             else text += "<td>" + a[i] + "</td>";
         }
         text += `
-    <td class="jfgrid">
+    <td class="g2 jfgrid">
         ${
             sampUpdate(
                 a[0], "0",
@@ -354,10 +337,10 @@ export const templates = {
         }
         // <td>Leltárbejegyzés frissítése</td><td>Leltárbejegyzés törlése</td>
         text += `
-    <td class="jfgrid">
+    <td class="g2 jfgrid">
         ${
             sampUpdate(
-                a, "0", 
+                a[0], "0", 
                 "public/leltaresemeny/"+a[0],
                 mezok.leltarEsemenyUpd(a, true),
                 true, "Hozzáad",
@@ -367,7 +350,7 @@ export const templates = {
         }
         ${
             udMezC(
-                a, 
+                a[0], 
                 "public/beszerzes/" + a[0],
                 mezok.beszerzesUpd(a),
                 "Helyiség adatainak frissítése",

@@ -27,9 +27,14 @@ form input:not(.settr):not(.mez):not([type="submit"]), form select:not(.settr):n
     background:#AAA;
     color:#F5F5F5;
 }
-form>div, form>div[cgrid="2"], .jfgrid{
+form>div, form>div[cgrid="2"], .g2.jfgrid{
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.g1.jfgrid{
+    display: grid;
+    grid-template-columns: 1fr;
 }
 
 .jfgrid{

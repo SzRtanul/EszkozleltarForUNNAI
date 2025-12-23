@@ -7,7 +7,7 @@ import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
 
-const szt = "szét\x00kell\x00választani";
+const subsite = {};
 console.log(szt.split("\x00"));
 
 const retns = {
@@ -98,9 +98,51 @@ class MezP extends HTMLElement{
     }
 }
 
+class SubSite extends HTMLElement{
+    connectedCallback() {
+        const shadow = this.attachShadow({mode: 'open'});
+        shadow.innerHTML = "";
+        subsite[""] = shadow;
+        const retn = retns[cjust];
+        eventSample("click", shadow);
+        //eventSample("Enter", shadow);
+        eventSample("submit", shadow);
+        eventSample("change", shadow);
+
+        if (currentRequest) {
+        currentRequest.abort();
+    }
+    
+    currentRequest = new XMLHttpRequest();
+    
+    currentRequest.open("GET", "content/" + melyik + "?nocache=" + new Date().getTime(), true);
+    //currentRequest.withCredentials = true;
+    currentRequest.setRequestHeader("Cache-Control", "no-store");
+    currentRequest.setRequestHeader("Pragma", "no-cache");
+
+    currentRequest.onload = async function () {
+        console.log("EN")
+        if (currentRequest.status >= 200 && currentRequest.status < 300) {   
+            let iHTML = currentRequest.responseText;
+            shadow.innerHTML = iHTML;
+        //    sessionStorage.setItem("oldal", melyik);
+        } else {
+            console.error("Request failed with status:", currentRequest.status);
+        }
+        console.log("ENNAE")
+    };
+    currentRequest.onerror = function () {
+        console.error("Request failed due to network error");
+    };
+    currentRequest.send();
+    console.log("ONPREM")
+    } 
+}
+
 customElements.define('retn-sh', Retn);
 customElements.define('retn-p', RetnP);
 customElements.define('mez-p', MezP);
+customElements.define('sub-s', SubSite);
 
 
 
