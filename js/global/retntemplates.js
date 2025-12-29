@@ -1,18 +1,24 @@
 export const formDRef = [
-    "0-0-3-0",
-    "0-0-0-0",
-    "0-0-0-1",
-    "0-0-0-2",
-    "0-0-2-3",
+    "3-0",
+    "0-0",
+    "0-1",
+    "0-2",
+    "2-3",
     // 5.
-    "0-0-2-4",
-    "0-0-0-5",
-    "0-0-2-7",
-    "0-0-0-6",
-    "0-0-0-8",
+    "2-4",
+    "0-5",
+    "2-7",
+    "0-6",
+    "0-8",
     // 10.
-    "0-0-0-9",
-    "0-0-0-10",
+    "0-9",
+    "0-10",
+
+];
+
+export const modDRef = [
+    "0-0",
+    "3-1",
 
 ];
 
@@ -59,7 +65,8 @@ export const retnCombinations = {
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
         "trowleBeszerzesList:theadleHelyisegList|||" +
-        "05FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF---040602FF;013;0=0=0:1:2",
+        "05FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF" +
+        "---040602FF;013;0=0=0:1:2",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),
     optionHelyisegTipusList: retEx[3]("002"),

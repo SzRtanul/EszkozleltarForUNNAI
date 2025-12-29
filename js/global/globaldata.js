@@ -1,4 +1,6 @@
 import { whd } from "./queriessetup.js";
+import { utschema, uttable } from "./actuelthings.js";
+import { formDRef, modDRef } from "./retntemplates.js";
 
 export let eventTarget = new EventTarget();
 export const outsideEventMethStores = [];
@@ -140,6 +142,15 @@ function getMez(mezo, text){
     return text.length > 0 ? ((mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',') : "null,";
 }
 
+function getSchemTab(al1, al2){
+    return [utschema[al1], uttable[al2]];
+}
+
+function getSchemTabValFromUsqF(usqF){
+    const usesDB = !isNaN(usqF) ? getSchemTab(...formDRef[usqF]?.split(/[^0-9]/).map(Number)) : [];
+    return usesDB.join("/");
+}
+
 function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
     //const myUrlap = urlap.elements;
@@ -147,18 +158,18 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     let columns = "";
     let values = "";
     for(const mezo of myUrlap){
-       // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
+        // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
         if(mezo.name && mezo.name.length > 0){
             const text = 
                 mezo.type !== "checkbox" ? 
                     (mezo.classList.contains("xhr") ? 
-                        getCryptoHash(mezo.value) : 
-                        mezo.value) : 
+                    getCryptoHash(mezo.value) : 
+                    mezo.value) : 
                     (mezo.checked ? 1 : 0) + ""
-            ;
-            if(mezo.classList.contains("mez")){
-                if(mode == 0){
-                    columns += mezo.name + ",";
+                    ;
+                    if(mezo.classList.contains("mez")){
+                        if(mode == 0){
+                            columns += mezo.name + ",";
                     values += getMez(mezo, text);
                 }
                 else if(mode == 1){
@@ -177,25 +188,26 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
         }
     }
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
-
+    
     num = txtenc.encode(values).length-1;
-console.log("Text hossz: " + num);
+    console.log("Text hossz: " + num);
     view.setUint32(0, num);
     const num32ui = new Uint8Array(buffer);
-console.log("Num32UI: " + num32ui)
+    console.log("Num32UI: " + num32ui)
     num32ui.reverse();
     
     const bits = [...num32ui].map(b => b.toString(2).padStart(8, "0")).join(" ");
-console.log(bits);
+    console.log(bits);
     const str = String.fromCharCode(...num32ui);
     const decodedBytes = Uint8Array.from(str, c => c.charCodeAt(0));
-
+    
     const bitstream = [...decodedBytes].map(b => b.toString(2).padStart(8, "0")).join("");
-console.log(bitstream);
-        fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
-console.log("Full: " + fullText);
+    console.log(bitstream);
+    fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
+    console.log("Full: " + fullText);
     return fullText;
 }
+
 
 function getValueFromAll(Cname="", jsonValue={}, localAktuels={}){
     let oText = "";
@@ -261,6 +273,8 @@ export const exportedMethods = {
     getValueFromAll: getValueFromAll,
     getCryptoHash: getCryptoHash,
     getDBThings: getDBThings,
+    getSchemTab: getSchemTab,
+    getSchemTabValFromUsqF: getSchemTabValFromUsqF,
     qTextReform: qTextReform,
     exampleREST: exampleREST,
 };

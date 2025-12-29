@@ -1,14 +1,18 @@
+:root{
+    
+}
+
 .polygon-btn {
-  color: white;
-  /*
-  padding: 20px 40px;
-  font-size: 16px;
-  */
-  width: 50px;
-  height: 50px;
-  border: none;
-  cursor: pointer;
-  clip-path: polygon(50% 0%, 100% 105%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    color: white;
+    /*
+    padding: 20px 40px;
+    font-size: 16px;
+    */
+    width: 50px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    clip-path: polygon(50% 0%, 100% 105%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
 .helyiseg{
@@ -35,14 +39,51 @@ background-color: #1c388c7f;
 }
 
 .content2{
-  display: flex;
-  flex-wrap: nowrap;
-  overflow: auto;
-  height: 70vh;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+    height: 70vh;
+    padding-bottom: 120px;
 }
+
+
 
 .content2>*{
     margin: 30px;
+}
+
+.rel{
+    position: relative;
+}
+
+.fel{
+    /*
+    width: calc(50%-1px);
+    float: left;
+    */
+    color: white;
+    border: 1px solid white;
+    font: 32px;
+    padding: 35px;
+}
+
+.rightbottom{
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+}
+
+.dform{
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+    /*
+    font-size: 25px;
+    */
+    font-weight: bold;
+    color: #000000;
+    border: 1px solid white;
+    background-color: rgb(26, 152, 255);
 }
 
 .polygon-btn:hover {
@@ -113,12 +154,13 @@ input[type="submit"]{
 }
 
 /*table *:not(form *){
-    }*/
+}*/
     
 td, th{
     border:  1px solid white;
     padding: 5px;
 }
+
 td > h4, td table{
     margin-left: 14px;
 }
@@ -140,19 +182,12 @@ header img{
     min-width: 80px;
 }
 
-.fel{
-    /*
-    width: calc(50%-1px);
-    float: left;
-    */
-    border: 1px solid white;
-    color: white;
-    font: 32;
-    padding: 35px;
-}
-
 main::after, header::after {
   content: "";
   display: block;
   clear: both;
+}
+
+.d-none{
+    display: none;
 }

@@ -1,37 +1,39 @@
+import { exportedMethods } from "./globaldata.js";
 import { mezok, defUrlap } from "./rowftemplates.js";
 
 // RETNNNNNNNNNNNNNNNNNN
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
 
-const sampUpdate = (id=-1, usqf="", value="", mezok="", insD, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
+const sampUpdate = (id=-1, usqF=[], mezok="", insD, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
+    const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + id;
     return `
 <${ctn} class="film">` + 
-    defUrlap(id, usqf, value, mezok, kuldFelirat, insD) + 
+    defUrlap(id, (usqF?.length > 0 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) + 
     `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">
         ${gombfelirat}
     </button>
 </${ctn}>`
 };
 
-const sampDelete = (schematableargs="", gombfelirat="Törlés", ctn="td") => {
-    return '<'+ctn+'><button runsclick="\x04" value="' + schematableargs + '">'+ gombfelirat +'</button></' + ctn + '>';
+const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
+    return '<'+ctn+'><button runsclick="\x04" value="delete/' + exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1] + '">'+ gombfelirat +'</button></' + ctn + '>';
 };
 
-const udMezC = (id, endpoint, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
-    return sampUpdate(id, "1", endpoint, mezok, undefined, ufk, ufg, cntnr) +
-        sampDelete(endpoint, df, cntnr);
+const udMezC = (id, endptr, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
+    return sampUpdate(id, [endptr], mezok, undefined, ufk, ufg, cntnr) +
+        sampDelete([endptr, id], df, cntnr);
 }
 
-const nevUp = (args, endpoint="", megj="") => {
-    return templates.trow(args, udMezC(args[0], endpoint, mezok.nevUpd(args, megj)));
+const nevUp = (args, endptr, megj="") => {
+    return templates.trow(args, udMezC(args[0], endptr, mezok.nevUpd(args, megj)));
 };
 
-const otherUpd = (args=[], endpoint, myUpd="", egyebbf="", egyebbh="") => {
+const otherUpd = (args=[], usqF, myUpd="", idnum=0, egyebbf="", egyebbh="") => {
     return templates.trow(
         args,
         egyebbf +
-        udMezC(args[0], endpoint, mezok[myUpd](args)) +
+        udMezC(usqF?.length > 0 ? args[usqF[1]] : args[0], usqF[0], mezok[myUpd](args)) +
         egyebbh
     );
 };
@@ -163,33 +165,28 @@ export const templates = {
     optionTagozatList: (args) => templates.optionList(args, args[1]),
     optionOsztalyList: (args) => templates.optionList(args, args[1]),
     optionTeremKiosztasList: (args) => templates.optionList(args, args[1]),
-    trowEszkozList: (args) => nevUp(args, "megnevezes/eszkoz_v/"+args[0], "Eszköz neve"),
-    trowMarkaList: (args) => nevUp(args, "megnevezes/marka/"+args[0], "Márka"),
-    trowHelyisegTipusList: (args) => nevUp(args, "megnevezes/helyisegtipus/"+args[0], "Eszköz neve"),
-    trowLeltarEsemenyTipusList: (args) => nevUp(args, "megnevezes/leltaresemenytipus/"+args[0], "Eszköz neve"),
-    trowCegList: (args) => otherUpd(args, "public/ceg/"+args[0], "cegUpd"),
-    trowTermekList: (args) => otherUpd(args, "public/termek/" + args[0], "termekUpd"),
-    trowBeszerzesList: (args) => otherUpd(
-        args,
-        "public/beszerzes/"+args[0],
-        "beszerzesUpd",
-`
+    trowEszkozList: (args) => nevUp(args, [0], "Eszköz neve"),
+    trowMarkaList: (args) => nevUp(args, [1], "Márka"),
+    trowHelyisegTipusList: (args) => nevUp(args, 2, "Eszköz neve"),
+    trowLeltarEsemenyTipusList: (args) => nevUp(args, 3, "Eszköz neve"),
+    trowCegList: (args) => otherUpd(args, [4], "cegUpd"),
+    trowTermekList: (args) => otherUpd(args, [5], "termekUpd"),
+    trowBeszerzesList: (args) => otherUpd(args, [5], "beszerzesUpd", `
 <td class="film"><button>Termék hozzáadása helyiséghez</button></td>
 <td class="film"><button>Leltár esemény regisztrálása</button></td>
 `),
-    trowEmeletList: (args) => otherUpd(args, "epulet/emelet/"+args[0], "emeletUpd"),
-    trowHelyisegList: (args) => otherUpd(args, "epulet/helyiseg/"+args[0], "helyisegUpd"),
-    trowLeltarList: (args) => otherUpd(args, "public/leltar/"+args[0], "leltarUpd"),
-    trowLeltarEsemenyList: (args) => otherUpd(args, "public/leltaresemeny/"+args[0], "leltarEsemenyUpd"),
-    trowFalList: (args) => otherUpd(args, "public/fal/"+args[0], "falUpd"),
-    trowTagozatList: (args) => otherUpd(args, "public/tagozat/"+args[0], "tagozatUpd"),
-    trowOsztalyList: (args) =>otherUpd(args, "public/osztaly/"+args[0], "osztalyUpd"),
-    trowTeremKiosztasList: (args) => otherUpd(args, "public/teremkiosztas/"+args[0], "teremKiosztasUpd"),
+    trowEmeletList: (args) => otherUpd(args, [6], "emeletUpd"),
+    trowHelyisegList: (args) => otherUpd(args, [7], "helyisegUpd"),
+    trowLeltarList: (args) => otherUpd(args, [8], "leltarUpd"),
+    trowLeltarEsemenyList: (args) => otherUpd(args, [9], "leltarEsemenyUpd"),
+    trowFalList: (args) => otherUpd(args, [10], "falUpd"),
+    trowTagozatList: (args) => otherUpd(args, [11], "tagozatUpd"),
+    trowOsztalyList: (args) =>otherUpd(args, [12], "osztalyUpd"),
+    trowTeremKiosztasList: (args) => otherUpd(args, [13], "teremKiosztasUpd"),
     trowleLeltarList: (a) => templates.trow(
         a,
-        udMezC(
-            [a[0], a[1]],
-            "public/leltar",
+        udMezC(a[0],
+            8,
             mezok.leltarUpd(
                 [a[0], a[1]], 
                 true
@@ -200,7 +197,7 @@ export const templates = {
         a,
         udMezC(
             [a[0], a[1]],
-            "public/leltar",
+            8,
             mezok.leltarUpd(
                 [a[0], a[1]], 
                 true
@@ -214,7 +211,7 @@ export const templates = {
         "<td class='g1 jfgrid'>" +
         udMezC(
             [a[0], a[1]],
-            "public/leltaresemeny",
+            7,
             mezok.leltarUpd(
                 [a[0], a[1]], 
                 true
@@ -259,8 +256,7 @@ export const templates = {
     <td class="g2 jfgrid">
         ${
             sampUpdate(
-                a[0], "0",
-                "public/leltar/"+a[0],
+                a[0], [8, 0],
                 mezok.leltarUpd(a, true),
                 true, "Hozzáad",
                 "Termék hozzárendelése Helyiséghez",
@@ -269,8 +265,7 @@ export const templates = {
         }
         ${
             sampUpdate(
-                a[0], "0", 
-                "public/leltaresemeny/"+a[0],
+                a[0], [7, 0],
                 mezok.leltarEsemenyUpd(a, true),
                 true, "Hozzáad",
                 "Leltáresemény hozzáadása",
@@ -279,9 +274,7 @@ export const templates = {
         }
         ${
             udMezC(
-                a[0],
-                "public/beszerzes/" + a[0],
-                mezok.beszerzesUpd(a),
+                a[0], 3, mezok.beszerzesUpd(a),
                 "Beszerzés Módosítása",
                 "Beszerzés Törlése",
                 undefined, "div"
@@ -318,7 +311,7 @@ export const templates = {
     //
     // 2. customLeltarList
     //
-    customLeltarList: (a, beszerzes, bhead, tend, ...befilts) => {
+    customLeltarList: (a, beszerzes,/* eszkozszukseglet, termekszukseglet, */ bhead, tend, ...befilts) => {
         console.log("Befilts:");
         console.log(befilts)
         let text = "<tr class='retnrow'>";
@@ -339,9 +332,7 @@ export const templates = {
         text += `
     <td class="g2 jfgrid">
         ${
-            sampUpdate(
-                a[0], "0", 
-                "public/leltaresemeny/"+a[0],
+            sampUpdate(a[0], [7, 0],
                 mezok.leltarEsemenyUpd(a, true),
                 true, "Hozzáad",
                 "Leltárbejegyzés Hozzáadása",
@@ -350,8 +341,7 @@ export const templates = {
         }
         ${
             udMezC(
-                a[0], 
-                "public/beszerzes/" + a[0],
+                a[0], 3,
                 mezok.beszerzesUpd(a),
                 "Helyiség adatainak frissítése",
                 "Helyiség Törlése",
@@ -365,7 +355,7 @@ export const templates = {
             kieg+= 
                 '<tr><td colspan="'+ a.length +'">' +
                 '<h4>Hozzárendelt tárgyak</h4><hr>' + 
-                bhead + beszerzes + tend + 
+                    bhead + beszerzes + tend + 
                 '</td></tr>';
         }
         return text + kieg;

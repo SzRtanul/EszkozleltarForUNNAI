@@ -4,23 +4,16 @@ import { exportedRetnMethods } from "./global/events.js"
 import { exportedMethods } from "./global/globaldata.js";
 import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
-import { formDRef } from "./global/retntemplates.js";
+import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
+import { use } from "react";
 
+const retns = {};
+const retnsInner = {};
 const subsite = {};
-console.log(szt.split("\x00"));
-
-const retns = {
-    
-};
-
-const retnsInner = {
-
-};
-
-const urlapInner = {
-
-};
+const chdiv = {};
+const currentRequest = {};
+const urlapInner = {};
 
 await exportedQMethods.doQueryUpdates();
 
@@ -98,50 +91,58 @@ class MezP extends HTMLElement{
     }
 }
 
+class CHDiv{
+    connectedCallback() {
+        const name = this.getAttribute("fname");
+        if(name) chdiv[name] = this;        
+    }
+}
+
 class SubSite extends HTMLElement{
     connectedCallback() {
+        const name = this.getAttribute("fname");
+        if (currentRequest[name]) {
+            currentRequest.abort();
+        }
+        else{
+            currentRequest[name] = new XMLHttpRequest();
+        }
         const shadow = this.attachShadow({mode: 'open'});
         shadow.innerHTML = "";
-        subsite[""] = shadow;
-        const retn = retns[cjust];
+        subsite[name] = shadow;
         eventSample("click", shadow);
         //eventSample("Enter", shadow);
         eventSample("submit", shadow);
         eventSample("change", shadow);
 
-        if (currentRequest) {
-        currentRequest.abort();
-    }
-    
-    currentRequest = new XMLHttpRequest();
-    
-    currentRequest.open("GET", "content/" + melyik + "?nocache=" + new Date().getTime(), true);
-    //currentRequest.withCredentials = true;
-    currentRequest.setRequestHeader("Cache-Control", "no-store");
-    currentRequest.setRequestHeader("Pragma", "no-cache");
+        currentRequest.open("GET", "content/" + melyik + "?nocache=" + new Date().getTime(), true);
+        //currentRequest.withCredentials = true;
+        currentRequest.setRequestHeader("Cache-Control", "no-store");
+        currentRequest.setRequestHeader("Pragma", "no-cache");
 
-    currentRequest.onload = async function () {
-        console.log("EN")
-        if (currentRequest.status >= 200 && currentRequest.status < 300) {   
-            let iHTML = currentRequest.responseText;
-            shadow.innerHTML = iHTML;
-        //    sessionStorage.setItem("oldal", melyik);
-        } else {
-            console.error("Request failed with status:", currentRequest.status);
-        }
-        console.log("ENNAE")
-    };
-    currentRequest.onerror = function () {
-        console.error("Request failed due to network error");
-    };
-    currentRequest.send();
-    console.log("ONPREM")
+        currentRequest.onload = async function () {
+            console.log("EN")
+            if (currentRequest.status >= 200 && currentRequest.status < 300) {   
+                let iHTML = currentRequest.responseText;
+                shadow.innerHTML = iHTML;
+            //    sessionStorage.setItem("oldal", melyik);
+            } else {
+                console.error("Request failed with status:", currentRequest.status);
+            }
+            console.log("ENNAE")
+        };
+        currentRequest.onerror = function () {
+            console.error("Request failed due to network error");
+        };
+        currentRequest.send();
+        console.log("ONPREM")
     } 
 }
 
 customElements.define('retn-sh', Retn);
 customElements.define('retn-p', RetnP);
 customElements.define('mez-p', MezP);
+customElements.define('ch-d', CHDiv);
 customElements.define('sub-s', SubSite);
 
 
@@ -161,9 +162,10 @@ const test = document.querySelector("form");
 console.log("Itt:")
 console.log(test.attributes);
 
-logout.addEventListener("click", ()=>{
+logout.addEventListener("click", () => {
     window.location.pathname = "";
 });
+
 /*
 export async function UIUpdate(){
     console.log("UPDATING UI1")
@@ -209,22 +211,27 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     const fvalue = attrs["value"];
     let sikeresKeres = false;
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés folyamatban...");
-    const usqF = Number(attrs["usqf"]);
+//    const mod = Number(attrs["mod"]);
+    const usqF = attrs["usqf"]?.split(/[^0-9]/).map(Number);
     const ut = urlap.getAttribute("utjson") || "na";
     let ddtxt = "";
     let tr = "";
     if(fvalue){
         const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
-        ddtxt = exportedMethods.getDBThings(urlap, usqF, JSONValue);
+        ddtxt = exportedMethods.getDBThings(urlap, usqF[0], JSONValue);
         tr =  exportedMethods.qTextReform(fvalue, JSONValue);
     }
-    else{
-        const usesDB = !isNaN(usqF) ? formDRef[usqF]?.split(/[^0-9]/) : [];
+    else if(usqF.length > 1){
+        const usesMOD = !isNaN(usqF[0]) ? modDRef[usqF[0]]?.split(/[^0-9]/) : [];
+        const usesDB = !isNaN(usqF[1]) ? exportedMethods.getSchemTab(...formDRef[usqF[1]]?.split(/[^0-9]/).map(Number)) : [];
+        const row = Number(usqF[2]);
+        
         const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
-        if(usesDB[2]) JSONValue["schema"] = utschema[Number(usesDB[2])];
-        if(usesDB[3]) JSONValue["table"] = uttable[Number(usesDB[3])];
-        ddtxt = exportedMethods.getDBThings(urlap, usesDB[0], JSONValue);
-        tr =  exportedMethods.qTextReform(qInserts[usesDB[1]], JSONValue);
+        if(usesDB[0]) JSONValue["schema"] = usesDB[0];
+        if(usesDB[1]) JSONValue["table"] = usesDB[1];
+        if(!isNaN(row)) JSONValue["row"] = row;
+        tr =  exportedMethods.qTextReform(qInserts[usesMOD[0]], JSONValue);
+        if(usesMOD.length > 1) ddtxt = exportedMethods.getDBThings(urlap, usesMOD[1], JSONValue);
     }
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
@@ -232,8 +239,8 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 }
 
 function doDelete(e){
-    console.log("Flááke")
-    exportedMethods.exampleREST("delete/"+e.target.value, "POST", "");
+    console.log("Flááke");
+    exportedMethods.exampleREST("delete/" + e.target.value, "POST", "");
     const del = e.target.closest(".retnrow");
     if(del) del.remove();
     else console.log("A törlés nem sikeres.")
@@ -250,8 +257,8 @@ function kiscica(e){
 }
 
 function changeview(e){
-    // e.value
-    // .querySelector(".naga");
+    // const name = e.target.getAttribute("fname");
+    // if(chdiv[name]) chdiv[name].classList.add();
 }
 
 function doFilm(e){
@@ -280,7 +287,10 @@ const runnable = [
     changeview,
     doDelete,
     doUpdate,
-    doFilm
+    // 6.
+    doFilm,
+
+
 ];
 
 function doRun(e, eType = ""){

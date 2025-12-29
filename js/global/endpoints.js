@@ -24,6 +24,11 @@ export const endpoints = [
     "gettable/epulet/helyisegc_v",
     // 20.
     "gettable/public/beszerzesc_elh_v",
+    "gettable/public/eszkozszukseglet",
+    "gettable/public/termekszukseglet",
+    "gettable/public/eszkozszuksegletossz_v",
+    "gettable/public/termekszuksegletossz_v",
+    // 25.
 ];
 
 export const qInserts = [
