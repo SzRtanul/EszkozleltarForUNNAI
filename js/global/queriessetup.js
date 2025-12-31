@@ -55,7 +55,8 @@ async function doQueryUpdates(){
         console.log(endpointsResults)
     }
     catch(e){
-        console.log("Hiba történt az adatok lekérése során.")
+        console.log("Hiba történt az adatok lekérése során:v")
+        console.log(e)
         
     }
     console.log("Nem.");

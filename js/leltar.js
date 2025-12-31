@@ -6,7 +6,6 @@ import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
-import { use } from "react";
 
 const retns = {};
 const retnsInner = {};
@@ -196,6 +195,8 @@ export async function UIUpdate(){
     }
 }
 
+
+
 //Kuld
 async function doKuld(e){
     e.preventDefault();
@@ -230,20 +231,25 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
         if(usesDB[0]) JSONValue["schema"] = usesDB[0];
         if(usesDB[1]) JSONValue["table"] = usesDB[1];
         if(!isNaN(row)) JSONValue["row"] = row;
-        tr =  exportedMethods.qTextReform(qInserts[usesMOD[0]], JSONValue);
         if(usesMOD.length > 1) ddtxt = exportedMethods.getDBThings(urlap, usesMOD[1], JSONValue);
+        tr =  exportedMethods.qTextReform(qInserts[usesMOD[0]], JSONValue);
     }
-    const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt);
-    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, "Küldés sikeres!");
+    let stat = {
+        st: 0
+    };
+    const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
+    console.log("Stat: " + stat.st);
+    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, stat.st < 300 ? "Küldés sikeres!" : "Küldés sikertelen!");
 //    doAfter(e, sikeresKeres, response);
 }
 
 function doDelete(e){
     console.log("Flááke");
-    exportedMethods.exampleREST("delete/" + e.target.value, "POST", "");
+    let stat = 0;
+    exportedMethods.exampleREST("delete/" + e.target.value, "POST", "", stat);
     const del = e.target.closest(".retnrow");
-    if(del) del.remove();
-    else console.log("A törlés nem sikeres.")
+    if(stat < 300 && del) del.remove();
+    else e.target.classList.add("redborder");
 }
 
 function doUpdate(e){

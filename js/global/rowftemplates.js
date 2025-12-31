@@ -1,5 +1,5 @@
 export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít", inS=false) => 
-`<form runssubmit="\x01" usqf="${usqf}" value='${(ins ? "insert" : "update") + "/" +value}' nextTo="" class="scene scen scen1">
+`<form runssubmit="\x01" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" +value}' nextTo="" class="scene scen scen1">
     <div>
         ${!inS ? '<label>Id</label><input type="number" value="' + id + '" disabled class="">' : ''}
         ${fields}
@@ -78,8 +78,7 @@ export const mezok = {
         return mez.label("Beszerzés") + 
             (isD ? mez.dinput(args[0], "beszerzesID", true) : mez.select(args[2], "beszerzesID", "optionBeszerzesList", true)) /* Kompatibilitás */ +
             mez.label("Helyiség") + mez.select(args[1], "helyisegID", "optionHelyisegTipusList", true) +
-            mez.label("Darabszám") + mez.input(args[3], "mennyiseg", true) +
-            mez.label("Hozzáadás dátuma") + mez.input(args[4], "hozzaadva", false, "datetime-local");
+            mez.label("Darabszám") + mez.input(args[3], "mennyiseg", true)
     },
     leltarEsemenyUpd: (args=[], isD=false) => {
         return mez.label("Beszerzés") +

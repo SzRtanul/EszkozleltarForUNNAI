@@ -84,7 +84,7 @@ function doJelenetValtas(urlap, hova, tipus="scen"){
 // Film vége -------------
 //
 
-function doUrlapAllapotFrissites(mezok, szoveg){
+function doUrlapAllapotFrissites(mezok, szoveg, isSiker){
     for(const mezo of mezok){
         mezo.innerHTML = szoveg;
     }
@@ -256,8 +256,9 @@ async function getRest(honnan="", method="POST", dbthings = ""){
     return await fetch(serverhost + honnan, fetchJSON).catch(error => { return null; });
 }
 
-async function exampleREST(honnan="", method="POST", dbthings=""){
+async function exampleREST(honnan="", method="POST", dbthings="", refstatus={}){
     const response = await getRest(honnan, method, dbthings);
+    refstatus["st"] = response.status;
     return await response ? await response.text() : "err:HIBA: A szerver elérhetetlen.";
 }
 

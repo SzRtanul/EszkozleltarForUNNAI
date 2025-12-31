@@ -29,7 +29,14 @@ export const uttable = [
     // 10.
     //
     "teremkiosztas",
-    "eszkoz_v"
+    "eszkoz_v",
+    "eszkoz",
+    "marka",
+    "helyisegtipus",
+    //
+    // 15.
+    //
+    "leltaresemenytipus",
 ];
 
 export const ActuelThings = [

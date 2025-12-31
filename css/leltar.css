@@ -46,7 +46,9 @@ background-color: #1c388c7f;
     padding-bottom: 120px;
 }
 
-
+.redborder{
+    border-color: #ff1b1b;
+}
 
 .content2>*{
     margin: 30px;
