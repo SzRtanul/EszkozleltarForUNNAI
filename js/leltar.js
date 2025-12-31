@@ -179,20 +179,18 @@ export async function UIUpdate(){
 */
 
  async function doAfter(e, sikeresKeres){
-    if(!sikeresKeres){
-        await exportedQMethods.doQueryUpdates();
-        for(const cjust in retns){
-            retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
-            for(const inner of retnsInner[cjust]){
-                inner.innerHTML = retns[cjust];
-            }
+    await exportedQMethods.doQueryUpdates();
+    for(const cjust in retns){
+        retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+        for(const inner of retnsInner[cjust]){
+            inner.innerHTML = retns[cjust];
         }
-
-        eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
-            new CustomEvent("urlapS" + urlap.getAttribute("action"), {detail: { response: response }}) : MyEvent
-        );
-        exportedMethods.doEnvAutoJumpJelenet(urlap, "NextToIfSuccess");
     }
+
+  /*  eventTarget.dispatchEvent(true || urlap.hasAttribute("useRespInEvent") ? 
+        new CustomEvent("urlapS" + urlap.getAttribute("action"), {detail: { response: response }}) : MyEvent
+    );*/
+    //exportedMethods.doEnvAutoJumpJelenet(urlap, "NextTo");
 }
 
 
@@ -240,7 +238,9 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
     console.log("Stat: " + stat.st);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, stat.st < 300 ? "Küldés sikeres!" : "Küldés sikertelen!");
-//    doAfter(e, sikeresKeres, response);
+    if(stat.st < 300){
+       // doAfter(e, sikeresKeres, response);
+    }
 }
 
 function doDelete(e){
@@ -249,7 +249,7 @@ function doDelete(e){
     exportedMethods.exampleREST("delete/" + e.target.value, "POST", "", stat);
     const del = e.target.closest(".retnrow");
     if(stat < 300 && del) del.remove();
-    else e.target.classList.add("redborder");
+   // else e.target.classList.add("redborder");
 }
 
 function doUpdate(e){

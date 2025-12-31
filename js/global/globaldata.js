@@ -189,9 +189,9 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     }
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
     
-    num = txtenc.encode(values).length-1;
+    /*num = txtenc.encode(values).length-1;
     console.log("Text hossz: " + num);
-    view.setUint32(0, num);
+    view.setUint32(0, num>>>0);
     const num32ui = new Uint8Array(buffer);
     console.log("Num32UI: " + num32ui)
     num32ui.reverse();
@@ -202,10 +202,42 @@ function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
     const decodedBytes = Uint8Array.from(str, c => c.charCodeAt(0));
     
     const bitstream = [...decodedBytes].map(b => b.toString(2).padStart(8, "0")).join("");
-    console.log(bitstream);
-    fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
-    console.log("Full: " + fullText);
-    return fullText;
+    console.log(bitstream);*/
+    
+    const encodedValues = txtenc.encode(values.slice(0, -1)); // values.length-1 helyett a végét vágjuk le
+    num = encodedValues.length;
+    // 1. Kiszámoljuk a méreteket
+    const colData = (mode == 0) ? txtenc.encode(columns + "\x00") : new Uint8Array(0);
+    const totalSize = colData.length + 4 + encodedValues.length;
+
+    // 2. Létrehozunk egy akkora puffert, amibe minden belefér
+    const finalBuffer = new Uint8Array(totalSize);
+    const view = new DataView(finalBuffer.buffer);
+
+    // 3. Másolás
+    let offset = 0;
+
+    // Ha mode == 0, beírjuk a columns-t
+    if (mode == 0) {
+        finalBuffer.set(colData, 0);
+        offset += colData.length;
+    }
+
+    // Beírjuk a hosszt 4 bájton (Little-Endian, mert a kódodban reverse-öltél)
+    view.setUint32(offset, num, true); 
+    offset += 4;
+
+    // Beírjuk a szöveg bájtokat
+    finalBuffer.set(encodedValues, offset);
+    
+    const decoder = new TextDecoder('latin1');
+    console.log("Nyers szöveges nézet: " + decoder.decode(finalBuffer));
+
+    //fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
+    //console.log("Full: " + fullText);
+    return finalBuffer.buffer;
+
+
 }
 
 
