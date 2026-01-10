@@ -30,30 +30,50 @@ const mez = {
         "<input type='"+type+"' name='" + name + "' value='" + def + "' placeholder='"+ placeholder +"' class='mez"+(isWoap ? " woap" : "")+"'>",
     select: (def="", name="", cjust="", isWoap=true) => {
         return `
-<select name="${name}" value="${def}" class="mez ${isWoap ? " woap" : ""}">
+<select name="${name}" runschange="\x07" value="${def}" class="mez ${isWoap ? " woap" : ""}">
     <retn-p no cjust="${cjust}"></retn-p>
 </select>`
     },
-    label: (felirat="") => "<label for=''>" + felirat + "</label>"
+    label: (felirat="") => "<label for=''>" + felirat + "</label>",
+    div: (content, akarmi="") => "<div " + akarmi + ">" + content + "</div>",
+}
+
+const mT = {
+    nev: (arg, dname="nev") => mez.input(arg, dname),
+    eszkozID: (arg, dname="eszkozID") => mez.select(arg, dname, "optionEszkozList"),
+    markaID: (arg, dname="markaID") => mez.select(arg, dname, "optionMarkaList"),
+    termekID: (arg, dname="termekID") => mez.select(arg, dname, "optionTermekList"),
+    cegID: (arg, dname="cegID") => mez.select(arg, dname, "optionCegList"),
+    helyisegTipusID: (arg, dname="helyisegTipusID") => mez.select(arg, dname, "optionHelyisegTipusList"),
+    emeletID: (arg, dname="emeletID") => mez.select(arg, dname, "optionEmeletList"),
+    helyisegID: (arg, dname="helyisegID") => mez.select(arg, dname, "optionHelyisegList"),
+    beszerzesID: (arg, dname="beszerzesID") => mez.select(arg, dname, "optionBeszerzesList"),
+    leltarEsemenyTipusID: (arg, dname="leltarEsemenyTipusID") => mez.select(arg, dname, "optionLeltarEsemenyTipusList"),
+    osztalyID: (arg, dname="osztalyID") => mez.select(arg, dname, "optionOsztalyList"),
+    tagozatID: (arg, dname="tagozatID") => mez.select(arg, dname, "optionTagozatList"),
+    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
+    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
+    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
+    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList")
 }
 
 export const mezok = {
     nevUpd: (args=[], megjelen="")=>{
-        return mez.label(megjelen) + mez.input(args[1], "nev");
+        return mez.label(megjelen) + mT.nev(args[1]);
     },
     cegUpd: (args=[]) => {
-        return mez.label("Cég neve") + mez.input(args[1], "nev");
+        return mez.label("Cég neve") + mT.nev(args[1]);
     },
     termekUpd: (args=[])=>{
-        return mez.label("Eszköznév") + mez.select(args[1], "eszkozID", "optionEszkozList") +
-            mez.label("Márka") + mez.select(args[2], "markaID", "optionMarkaList") +
-            mez.label("Tipus") + mez.input(args[3], "tipus");
+        return mez.label("Eszköznév") + mT.eszkozID(args[1]) +
+            mez.label("Márka") + mT.markaID(args[2]) +
+            mez.label("Tipus") + mT.nev(args[3], "tipus");
     },
     beszerzesUpd: (args=[]) => {
-        return mez.label("Termék") + mez.select(args[1], "termekID", "optionTermekList") +
+        return mez.label("Termék") + mT.termekID(args[1]) +
             mez.label("Gyártás éve") + mez.input(args[2], "gyartaseve", true) +
             mez.label("Használt cikk") + mez.input(args[5], "hasznalt", false, "checkbox") +
-            mez.label("Cég") + mez.select(args[3], "cegID", "optionCegList") +
+            mez.label("Cég") + mT.cegID(args[3]) +
             mez.label("Darabszám") + mez.input(args[4], "mennyiseg", true) +
             mez.label("Darabár") + mez.input(args[6], "darabar", true) +
             mez.label("Bérelt (Havi lebontás)") + mez.input(args[7], "haviberlet", false, "checkbox") +
@@ -66,8 +86,8 @@ export const mezok = {
     },
     helyisegUpd: (args=[]) => {
         return mez.label("Helyiség azonosító") + mez.input(args[1], "chid") +
-            mez.label("Helyiség típusa") + mez.select(args[6], "helyisegtipusID", "optionHelyisegTipusList") +
-            mez.label("Emelet") + mez.select(args[8], "emeletID", "optionEmeletList") +
+            mez.label("Helyiség típusa") + mT.helyisegTipusID(args[6]) +
+            mez.label("Emelet") + mT.emeletID(args[8]) +
             mez.label("X kordináta(px)") + mez.input(args[2], "x", true) +
             mez.label("Y kordináta(px)") + mez.input(args[3], "y", true) +
             mez.label("Szélesség(px)") + mez.input(args[4], "width", true) +
@@ -76,19 +96,19 @@ export const mezok = {
     },
     leltarUpd: (args=[], isD=false) => {
         return mez.label("Beszerzés") + 
-            (isD ? mez.dinput(args[0], "beszerzesID", true) : mez.select(args[2], "beszerzesID", "optionBeszerzesList", true)) /* Kompatibilitás */ +
-            mez.label("Helyiség") + mez.select(args[1], "helyisegID", "optionHelyisegTipusList", true) +
+                (isD ? mez.dinput(args[0], "beszerzesID", true) : mT.beszerzesID(args[1])) /* Kompatibilitás */ +
+            mez.label("Helyiség") + mT.helyisegID(args[1]) +
             mez.label("Darabszám") + mez.input(args[3], "mennyiseg", true)
     },
     leltarEsemenyUpd: (args=[], isD=false) => {
         return mez.label("Beszerzés") +
-        (isD ? mez.dinput(args[0], "beszerzesID", true) : mez.select(args[1], "beszerzesID", "optionBeszerzesList")) +
-            mez.label("Leltáresemény típus") + mez.select(args[3], "leltaresemenytipusID", "optionLeltarEsemenyTipusList") +
+                (isD ? mez.dinput(args[0], "beszerzesID", true) : mT.beszerzesID(args[1])) +
+            mez.label("Leltáresemény típus") + mT.leltarEsemenyTipusID(args[3]) +
             mez.label("Darabszám") + mez.input(args[2], "mennyiseg", true) +
-            mez.label("Dátum") + mez.input(args[4], "mikor", true);
+            mez.label("Dátum") + mez.input(args[4], "mikor", true, "datetime-local");
     },
     falUpd: (args=[]) => {
-        return mez.label("Helyiség") + mez.select(args[3], "helyisegID", "optionHelyisegList", true) +
+        return mez.label("Helyiség") + mT.helyisegID(args[3]) +
             mez.label("X kordináta(px)") + mez.input(args[1], "x", true) +
             mez.label("Y kordináta(px)") + mez.input(args[2], "y", true) +
             mez.label("Sorrend pontszám") + mez.input(args[4], "sorrend", true);
@@ -99,11 +119,11 @@ export const mezok = {
             mez.label("Tagozat neve") + mez.input(args[3], "tagozatmegnevezes");
     },
     osztalyUpd: (args=[]) => {
-        return mez.label("Tagozat") + mez.select(args[2], "tagozatID", "optionTagozatList") +
+        return mez.label("Tagozat") + mT.tagozatID(args[2]) +
             mez.label("Kezdés éve") + mez.input(args[1], "kezdev", true);
     },
     teremKiosztasUpd: (args=[]) => {
-        return mez.label("Osztály") + mez.select(args[1], "osztalyID", "optionOsztalyList") +
-            mez.label("Helyiség") + mez.select(args[2], "helyisegID", "optionHelyisegList");
+        return mez.label("Osztály") + mT.osztalyID(args[1]) +
+            mez.label("Helyiség") + mT.helyisegID(args[2]);
     },
 }

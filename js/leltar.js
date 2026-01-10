@@ -54,33 +54,45 @@ class Retn extends HTMLElement {
 }
 
 class RetnP extends HTMLElement {
-  connectedCallback() {
-    const cjust = this.getAttribute("cjust");
-    const name = this.getAttribute("fref");
-    const div = this.parentElement;
-    if(name) {
-        if(urlapInner[name])urlapInner[name].push(div);
+    
+    connectedCallback() {
+        const cjust = this.getAttribute("cjust");
+        const name = this.getAttribute("fref");
+        const div = this.parentElement;
+
+        if(name) {
+            if(urlapInner[name])urlapInner[name].push(div);
+            else{
+                urlapInner[name] = [div];
+            } 
+        }
+        if(!cjust) return;
+        const value = div.value || div.getAttribute("value");
+        console.log("VellYou!!!: " + value);
+        console.log(div)
+        const retn = retns[cjust];
+        if(retn){
+    //        console.log("Fa")
+            div.innerHTML = retn;
+            retnsInner[cjust].push(div);
+        }
         else{
-            urlapInner[name] = [div];
-        } 
+    //        console.log("Nem fa");
+            retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+            div.innerHTML = retns[cjust];
+            retnsInner[cjust] = [div];
+        }
+        //    console.log(retnsInner);
+        if(div.tagName == 'SELECT') div.querySelector("* [value='"+ value +"']")?.setAttribute("selected", "");
+        this.remove();
+       // console.log("YellYe");
+       // console.log(div)
+
+        /*queueMicrotask(() => {
+            //div.value=div.getAttribute("value");
+            div.value = value;
+        });*/
     }
-    if(!cjust) return;
-    const retn = retns[cjust];
-    if(retn){
-//        console.log("Fa")
-        div.innerHTML = retn;
-        retnsInner[cjust].push(div);
-    }
-    else{
-//        console.log("Nem fa");
-        retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
-        div.innerHTML = retns[cjust];
-        retnsInner[cjust] = [div];
-    }
-//    console.log(retnsInner)
-    div.value=div.getAttribute("value");
-    this.remove();
-  }
 }
 
 class MezP extends HTMLElement{
@@ -239,16 +251,21 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     console.log("Stat: " + stat.st);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, stat.st < 300 ? "Küldés sikeres!" : "Küldés sikertelen!");
     if(stat.st < 300){
-       // doAfter(e, sikeresKeres, response);
+        doAfter(e, sikeresKeres, response);
     }
 }
 
-function doDelete(e){
+async function doDelete(e){
     console.log("Flááke");
-    let stat = 0;
-    exportedMethods.exampleREST("delete/" + e.target.value, "POST", "", stat);
+    let stat = {
+        st: 0,
+    };
+    console.log(e);
     const del = e.target.closest(".retnrow");
-    if(stat < 300 && del) del.remove();
+    await exportedMethods.exampleREST("delete/" + e.target.value, "POST", "", stat);
+    console.log("Stat: " + stat.st);
+    console.log(del);
+    if(stat.st < 300 && del) del.remove();
    // else e.target.classList.add("redborder");
 }
 
@@ -287,6 +304,11 @@ function doFilm(e){
     }
 }
 
+function doSelVal(e){
+    console.log(e.target);
+    e.target.setAttribute("value", e.target.value);
+}
+
 const runnable = [
     doKuld,
     kiscica,
@@ -295,17 +317,16 @@ const runnable = [
     doUpdate,
     // 6.
     doFilm,
-
-
+    doSelVal
 ];
 
-function doRun(e, eType = ""){
+async function doRun(e, eType = ""){
 //    console.log("runs"+eType)
     const runs = e.target.getAttribute("runs"+eType) || "";
 //    console.log(runs);
     for(let i = 0; i < runs.length; i++){
        console.log("Ruin: " + runs.charCodeAt(i));
-        runnable[runs.charCodeAt(i)-1](e);
+        await runnable[runs.charCodeAt(i)-1](e);
     }
 }
 

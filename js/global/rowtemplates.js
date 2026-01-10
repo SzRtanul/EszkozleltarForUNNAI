@@ -9,7 +9,7 @@ const sampUpdate = (id=-1, usqF=[], mezok="", insD, kuldFelirat, gombfelirat="M�
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + id;
     return `
 <${ctn} class="film">` + 
-    defUrlap(id, (usqF?.length > 0 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) + 
+    defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) + 
     `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">
         ${gombfelirat}
     </button>
@@ -17,7 +17,7 @@ const sampUpdate = (id=-1, usqF=[], mezok="", insD, kuldFelirat, gombfelirat="M�
 };
 
 const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
-    return '<'+ctn+'><button runsclick="\x04" value="delete/' + exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1] + '">'+ gombfelirat +'</button></' + ctn + '>';
+    return '<'+ctn+'><button runsclick="\x04" value="' + exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1] + '">'+ gombfelirat +'</button></' + ctn + '>';
 };
 
 const udMezC = (id, endptr, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
@@ -33,7 +33,7 @@ const otherUpd = (args=[], usqF, myUpd="", idnum=0, egyebbf="", egyebbh="") => {
     return templates.trow(
         args,
         egyebbf +
-        udMezC(usqF?.length > 0 ? args[usqF[1]] : args[0], usqF[0], mezok[myUpd](args)) +
+        udMezC(usqF?.length > 1 ? args[usqF[1]] : args[0], usqF[0], mezok[myUpd](args)) +
         egyebbh
     );
 };
@@ -165,10 +165,10 @@ export const templates = {
     optionTagozatList: (args) => templates.optionList(args, args[1]),
     optionOsztalyList: (args) => templates.optionList(args, args[1]),
     optionTeremKiosztasList: (args) => templates.optionList(args, args[1]),
-    trowEszkozList: (args) => nevUp(args, 13, "Eszköz neve"),
-    trowMarkaList: (args) => nevUp(args, 14, "Márka"),
-    trowHelyisegTipusList: (args) => nevUp(args, 15, "Helyiség neve"),
-    trowLeltarEsemenyTipusList: (args) => nevUp(args, 16, "Leltáresemény típus neve"),
+    trowEszkozList: (args) => nevUp(args, 12, "Eszköz neve"),
+    trowMarkaList: (args) => nevUp(args, 13, "Márka"),
+    trowHelyisegTipusList: (args) => nevUp(args, 14, "Helyiség neve"),
+    trowLeltarEsemenyTipusList: (args) => nevUp(args, 15, "Leltáresemény típus neve"),
     trowCegList: (args) => otherUpd(args, [1], "cegUpd"),
     trowTermekList: (args) => otherUpd(args, [2], "termekUpd"),
     trowBeszerzesList: (args) => otherUpd(args, [3], "beszerzesUpd", `
