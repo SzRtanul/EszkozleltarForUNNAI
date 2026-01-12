@@ -149,18 +149,18 @@ function whataf(
         outResBefNums.push(fullText.length); // ALAMÉAEA
     }
     if(error == 0 && retnrows[0] != 0){
-        console.log("Befilter:")
-        console.log(befFilters);
+    //    console.log("Befilter:")
+    //    console.log(befFilters);
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i+=leptek){
             const resultsBef = [];
             let qruak=1;
             for(let usqT = 0; usqT < eleje; usqT++){ // befs
                 const memqruak = qruak;
                 const qruakLiminal = befFilters[qruak-1];  // FONTOS!
-                console.log(befretns[usqT])
-                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
+//                console.log(befretns[usqT])
+//                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
                 if(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1)){
-                    console.log("BLEEEEH;")
+//                    console.log("BLEEEEH;")
                     resultsBef.push(befretns[usqT]);
                     qruak++;
                 }
@@ -189,8 +189,8 @@ function whataf(
 
                     let checkResplit = "";
                     const honnmedd = Math.floor(qruakLiminal / 2);
-                    console.log(qruakLiminal)
-                    console.log("CRA: " + qruak)
+//                    console.log(qruakLiminal)
+//                    console.log("CRA: " + qruak)
                     for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
                         const conc = resPlit[i + befFilters[qruak]];
                         notHasNull = conc.length > 0;
@@ -215,8 +215,8 @@ function whataf(
                             }
                             const checkFra = checkFraParts.join("");
                             ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
-                            console.log("TRAAAAAA: " + checkFra + ":" + checkResplit);
-                            console.log(ortami)
+//                            console.log("TRAAAAAA: " + checkFra + ":" + checkResplit);
+//                            console.log(ortami)
                             if(ortami != memoryRef){
                                 qruakArray.push(usqTrow);
                                 //Szétválasztás, csoportosítás
@@ -227,21 +227,21 @@ function whataf(
  //                       console.log("CRA: " + qruak)
                     }
                     else{
-                        console.log("ELLEN;");
+//                        console.log("ELLEN;");
                         qruak += qruakLiminal;
                     }
                     if(usqTrow > 0 && qruakArray.length & 1 == 1){
-                        console.log("KRU")
+//                        console.log("KRU")
                         qruakArray.push(actualRowNums.length - 1);
                     }
                     else if (usqTrow < actualRowNums.length - 1){
                         /*+ (actualRowNums[0] ? 0 : 1) */
-                        console.log("KRUe")
+//                        console.log("KRUe")
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
                     let szen = "";
                     for(let qere = 0; qere<qruakArray.length; qere+=2){
-                        console.log("Krak: " + qruakArray[qere] +":"+ qruakArray[qere+1]);
+//                        console.log("Krak: " + qruakArray[qere] +":"+ qruakArray[qere+1]);
                         szen += /*"\n"+qere+". "+ */actualBef.substring(
                             actualRowNums[qruakArray[qere]], 
                             actualRowNums[qruakArray[qere+1]]
@@ -249,10 +249,10 @@ function whataf(
                     }
                     //                    console.log("Szen: " + szen);
                     resultsBef[resLast] += szen;
-                    console.log(szen);
+/*                    console.log(szen);
                     console.log(usqTrow)
                     console.log(actualRowNums)
-                    console.log("Vége");
+                    console.log("Vége");*/
                 }
             }
             fullText += retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef);

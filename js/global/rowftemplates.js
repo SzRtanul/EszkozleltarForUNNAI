@@ -1,5 +1,5 @@
 export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít", inS=false) => 
-`<form runssubmit="\x01" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" +value}' nextTo="" class="scene scen scen1">
+`<form runssubmit="\x01" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" + value  + (!inS ? "/" + id : "")}' nextTo="" class="scene scen scen1">
     <div>
         ${!inS ? '<label>Id</label><input type="number" value="' + id + '" disabled class="">' : ''}
         ${fields}
@@ -51,10 +51,10 @@ const mT = {
     leltarEsemenyTipusID: (arg, dname="leltarEsemenyTipusID") => mez.select(arg, dname, "optionLeltarEsemenyTipusList"),
     osztalyID: (arg, dname="osztalyID") => mez.select(arg, dname, "optionOsztalyList"),
     tagozatID: (arg, dname="tagozatID") => mez.select(arg, dname, "optionTagozatList"),
+  /*  ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
     ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
     ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
-    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList"),
-    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList")
+    ID: (arg, dname="ID") => mez.select(arg, dname, "optionList")*/
 }
 
 export const mezok = {

@@ -5,8 +5,9 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
 
-const sampUpdate = (id=-1, usqF=[], mezok="", insD, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
-    const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + id;
+const sampUpdate = (id=-1, usqF=[], mezok="", insD=false, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
+    const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
+//    console.log("Con: " + value);
     return `
 <${ctn} class="film">` + 
     defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) + 
@@ -29,7 +30,7 @@ const nevUp = (args, endptr, megj="") => {
     return templates.trow(args, udMezC(args[0], endptr, mezok.nevUpd(args, megj)));
 };
 
-const otherUpd = (args=[], usqF, myUpd="", idnum=0, egyebbf="", egyebbh="") => {
+const otherUpd = (args=[], usqF, myUpd="", egyebbf="", egyebbh="") => {
     return templates.trow(
         args,
         egyebbf +
@@ -179,14 +180,14 @@ export const templates = {
     trowHelyisegList: (args) => otherUpd(args, [5], "helyisegUpd"),
     trowLeltarList: (args) => otherUpd(args, [6], "leltarUpd"),
     trowLeltarEsemenyList: (args) => otherUpd(args, [8], "leltarEsemenyUpd"),
-    trowFalList: (args) => otherUpd(args, [7], "falUpd"),
+    trowFalList: (args) => otherUpd(args, [7, 4], "falUpd"),
     trowTagozatList: (args) => otherUpd(args, [9], "tagozatUpd"),
     trowOsztalyList: (args) =>otherUpd(args, [10], "osztalyUpd"),
     trowTeremKiosztasList: (args) => otherUpd(args, [11], "teremKiosztasUpd"),
     trowleLeltarList: (a) => templates.trow(
         a,
-        udMezC(a[0],
-            8,
+        udMezC(a[6],
+            6,
             mezok.leltarUpd(
                 [a[0], a[1]], 
                 true
@@ -256,7 +257,7 @@ export const templates = {
     <td class="g2 jfgrid">
         ${
             sampUpdate(
-                a[0], [8, 0],
+                a[0], [6, 0],
                 mezok.leltarUpd(a, true),
                 true, "Hozzáad",
                 "Termék hozzárendelése Helyiséghez",
@@ -265,7 +266,7 @@ export const templates = {
         }
         ${
             sampUpdate(
-                a[0], [7, 0],
+                a[0], [8, 0],
                 mezok.leltarEsemenyUpd(a, true),
                 true, "Hozzáad",
                 "Leltáresemény hozzáadása",
@@ -283,23 +284,23 @@ export const templates = {
     </td>
 </tr>
 `;
-        console.log(helyiseg.length);
-        console.log(leltaresemeny.length);
-        console.log(tend);
+//        console.log(helyiseg.length);
+//        console.log(leltaresemeny.length);
+//        console.log(tend);
 
         const bon = ((helyiseg.length > 0 ? 1 : 0) & 1) ^ ((((leltaresemeny.length > 0 ? 1 : 0) & 1) << 1));
         let both = bon;
-        console.log("Bon: "+bon);
+//        console.log("Bon: "+bon);
         let kieg = "";
         if(both > 0){
             kieg += '<tr><td colspan="'+ a.length + '">';
             if((both & 1) != 0){
                 kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg + tend + "";
             }
-            console.log("Azon!");
-            console.log(bon);
-            console.log(both & 2)
-            console.log((both & 2) != 0);
+//            console.log("Azon!");
+//            console.log(bon);
+//            console.log(both & 2)
+//            console.log((both & 2) != 0);
             if((both & 2) != 0){
                 kieg += "<h4>Leltáreseményben érintett</h4><hr>" + lehead + leltaresemeny + tend + "";
             }
@@ -313,7 +314,7 @@ export const templates = {
     //
     customLeltarList: (a, beszerzes,/* eszkozszukseglet, termekszukseglet, */ bhead, tend, ...befilts) => {
         console.log("Befilts:");
-        console.log(befilts)
+        console.log(befilts);
         let text = "<tr class='retnrow'>";
         let c = 0;
         const befs = [ // i

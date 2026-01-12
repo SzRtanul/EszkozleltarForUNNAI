@@ -291,7 +291,7 @@ async function getRest(honnan="", method="POST", dbthings = ""){
 async function exampleREST(honnan="", method="POST", dbthings="", refstatus={}){
     const response = await getRest(honnan, method, dbthings);
 //    console.log("stat: " + response.status);
-    refstatus["st"] = response.status;
+    refstatus["st"] = response.status || 404;
     return await response ? await response.text() : "err:HIBA: A szerver elérhetetlen.";
 }
 

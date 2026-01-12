@@ -53,8 +53,7 @@ class Retn extends HTMLElement {
   }
 }
 
-class RetnP extends HTMLElement {
-    
+class RetnP extends HTMLElement { 
     connectedCallback() {
         const cjust = this.getAttribute("cjust");
         const name = this.getAttribute("fref");
@@ -68,8 +67,8 @@ class RetnP extends HTMLElement {
         }
         if(!cjust) return;
         const value = div.value || div.getAttribute("value");
-        console.log("VellYou!!!: " + value);
-        console.log(div)
+      //  console.log("VellYou!!!: " + value);
+      //  console.log(div)
         const retn = retns[cjust];
         if(retn){
     //        console.log("Fa")
@@ -244,29 +243,30 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
         if(usesMOD.length > 1) ddtxt = exportedMethods.getDBThings(urlap, usesMOD[1], JSONValue);
         tr =  exportedMethods.qTextReform(qInserts[usesMOD[0]], JSONValue);
     }
-    let stat = {
-        st: 0
-    };
+    let stat = { st: 0 };
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
     console.log("Stat: " + stat.st);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, stat.st < 300 ? "Küldés sikeres!" : "Küldés sikertelen!");
     if(stat.st < 300){
-        doAfter(e, sikeresKeres, response);
+        await doAfter(e, sikeresKeres, response);
     }
+    console.log(tr);
 }
 
 async function doDelete(e){
     console.log("Flááke");
     let stat = {
-        st: 0,
+        st: 404,
     };
     console.log(e);
     const del = e.target.closest(".retnrow");
-    await exportedMethods.exampleREST("delete/" + e.target.value, "POST", "", stat);
+    const value = "delete/" + e.target.value;
+    await exportedMethods.exampleREST(value, "POST", "", stat);
     console.log("Stat: " + stat.st);
     console.log(del);
     if(stat.st < 300 && del) del.remove();
    // else e.target.classList.add("redborder");
+   console.log(value);
 }
 
 function doUpdate(e){
@@ -305,8 +305,8 @@ function doFilm(e){
 }
 
 function doSelVal(e){
-    console.log(e.target);
-    e.target.setAttribute("value", e.target.value);
+  /*  console.log(e.target);
+    e.target.setAttribute("value", e.target.value);*/
 }
 
 const runnable = [
