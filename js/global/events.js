@@ -20,7 +20,7 @@ function doFrissit(retns){
         retns[i].innerHTML = result;
         requestAnimationFrame(() => {
             const end = performance.now();
-            console.log(`Render + DOM update: ${end - start} ms`);
+//            console.log(`Render + DOM update: ${end - start} ms`);
         });
     }
 }
@@ -59,6 +59,7 @@ function doUjratolt(cjust="", responseInput=0){
                 templeLast++;
                 //break;
             }
+            console.log("TSPI: " + cjust)
             if(cja.length>13){
                 const materia = cja.substring(13, cja.length).split(":_"); // retnrowType selecter(választó)
                 let mal = "";
@@ -78,7 +79,7 @@ function doUjratolt(cjust="", responseInput=0){
                         const matre = lk.split(/[-,=\;]+/).filter(Boolean); // filter parameters with retnrow
                         let hirF = Number(matre[0]);
                         if(matre && matre.length > 0 && !isNaN(hirF) && hirF < yeP){
-                            console.log("SPARTA")
+//                            console.log("SPARTA")
                             resultBef.push(templeBefs[hirF]);
                             resultQ.push(templeUsq[hirF]);
                             resultsBefRowsNums.push(befRowsNum[hirF]);
@@ -113,6 +114,9 @@ function doUjratolt(cjust="", responseInput=0){
         }
         yeP++;
     }
+    const tspl = templeBefs;
+    console.log("TSPL: " + cjust)
+    console.log(tspl);
     return templeLast > -1 ? templeBefs[templeLast] : "";
 }
 
@@ -133,6 +137,8 @@ function whataf(
     befFilters=[],
     wherebef=[]
 ){
+    console.log(retnrows)
+    console.log(befretns)
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);
@@ -144,24 +150,30 @@ function whataf(
     // Fejléckiírás
     const eleje = wherebef[0];
     if(resHaveThead && retnrows[1] != 0){
+        console.log("HÁ");
         outResBefNums[0] = true;
         fullText = retnrows[1](resPlit.slice(0, leptek), ...befretns.slice(eleje, wherebef[1]));
         outResBefNums.push(fullText.length); // ALAMÉAEA
+        console.log(fullText);
     }
     if(error == 0 && retnrows[0] != 0){
     //    console.log("Befilter:")
-    //    console.log(befFilters);
+        console.log(befFilters);
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i+=leptek){
             const resultsBef = [];
             let qruak=1;
             for(let usqT = 0; usqT < eleje; usqT++){ // befs
                 const memqruak = qruak;
                 const qruakLiminal = befFilters[qruak-1];  // FONTOS!
+                const actualBef = befretns[usqT];
 //                console.log(befretns[usqT])
 //                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
+                console.log(befretns[usqT]);
+                console.log(qruak);
+                console.log(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1));
                 if(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1)){
-//                    console.log("BLEEEEH;")
-                    resultsBef.push(befretns[usqT]);
+                    console.log("BLEEEEH;");
+                    resultsBef.push(actualBef);
                     qruak++;
                 }
                 else{
@@ -179,7 +191,7 @@ function whataf(
                     //usqTrow++
 //                    console.log("ActualRowNums: " + actualRowNums[0] + ":" + actualRowNums[2])
 
-                    const actualBef = befretns[usqT];
+                    
 //                    console.log("actual")
                     const resLast = resultsBef.push("")-1;
 
@@ -196,9 +208,9 @@ function whataf(
                         notHasNull = conc.length > 0;
                         if(notHasNull) checkResplit += conc;
                     }
-                    console.log("TRAAAAAA: " + notHasNull + ":" + checkResplit);
+//                    console.log("TRAAAAAA: " + notHasNull + ":" + checkResplit);
                     const checkResplitLength = checkResplit.length;
-                    if(notHasNull){
+                    if(actualBef.length > 0 && notHasNull){
                         for(
                            usqTrow, usqTitem = usqThaveHead * usLeptek;
                            usqTitem < fra.length-1;
@@ -207,11 +219,11 @@ function whataf(
                             let ortami = true;
                             let checkFraParts = [];
                             const brase = usqTitem;
-                            console.log("usqItem: " + usqTitem +""+usqThaveHead)
+//                            console.log("usqItem: " + usqTitem +""+usqThaveHead)
                             //console.log("CRAt: " + qruak);
                             for(qruak = memqruak+honnmedd; qruak < memqruak + qruakLiminal-1; qruak++){ // befFilters
                                 checkFraParts.push(fra[Number(brase + befFilters[qruak])]);
-                                console.log("GRA: " + brase + ":" + befFilters[qruak] +":"+ Number(brase+befFilters[qruak]))
+//                                console.log("GRA: " + brase + ":" + befFilters[qruak] +":"+ Number(brase+befFilters[qruak]))
                             }
                             const checkFra = checkFraParts.join("");
                             ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
@@ -255,21 +267,25 @@ function whataf(
                     console.log("Vége");*/
                 }
             }
+            console.log("HÁÁ")
+            //console.log(resultsBef);
             fullText += retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef);
             outResBefNums.push(fullText.length);
         }
     }
     else if(retnrows[3] != 0){
+        console.log("HÁ2");
         fullText += retnrows[3](resPlit.split(columnSep));
         outResBefNums.push(fullText.length);
     }
     // tfoot
     if(retnrows[2]!=0) {
+        console.log("HÁ3");
         fullText += wherebef.length > 2 ? retnrows[2](
             ...befretns.slice(wherebef[1], wherebef[2])
         ) : retnrows[2]();
         outResBefNums.push(fullText.length);
     }
-//    console.log(fullText);
+//    if(retnrows[1] != 0) console.log(fullText);
     return fullText;
 }

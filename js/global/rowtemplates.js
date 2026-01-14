@@ -41,6 +41,8 @@ const otherUpd = (args=[], usqF, myUpd="", egyebbf="", egyebbh="") => {
 
 const tempex = [
     (args, koszbe="")=>{
+        console.log(args);
+        console.log(koszbe)
         let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
         for(let i = 0; i < args.length; i++){
             ret+="<th>"+args[i]+"</th>";
@@ -235,12 +237,12 @@ export const templates = {
     // 1. customBeszerzesList
     //
     customBeszerzesList: (a, helyiseg, leltaresemeny, hhead="", lehead="", tend="", ...befilts) => {
-        console.log("Befilts:");
-        console.log(befilts)
+//        console.log("Befilts:");
+//        console.log(befilts)
         let text = "<tr class='retnrow'>";
         let c = 0;
         const endpoint = "";
-        console.log("TARRRRRR: " + helyiseg)
+//        console.log("TARRRRRR: " + helyiseg)
         const befs = [ // i
             
         ];
@@ -248,7 +250,7 @@ export const templates = {
             0, 1
         ];
         for(let i = 0; i < a.length; i++){
-            console.log("C: " + c)
+//            console.log("C: " + c)
             if(c < befs.length && befs[c] < i) c++;
             if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + a[i] + "</td>";
@@ -292,29 +294,31 @@ export const templates = {
         let both = bon;
 //        console.log("Bon: "+bon);
         let kieg = "";
-        if(both > 0){
+        if(true || both > 0){
             kieg += '<tr><td colspan="'+ a.length + '">';
             if((both & 1) != 0){
+//                console.log("trate: " + hhead)
                 kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg + tend + "";
             }
-//            console.log("Azon!");
-//            console.log(bon);
-//            console.log(both & 2)
-//            console.log((both & 2) != 0);
+            //            console.log("Azon!");
+            //            console.log(bon);
+            //            console.log(both & 2)
+            //            console.log((both & 2) != 0);
             if((both & 2) != 0){
+//                console.log("trat: " + lehead)
                 kieg += "<h4>Leltáreseményben érintett</h4><hr>" + lehead + leltaresemeny + tend + "";
             }
             kieg+= '</td></tr>';
         }
-        console.log("HJ: " + lehead + leltaresemeny + "</tbody></table>")
+//        console.log("HJ: " + lehead + leltaresemeny + "</tbody></table>")
         return text + kieg;
     },
     //
     // 2. customLeltarList
     //
     customLeltarList: (a, beszerzes,/* eszkozszukseglet, termekszukseglet, */ bhead, tend, ...befilts) => {
-        console.log("Befilts:");
-        console.log(befilts);
+//        console.log("Befilts:");
+//        console.log(befilts);
         let text = "<tr class='retnrow'>";
         let c = 0;
         const befs = [ // i
