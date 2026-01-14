@@ -294,7 +294,7 @@ export const templates = {
         let both = bon;
 //        console.log("Bon: "+bon);
         let kieg = "";
-        if(true || both > 0){
+        if(both > 0){
             kieg += '<tr><td colspan="'+ a.length + '">';
             if((both & 1) != 0){
 //                console.log("trate: " + hhead)
@@ -337,8 +337,8 @@ export const templates = {
         text += `
     <td class="g2 jfgrid">
         ${
-            sampUpdate(a[0], [7, 0],
-                mezok.leltarEsemenyUpd(a, true),
+            sampUpdate(a[0], [6, 0],
+                mezok.leltarUpd(a, true),
                 true, "Hozzáad",
                 "Leltárbejegyzés Hozzáadása",
                 "div"
@@ -346,8 +346,8 @@ export const templates = {
         }
         ${
             udMezC(
-                a[0], 3,
-                mezok.beszerzesUpd(a),
+                a[0], 5,
+                mezok.helyisegUpd(a),
                 "Helyiség adatainak frissítése",
                 "Helyiség Törlése",
                 undefined, "div"

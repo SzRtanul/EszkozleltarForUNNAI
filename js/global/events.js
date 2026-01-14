@@ -59,7 +59,7 @@ function doUjratolt(cjust="", responseInput=0){
                 templeLast++;
                 //break;
             }
-            console.log("TSPI: " + cjust)
+//            console.log("TSPI: " + cjust)
             if(cja.length>13){
                 const materia = cja.substring(13, cja.length).split(":_"); // retnrowType selecter(választó)
                 let mal = "";
@@ -115,8 +115,8 @@ function doUjratolt(cjust="", responseInput=0){
         yeP++;
     }
     const tspl = templeBefs;
-    console.log("TSPL: " + cjust)
-    console.log(tspl);
+//    console.log("TSPL: " + cjust)
+//    console.log(tspl);
     return templeLast > -1 ? templeBefs[templeLast] : "";
 }
 
@@ -137,8 +137,8 @@ function whataf(
     befFilters=[],
     wherebef=[]
 ){
-    console.log(retnrows)
-    console.log(befretns)
+//    console.log(retnrows)
+//    console.log(befretns)
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);
@@ -150,15 +150,15 @@ function whataf(
     // Fejléckiírás
     const eleje = wherebef[0];
     if(resHaveThead && retnrows[1] != 0){
-        console.log("HÁ");
+//        console.log("HÁ");
         outResBefNums[0] = true;
         fullText = retnrows[1](resPlit.slice(0, leptek), ...befretns.slice(eleje, wherebef[1]));
         outResBefNums.push(fullText.length); // ALAMÉAEA
-        console.log(fullText);
+//        console.log(fullText);
     }
     if(error == 0 && retnrows[0] != 0){
     //    console.log("Befilter:")
-        console.log(befFilters);
+//        console.log(befFilters);
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i+=leptek){
             const resultsBef = [];
             let qruak=1;
@@ -168,9 +168,9 @@ function whataf(
                 const actualBef = befretns[usqT];
 //                console.log(befretns[usqT])
 //                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
-                console.log(befretns[usqT]);
-                console.log(qruak);
-                console.log(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1));
+//                console.log(befretns[usqT]);
+//                console.log(qruak);
+//                console.log(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1));
                 if(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1)){
                     console.log("BLEEEEH;");
                     resultsBef.push(actualBef);
@@ -267,20 +267,20 @@ function whataf(
                     console.log("Vége");*/
                 }
             }
-            console.log("HÁÁ")
+//            console.log("HÁÁ")
             //console.log(resultsBef);
             fullText += retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef);
             outResBefNums.push(fullText.length);
         }
     }
     else if(retnrows[3] != 0){
-        console.log("HÁ2");
+//        console.log("HÁ2");
         fullText += retnrows[3](resPlit.split(columnSep));
         outResBefNums.push(fullText.length);
     }
     // tfoot
     if(retnrows[2]!=0) {
-        console.log("HÁ3");
+//        console.log("HÁ3");
         fullText += wherebef.length > 2 ? retnrows[2](
             ...befretns.slice(wherebef[1], wherebef[2])
         ) : retnrows[2]();
