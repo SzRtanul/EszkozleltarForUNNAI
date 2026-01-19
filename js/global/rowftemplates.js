@@ -84,15 +84,16 @@ export const mezok = {
         return mez.label("Szint") + mez.input(args[1], "szint", true) +
             mez.label("Elnevezés") + mez.input(args[2], "elnevezes");
     },
-    helyisegUpd: (args=[]) => {
+    helyisegUpd: (args=[], needKord=false) => {
         return mez.label("Helyiség azonosító") + mez.input(args[1], "chid") +
             mez.label("Helyiség típusa") + mT.helyisegTipusID(args[6]) +
-            mez.label("Emelet") + mT.emeletID(args[8]) +
-            mez.label("X kordináta(px)") + mez.input(args[2], "x", true) +
-            mez.label("Y kordináta(px)") + mez.input(args[3], "y", true) +
-            mez.label("Szélesség(px)") + mez.input(args[4], "width", true) +
-            mez.label("Hosszúság(px)") + mez.input(args[5], "height", true) +
-            mez.label("Helyiség neve(opcionális)") + mez.input(args[7], "nev");
+            mez.label("Emelet") + mT.emeletID(args[8]) + (needKord ? 
+                mez.label("X kordináta(px)") + mez.input(args[2], "x", true) +
+                mez.label("Y kordináta(px)") + mez.input(args[3], "y", true) +
+                mez.label("Szélesség(px)") + mez.input(args[4], "width", true) +
+                mez.label("Hosszúság(px)") + mez.input(args[5], "height", true):
+                ""
+            ) + mez.label("Helyiség neve(opcionális)") + mez.input(args[7], "nev");
     },
     leltarUpd: (args=[], isD=false) => {
         return mez.label("Beszerzés") + 
@@ -126,4 +127,10 @@ export const mezok = {
         return mez.label("Osztály") + mT.osztalyID(args[1]) +
             mez.label("Helyiség") + mT.helyisegID(args[2]);
     },
+    eszkozSzuksegletUpd: (args=[])=>{
+        return "";
+    },
+    termekSzuksegletUpd: (args=[])=>{
+        return "";
+    }
 }

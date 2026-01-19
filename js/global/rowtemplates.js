@@ -6,6 +6,7 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 const boreSplit = '<p class="inv">elva</p>';
 
 const sampUpdate = (id=-1, usqF=[], mezok="", insD=false, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
+//    console.log(usqF);
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
 //    console.log("Con: " + value);
     return `
@@ -40,13 +41,17 @@ const otherUpd = (args=[], usqF, myUpd="", egyebbf="", egyebbh="") => {
 };
 
 const tempex = [
-    (args, koszbe="")=>{
+    (args, koszbe="", nFD=[], befTHlen=0)=>{
         console.log(args);
         console.log(koszbe)
         let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
         for(let i = 0; i < args.length; i++){
             ret+="<th>"+args[i]+"</th>";
         }
+        for(let i = 0; i< befTHlen; i++){
+            ret += "<th></th>";
+        }
+        if(nFD.length > 0) ret += sampUpdate(undefined, nFD[0], nFD[1], true, nFD[2] || "Hozzáad", nFD[3] || "+", "th");
         ret+= "</tr></thead><tbody>";
         return ret;
     },
@@ -66,7 +71,7 @@ export const templates = {
         console.log(retr);
         return "<table>" +retr+ "</table>";
     },
-    theade: (args, koszbe) => tempex[0](args, koszbe),
+    theade: (args, koszbe, newFormData) => tempex[0](args, koszbe, newFormData),
     divheade: (args) => {
         let text = "<div class='fleft tbord'>";
         for(let i = 0; i < args.length; i++){
@@ -127,26 +132,66 @@ export const templates = {
     optionList: (args, text=args[1], id=0) => "<option value=" + args[id] + ">"+ text + "</option>",
     // Customs
     theadeEszkozList: (args) => { 
-        return templates.theade(
+        return tempex[0](
             [
                 "Eszköz Azonosító",
                 "Eszköznév",
                 /*  "Márka",
                 "Darabszám"*/
-            ]
+            ], undefined, [[12, 0], mezok.nevUpd(undefined, "Eszkoz neve")], 1
         );
     },
-    theadeTeremList: (args) => {
-        return templates.theade(
-            [
-                "Terem száma", 
-                "Terem",
-                "Terem típusa"
-            ]
+    theadeMarkaList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[13, 0], mezok.nevUpd(undefined, "Márka")], 1
+        );
+    },
+    theadeHelyisegTipusList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[14, 0], mezok.nevUpd(undefined, "Helyiségtípus neve")], 1
+        );
+    },
+    theadeLeltarEsemenyTipusList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[15, 0], mezok.nevUpd(undefined, "Leltáresemény típus neve")], 1
+        );
+    },
+    // ETTŐŐL
+    theadeCegList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[1, 0], mezok.cegUpd()], 1
+        );
+    },
+    theadeTermekList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[2, 0], mezok.termekUpd()], 1
+        );
+    },
+    theadeBeszerzesList: (args) => { //
+        return tempex[0](
+            args,
+            undefined, [[3, 0], mezok.beszerzesUpd()], 1
+        );
+    },
+    theadeEmeletList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[4, 0], mezok.emeletUpd()], 1
+        );
+    },
+    theadeHelyisegList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[5, 0], mezok.helyisegUpd()], 1
         );
     },
     theadeLeltarList: (args) => {
-        return templates.theade(
+        return tempex[0](
             [
                 "Terem száma", 
                 "Terem",
@@ -154,9 +199,56 @@ export const templates = {
                 "Eszköz",
                 "Márka",
                 "Darabszám"
-            ]
+            ],
+            undefined, [[7, 0], mezok.leltarUpd()], 1
         );
     },
+    theadeLeltarEsemenyList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[6, 0], mezok.leltarEsemenyUpd()], 1
+        );
+    },
+    theadeFalList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[8, 0], mezok.falUpd()], 1
+        );
+    },
+    theadeTagozatList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[9, 0], mezok.tagozatUpd()], 1
+        );
+    },
+    theadeOsztalyList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[10, 0], mezok.osztalyUpd()], 1
+        );
+    },
+    theadeTeremKiosztasList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[11, 0], mezok.teremKiosztasUpd()], 1
+        );
+    },
+    theadeEszkozSzuksegletList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[16, 0], mezok.eszkozSzuksegletUpd()], 1
+        );
+    },
+    theadeTermekSzuksegletList: (args) => {
+        return tempex[0](
+            args,
+            undefined, [[17, 0], mezok.termekSzuksegletUpd()], 1
+        );
+    },
+    theadeTervrajz: (args) => {
+        return "";
+    },
+    theadeCustomLeltarList:(a) => templates.theade(a.slice(0, a.length - 2)),
     optionCegList: (args) => templates.optionList(args, args[1]),
     optionTermekList: (args) => templates.optionList(args, args[1]),
     optionBeszerzesList: (args) => templates.optionList(args, args[1]),
@@ -186,6 +278,8 @@ export const templates = {
     trowTagozatList: (args) => otherUpd(args, [9], "tagozatUpd"),
     trowOsztalyList: (args) =>otherUpd(args, [10], "osztalyUpd"),
     trowTeremKiosztasList: (args) => otherUpd(args, [11], "teremKiosztasUpd"),
+    trowEszkozSzuksegletList: (args) => otherUpd(args, [16], "eszkozSzuksegletUpd"),
+    trowTermekSzuksegletList: (args) => otherUpd(args, [17], "termekSzuksegletUpd"),
     trowleLeltarList: (a) => templates.trow(
         a,
         udMezC(a[6],
@@ -231,7 +325,7 @@ export const templates = {
     },
     theadleHelyisegList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
-        return templates.theade(a);
+        return templates.theade(a.slice(0, a.length - 2));
     },
     //
     // 1. customBeszerzesList
@@ -252,7 +346,7 @@ export const templates = {
         for(let i = 0; i < a.length; i++){
 //            console.log("C: " + c)
             if(c < befs.length && befs[c] < i) c++;
-            if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
+            if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */ + befilts[befous[c]] + "</td>"
             else text += "<td>" + a[i] + "</td>";
         }
         text += `
@@ -327,8 +421,8 @@ export const templates = {
         const befous = [ // befilts
             0, 1
         ];
-        for(let i = 0; i < a.length; i++){
-            console.log("C: " + c)
+        for(let i = 0; i < a.length-2; i++){
+            console.log("C: " + c);
             if(c < befs.length && befs[c] < i) c++;
             if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + a[i] + "</td>";
@@ -337,17 +431,9 @@ export const templates = {
         text += `
     <td class="g2 jfgrid">
         ${
-            sampUpdate(a[0], [6, 0],
-                mezok.leltarUpd(a, true),
-                true, "Hozzáad",
-                "Leltárbejegyzés Hozzáadása",
-                "div"
-            )
-        }
-        ${
             udMezC(
                 a[0], 5,
-                mezok.helyisegUpd(a),
+                mezok.helyisegUpd(a, false),
                 "Helyiség adatainak frissítése",
                 "Helyiség Törlése",
                 undefined, "div"

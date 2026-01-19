@@ -37,8 +37,8 @@ export const uttable = [
     // 15.
     //
     "leltaresemenytipus",
+    "eszkozszukseglet",
+    "termekszukseglet"
 ];
 
-export const ActuelThings = [
-    
-];
+export const ActuelThings = [];

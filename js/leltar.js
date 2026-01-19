@@ -9,6 +9,8 @@ import { mezok, insUrlap } from "./global/rowftemplates.js";
 
 const retns = {};
 const retnsInner = {};
+const retnsRowsNums = {};
+
 const subsite = {};
 const chdiv = {};
 const currentRequest = {};

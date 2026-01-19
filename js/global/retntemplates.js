@@ -18,7 +18,8 @@ export const formDRef = [
     "3-14",
     // 15.
     "3-15",
-    "0-11",
+    "0-16",
+    "0-17",
 ];
 
 export const modDRef = [ // LinkNum, MOD
@@ -45,21 +46,23 @@ const retEx = [
 
 export const retnCombinations = {
     felh: retEx[0]("F"),
-    eszkozlist: retEx[0]("000", undefined, "trowEszkozList"),
-    markalist: retEx[0]("001", undefined, "trowMarkaList"),
-    helyisegtipuslist: retEx[0]("002", undefined, "trowHelyisegTipusList"),
-    leltaresemenytipuslist: retEx[0]("003", undefined, "trowLeltarEsemenyTipusList"),
-    ceglist: retEx[0]("004", undefined, "trowCegList"),
-    termeklist: retEx[0]("005", undefined, "trowTermekList"),
-    beszerzeslist: retEx[0]("006", undefined, "trowBeszerzesList"),
-    emeletlist: retEx[0]("007", undefined, "trowEmeletList"),
-    helyiseglist: retEx[0]("008", undefined, "trowHelyisegList"),
-    leltarlist: retEx[0]("009", undefined, "trowLeltarList"),
-    leltaresemenylist: retEx[0]("00A", undefined, "trowLeltarEsemenyList"),
-    fallist: retEx[0]("00B", undefined, "trowFalList"),
-    tagozatlist: retEx[0]("00C", undefined, "trowTagozatList"),
-    osztalylist: retEx[0]("00D", undefined, "trowOsztalyList"),
-    teremkiosztaslist: retEx[0]("00E", undefined, "trowTeremKiosztasList"),
+    eszkozlist: retEx[0]("000", "theadeEszkozList", "trowEszkozList"),
+    markalist: retEx[0]("001", "theadeMarkaList", "trowMarkaList"),
+    helyisegtipuslist: retEx[0]("002", "theadeHelyisegTipusList", "trowHelyisegTipusList"),
+    leltaresemenytipuslist: retEx[0]("003", "theadeLeltarEsemenyTipusList", "trowLeltarEsemenyTipusList"),
+    ceglist: retEx[0]("004", "theadeCegList", "trowCegList"),
+    termeklist: retEx[0]("005", "theadeTermekList", "trowTermekList"),
+    beszerzeslist: retEx[0]("006", "theadeBeszerzesList", "trowBeszerzesList"),
+    emeletlist: retEx[0]("007", "theadeEmeletList", "trowEmeletList"),
+    helyiseglist: retEx[0]("008", "theadeHelyisegList", "trowHelyisegList"),
+    leltarlist: retEx[0]("009", "theadeLeltarList", "trowLeltarList"),
+    leltaresemenylist: retEx[0]("00A", "theadeLeltarEsemenyList", "trowLeltarEsemenyList"),
+    fallist: retEx[0]("00B", "theadeFalList", "trowFalList"),
+    tagozatlist: retEx[0]("00C", "theadeTagozatList", "trowTagozatList"),
+    osztalylist: retEx[0]("00D", "theadeOsztalyList", "trowOsztalyList"),
+    teremkiosztaslist: retEx[0]("00E", "theadeTeremKiosztasList", "trowTeremKiosztasList"),
+    eszkozszuksegletlist: retEx[0]("015", "theadeEszkozSzuksegletList", "trowEszkozSzuksegletList"),
+    termekszuksegletlist: retEx[0]("016", "theadeTermekSzuksegletList", "trowTermekSzuksegletList"),
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
     customBeszerzesList: 
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
