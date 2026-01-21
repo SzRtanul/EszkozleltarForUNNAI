@@ -41,7 +41,9 @@ const retEx = [
         return theade + ":"+ trow +":"+ tend +"|||010002FF;" + data;
     },
     (sendQ, data, h1="") => retEx[0](data, ""),
-    (data, optionList="optionList", optionHead="optionHead") => optionList +":"+ optionHead + "|||0001FFFF;" + data,
+    (data, optionList="optionList", optionHead="optionHead", kozbeszur1="", kozbeszur2="") => {
+        return optionList +":"+ optionHead + ":megn" + kozbeszur1 + "|||" + kozbeszur2 + "0001FFFF;" + data;
+    }
 ]
 
 export const retnCombinations = {
@@ -79,7 +81,7 @@ export const retnCombinations = {
     optionHelyisegTipusList: retEx[3]("002"),
     optionLeltarEsemenyTipusList: retEx[3]("003"),
     optionCegList: retEx[3]("004"),
-    optionTermekList: retEx[3]("005", "optionTermekList"),
+    optionTermekList: retEx[3]("005", "optionTermekList", undefined, "", "02FFFFFF;001---02FFFFFF;000---") + ";0=2=0:1=1=0",
     optionBeszerzesList: retEx[3]("006", "optionBeszerzesList"),
     optionEmeletList: retEx[3]("007", "optionEmeletList"),
     optionHelyisegList: retEx[3]("008", "optionHelyisegList"),

@@ -250,7 +250,7 @@ export const templates = {
     },
     theadeCustomLeltarList:(a) => templates.theade(a.slice(0, a.length - 2)),
     optionCegList: (args) => templates.optionList(args, args[1]),
-    optionTermekList: (args) => templates.optionList(args, args[1]),
+    optionTermekList: (args, markanev="", eszkoznev="") => templates.optionList(args, `${ eszkoznev } [${markanev} - ${args[3]}]`),
     optionBeszerzesList: (args) => templates.optionList(args, args[1]),
     optionEmeletList: (args) => templates.optionList(args, args[1]),
     optionHelyisegList: (args) => templates.optionList(args, args[1]),
@@ -439,11 +439,29 @@ export const templates = {
                 undefined, "div"
             )
         }
+        ${
+            sampUpdate(
+                a[0], [16, 0],
+                mezok.eszkozSzuksegletUpd(a, true),
+                true, "Hozzáad",
+                "Eszközszükséglet hozzáadása",
+                "div"
+            )
+        }
+        ${
+            sampUpdate(
+                a[0], [17, 0],
+                mezok.termekSzuksegletUpd(a, true),
+                true, "Hozzáad",
+                "Termékszükséglet hozzáadása",
+                "div"
+            )
+        }
     </td>
 </tr>`;
         let kieg = "";
         if(beszerzes.length > 0){
-            kieg+= 
+            kieg += 
                 '<tr><td colspan="'+ a.length +'">' +
                 '<h4>Hozzárendelt tárgyak</h4><hr>' + 
                     bhead + beszerzes + tend + 
