@@ -55,8 +55,11 @@ class Retn extends HTMLElement {
   }
 }
 
+let iterat = 0;
+
 class RetnP extends HTMLElement { 
     connectedCallback() {
+        iterat++;
         const cjust = this.getAttribute("cjust");
         const name = this.getAttribute("fref");
         const div = this.parentElement;
@@ -68,23 +71,27 @@ class RetnP extends HTMLElement {
             } 
         }
         if(!cjust) return;
-        const value = div.value || div.getAttribute("value");
-      //  console.log("VellYou!!!: " + value);
-      //  console.log(div)
+        //  console.log("VellYou!!!: " + value);
+        //  console.log(div)
         const retn = retns[cjust];
         if(retn){
-    //        console.log("Fa")
+            //        console.log("Fa")
             div.innerHTML = retn;
             retnsInner[cjust].push(div);
         }
         else{
-    //        console.log("Nem fa");
+            //        console.log("Nem fa");
             retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
             div.innerHTML = retns[cjust];
             retnsInner[cjust] = [div];
         }
         //    console.log(retnsInner);
-        if(div.tagName == 'SELECT') div.querySelector("* [value='"+ value +"']")?.setAttribute("selected", "");
+        // console.log("Run: " + value);
+        if(value && div.tagName == 'SELECT'){
+            const value = div.value || div.getAttribute("value");
+            const dq = div.querySelector("* [value='"+ value +"']");
+            dq?.setAttribute("selected", "");
+        }
         this.remove();
        // console.log("YellYe");
        // console.log(div)
@@ -197,6 +204,12 @@ export async function UIUpdate(){
         retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
         for(const inner of retnsInner[cjust]){
             inner.innerHTML = retns[cjust];
+            const div = inner;
+            const value = div.value || div.getAttribute("value");
+            if(value && div.tagName == 'SELECT'){
+            const dq = div.querySelector("* [value='"+ value +"']");
+            dq?.setAttribute("selected", "");
+        }
         }
     }
 
@@ -307,8 +320,9 @@ function doFilm(e){
 }
 
 function doSelVal(e){
-  /*  console.log(e.target);
-    e.target.setAttribute("value", e.target.value);*/
+    console.log("fut");
+    //console.log(e.target);
+    e.target.setAttribute("value", e.target.value);
 }
 
 const runnable = [
