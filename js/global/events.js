@@ -4,6 +4,9 @@ import { templates } from "./rowtemplates.js";
 
 const columnSep = "\x00";
 
+export const retns = {};
+export const retnsUsQsAndRowsNums = {};
+
 export const exportedRetnMethods = {
     doFrissit: doFrissit,
     doUjratolt: doUjratolt,
@@ -40,7 +43,22 @@ function doUjratolt(cjust="", responseInput=0){
     const ye = two[1]?.split("---");
     const yelen = ye.length-1;
     for(const cja of ye){
-        if(cja.length > 10){
+        if(cja.startsWith("?")){
+            console.log("Fa!")
+            const rn = cja.substring(1, cja.length);
+            if(rn.length > 0){
+                const retn = retns[rn];
+                if(!retn){
+                    /*retns[rn] = */doUjratolt(rn);
+                }
+                const rUBRs = retnsUsQsAndRowsNums[rn];
+                templeBefs.push(retns[rn]);
+                templeUsq.push(rUBRs[0]);
+                befRowsNum.push(rUBRs[1]);
+                templeLast++;
+            }
+        }
+        else if(cja.length > 10){
             const methods = [];
             for(let i = 0; i < 8; i+=2){
                 const metnum = Number("0x"+cja.substring(i,i+2));
@@ -60,7 +78,7 @@ function doUjratolt(cjust="", responseInput=0){
                 //break;
             }
 //            console.log("TSPI: " + cjust)
-            if(cja.length>13){
+            if(cja.length >13){
                 const materia = cja.substring(13, cja.length).split(":_"); // retnrowType selecter(választó)
                 let mal = "";
                 const resultBef = [];
@@ -88,6 +106,7 @@ function doUjratolt(cjust="", responseInput=0){
                             whereBef[lastResBefIndex]--; // Utolsó hiba: --2025. 08. 08. 15:46--
                         }
                         if(mata < 1){
+                            //mode implementation
                             befIlter.push(matre.length);
                             for(let mat = 1; mat < matre.length; mat++){
                                 befIlter.push(isNaN(matre[mat]) ? matre[mat] : Number(matre[mat]));
@@ -117,7 +136,13 @@ function doUjratolt(cjust="", responseInput=0){
     const tspl = templeBefs;
 //    console.log("TSPL: " + cjust)
 //    console.log(tspl);
-    return templeLast > -1 ? templeBefs[templeLast] : "";
+    let rtnV = "";
+    if(templeLast > -1){
+        rtnV = templeBefs[templeLast];
+        retns[cjust] = rtnV;
+    }
+    retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
+    return rtnV;
 }
 
 function replaceLast(str, search, replace) {

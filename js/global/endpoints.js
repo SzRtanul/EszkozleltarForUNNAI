@@ -31,6 +31,10 @@ export const endpoints = [
     // 25.
 ];
 
+export const endpointUn = [
+
+];
+
 export const qInserts = [
     "insert/\\\-$schema\\\-/\\\-$table\\\-",
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",

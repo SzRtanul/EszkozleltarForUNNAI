@@ -1,20 +1,19 @@
 import { eventTarget } from "./global/globaldata.js";
 import { exportedQMethods } from "./global/queriessetup.js";
-import { exportedRetnMethods } from "./global/events.js"
+import { exportedRetnMethods, retns } from "./global/events.js"
 import { exportedMethods } from "./global/globaldata.js";
 import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
 
-const retns = {};
 const retnsInner = {};
-const retnsRowsNums = {};
 
 const subsite = {};
 const chdiv = {};
 const currentRequest = {};
 const urlapInner = {};
+const retnUpdatable = [];
 
 await exportedQMethods.doQueryUpdates();
 
@@ -47,7 +46,7 @@ class Retn extends HTMLElement {
     }
     else{
         console.log("Nem fa: " + cjust);
-        retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+        /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
         div.innerHTML = retns[cjust];
         if(!this.hasAttribute("no")) retnsInner[cjust] = [div];
     }
@@ -63,9 +62,10 @@ class RetnP extends HTMLElement {
         const cjust = this.getAttribute("cjust");
         const name = this.getAttribute("fref");
         const div = this.parentElement;
+        const value = div.value || div.getAttribute("value");
 
         if(name) {
-            if(urlapInner[name])urlapInner[name].push(div);
+            if(urlapInner[name]) urlapInner[name].push(div);
             else{
                 urlapInner[name] = [div];
             } 
@@ -81,14 +81,14 @@ class RetnP extends HTMLElement {
         }
         else{
             //        console.log("Nem fa");
-            retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+            /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
             div.innerHTML = retns[cjust];
             retnsInner[cjust] = [div];
+            retnUpdatable.push(cjust);
         }
         //    console.log(retnsInner);
         // console.log("Run: " + value);
         if(value && div.tagName == 'SELECT'){
-            const value = div.value || div.getAttribute("value");
             const dq = div.querySelector("* [value='"+ value +"']");
             dq?.setAttribute("selected", "");
         }
@@ -201,15 +201,17 @@ export async function UIUpdate(){
  async function doAfter(e, sikeresKeres){
     await exportedQMethods.doQueryUpdates();
     for(const cjust in retns){
-        retns[cjust] = exportedRetnMethods.doUjratolt(cjust);
+        /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
+    }
+    for(const cjust of retnUpdatable){
         for(const inner of retnsInner[cjust]){
             inner.innerHTML = retns[cjust];
             const div = inner;
             const value = div.value || div.getAttribute("value");
             if(value && div.tagName == 'SELECT'){
-            const dq = div.querySelector("* [value='"+ value +"']");
-            dq?.setAttribute("selected", "");
-        }
+                const dq = div.querySelector("* [value='"+ value +"']");
+                dq?.setAttribute("selected", "");
+            }
         }
     }
 
