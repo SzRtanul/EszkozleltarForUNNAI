@@ -277,11 +277,15 @@ async function doDelete(e){
     };
     console.log(e);
     const del = e.target.closest(".retnrow");
+    const allapot = e.target.closest(".film")?.querySelector(".allapot");
     const value = "delete/" + e.target.value;
     await exportedMethods.exampleREST(value, "POST", "", stat);
     console.log("Stat: " + stat.st);
     console.log(del);
     if(stat.st < 300 && del) del.remove();
+    else if(allapot){
+        allapot.innerHTML = "A törlés sikertelen.";
+    }
    // else e.target.classList.add("redborder");
    console.log(value);
 }

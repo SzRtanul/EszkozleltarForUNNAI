@@ -193,3 +193,7 @@ main::after, header::after {
 .d-none{
     display: none;
 }
+
+.nowrap{
+    white-space: nowrap;
+}

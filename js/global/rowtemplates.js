@@ -19,7 +19,15 @@ const sampUpdate = (id=-1, usqF=[], mezok="", insD=false, kuldFelirat, gombfelir
 };
 
 const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
-    return '<'+ctn+'><button runsclick="\x04" value="' + exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1] + '">'+ gombfelirat +'</button></' + ctn + '>';
+    return '<'+ctn+' class="film">' +
+            '<div class="scene scen scen1">' +
+                '<p>Biztos vagy benne?</p>' +
+                '<button class="kuld" runsclick="\x04" value="' + exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1] + '">Igen</button>' +
+                '<button runsclick="\x06" class="cancel" nextTo="scen:0">Mégse</button>' +
+                '<p class="allapot"></p>' +
+            '</div>' +
+            '<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">'+ gombfelirat +'</button>' +
+        '</' + ctn + '>';
 };
 
 const udMezC = (id, endptr, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
@@ -82,7 +90,7 @@ export const templates = {
     },
     arrlen: (args) => args.length + "",
     megn: (args) => args[1],
-    megnTermek: (args) => args[3],
+    megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
     tbodybef: (args) => "<tbody>",
     //divbef: (args) => "",
     divbef: (args) => `<div>`,
@@ -168,7 +176,7 @@ export const templates = {
     },
     theadeTermekList: (args) => {
         return tempex[0](
-            args,
+            ["id", "Termék"],
             undefined, [[2, 0], mezok.termekUpd()], 1
         );
     },
@@ -265,7 +273,9 @@ export const templates = {
     trowHelyisegTipusList: (args) => nevUp(args, 14, "Helyiség neve"),
     trowLeltarEsemenyTipusList: (args) => nevUp(args, 15, "Leltáresemény típus neve"),
     trowCegList: (args) => otherUpd(args, [1], "cegUpd"),
-    trowTermekList: (args) => otherUpd(args, [2], "termekUpd"),
+    trowTermekList: (args, megnTermek) => {
+        return "<tr class='retnrow'><td>" + args[0] + "</td><td class='nowrap'>" + megnTermek + "</td>" + udMezC(args[0], [2], mezok.termekUpd(args))+"</tr>";
+    },//otherUpd(args, [2], "termekUpd"),
     trowBeszerzesList: (args) => otherUpd(args, [3], "beszerzesUpd", `
 <td class="film"><button>Termék hozzáadása helyiséghez</button></td>
 <td class="film"><button>Leltár esemény regisztrálása</button></td>
@@ -462,7 +472,7 @@ export const templates = {
         let kieg = "";
         if(beszerzes.length > 0){
             kieg += 
-                '<tr><td colspan="'+ a.length +'">' +
+                '<tr><td colspan="'+ a.length + '">' +
                 '<h4>Hozzárendelt tárgyak</h4><hr>' + 
                     bhead + beszerzes + tend + 
                 '</td></tr>';
