@@ -121,20 +121,35 @@ export const templates = {
         return "<div style='position: relative;'>" + helyisegek + "</div>"
     },
     helyiseg: (args) => {
-        return `<button 
-            class='helyiseg' 
+        return `
+        <div class="film"
             style="
-                position: absolute; 
-                /*top: calc(${args[3]}px * var(--scale-v)); 
-                left: calc(${args[4]}px * var(--scale-v)); 
-                width: calc(${args[5]}px * var(--scale-v)); 
-                height: calc(${args[6]}px * var(--scale-v)); */
+                position: absolute;
                 top: ${args[3]}px;
                 left: ${args[4]}px;
-                width: ${args[5]}px;
-                height: ${args[6]}px;
-                ${ args[9] != "" ? "clip-path: polygon(" + args[9] + ");" : "" }
-            "></button>`
+        ">
+            <ul class="grayblack liview scen">
+                <li>Alakzatpontok</li>
+                ${
+                    udMezC(args[0], [1], mezok.helyisegUpd(args, true), undefined, undefined, undefined, "li")
+                }
+            </ul>
+            <button 
+                class='helyiseg' 
+                style="
+                    position: absolute; 
+                    /*top: calc(${args[3]}px * var(--scale-v)); 
+                    left: calc(${args[4]}px * var(--scale-v)); 
+                    width: calc(${args[5]}px * var(--scale-v)); 
+                    height: calc(${args[6]}px * var(--scale-v)); */
+                    top: ${0}px;
+                    left: ${0}px;
+                    width: ${args[5]}px;
+                    height: ${args[6]}px;
+                    ${ args[9] != "" ? "clip-path: polygon(" + args[9] + ");" : "" }
+            "></button>
+        </div>
+        `
     },
     optionHead: ()=> "<option value=''></option>",
     optionList: (args, text=args[1], id=0) => "<option value=" + args[id] + ">"+ text + "</option>",
@@ -200,14 +215,14 @@ export const templates = {
     },
     theadeLeltarList: (args) => {
         return tempex[0](
-            [
+            /*[
                 "Terem száma", 
                 "Terem",
                 "Eszköz leltári száma",
                 "Eszköz",
                 "Márka",
                 "Darabszám"
-            ],
+            ]*/ args,
             undefined, [[7, 0], mezok.leltarUpd()], 1
         );
     },

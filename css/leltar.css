@@ -197,3 +197,31 @@ main::after, header::after {
 .nowrap{
     white-space: nowrap;
 }
+
+.grayblack{
+    color: cornsilk;
+    background-color: #414141;
+}
+
+.liview{
+    padding: 0px;
+    z-index: 1;
+}
+
+.liview li{
+    list-style-type: none;
+    padding: 7px;
+}
+
+.liview li:hover{
+    padding: 9px;
+    background-color: #525252;
+}
+
+.liview li > button{
+    all: unset;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}

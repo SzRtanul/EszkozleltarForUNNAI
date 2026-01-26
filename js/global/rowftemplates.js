@@ -1,5 +1,5 @@
 export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít", inS=false) => 
-`<form runssubmit="\x01" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" + value  + (!inS ? "/" + id : "")}' nextTo="" class="scene scen scen1">
+`<form runssubmit="${inS ? "\x01" : "\x02"}" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" + value  + (!inS ? "/" + id : "")}' nextTo="" class="scene scen scen1">
     <div>
         ${!inS ? '<label>Id</label><input type="number" value="' + id + '" disabled class="">' : ''}
         ${fields}

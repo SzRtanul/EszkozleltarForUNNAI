@@ -224,7 +224,7 @@ export async function UIUpdate(){
 
 
 //Kuld
-async function doKuld(e){
+async function doKuld(e, afterMethod=()=>""){
     e.preventDefault();
 console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     const urlap = e.target;
@@ -265,7 +265,7 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     console.log("Stat: " + stat.st);
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, stat.st < 300 ? "Küldés sikeres!" : "Küldés sikertelen!");
     if(stat.st < 300){
-        await doAfter(e, sikeresKeres, response);
+        await afterMethod(e, sikeresKeres, response, );
     }
     console.log(tr);
 }
@@ -288,6 +288,23 @@ async function doDelete(e){
     }
    // else e.target.classList.add("redborder");
    console.log(value);
+}
+
+function doInject(e){
+    doAfter(e)
+}
+
+function doReplace(e){
+    doAfter(e);
+    const row = e.target.closest(".retnrow")
+}
+
+function doKuldIns(e){
+    doKuld(e, doAfter);
+}
+
+function doKuldUpd(e){
+    doKuld(e, doAfter);
 }
 
 function doUpdate(e){
@@ -332,8 +349,8 @@ function doSelVal(e){
 }
 
 const runnable = [
-    doKuld,
-    kiscica,
+    doKuldIns,
+    doKuldUpd,
     changeview,
     doDelete,
     doUpdate,
