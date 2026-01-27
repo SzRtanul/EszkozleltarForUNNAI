@@ -54,7 +54,7 @@ export const retnCombinations = {
     helyisegtipuslist: retEx[0]("002", "theadeHelyisegTipusList", "trowHelyisegTipusList"),
     leltaresemenytipuslist: retEx[0]("003", "theadeLeltarEsemenyTipusList", "trowLeltarEsemenyTipusList"),
     ceglist: retEx[0]("004", "theadeCegList", "trowCegList"),
-    megnTermekList: "megn:megnTermek|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
+    megnTermekList: "megn:megnTermekT|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
     termeklist: retEx[0]("005;0=0=0", "theadeTermekList", "trowTermekList", undefined, "", "?megnTermekList---"),
     beszerzeslist: retEx[0]("006", "theadeBeszerzesList", "trowBeszerzesList"),
     emeletlist: retEx[0]("007", "theadeEmeletList", "trowEmeletList"),

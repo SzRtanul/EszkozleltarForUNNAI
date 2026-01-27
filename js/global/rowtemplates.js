@@ -91,6 +91,10 @@ export const templates = {
     arrlen: (args) => args.length + "",
     megn: (args) => args[1],
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
+    megnTermekT: (args, eszkoznev, markanev) => {
+        const a3 = args[3];
+        return `<td>${ eszkoznev }</td> <td class='nowrap'>${markanev.length > 0 ? markanev : "-"}<br>${a3.length > 0 ? a3 : "-n/a-"}</td>`;
+    },
     tbodybef: (args) => "<tbody>",
     //divbef: (args) => "",
     divbef: (args) => `<div>`,
@@ -191,7 +195,7 @@ export const templates = {
     },
     theadeTermekList: (args) => {
         return tempex[0](
-            ["id", "Termék"],
+            ["id", "Eszköznév", "Márka/<br>Típus"],
             undefined, [[2, 0], mezok.termekUpd()], 1
         );
     },
@@ -289,7 +293,7 @@ export const templates = {
     trowLeltarEsemenyTipusList: (args) => nevUp(args, 15, "Leltáresemény típus neve"),
     trowCegList: (args) => otherUpd(args, [1], "cegUpd"),
     trowTermekList: (args, megnTermek) => {
-        return "<tr class='retnrow'><td>" + args[0] + "</td><td class='nowrap'>" + megnTermek + "</td>" + udMezC(args[0], [2], mezok.termekUpd(args))+"</tr>";
+        return "<tr class='retnrow'><td>" + args[0] + "</td>" + megnTermek + "" + udMezC(args[0], [2], mezok.termekUpd(args))+"</tr>";
     },//otherUpd(args, [2], "termekUpd"),
     trowBeszerzesList: (args) => otherUpd(args, [3], "beszerzesUpd", `
 <td class="film"><button>Termék hozzáadása helyiséghez</button></td>
