@@ -4,7 +4,10 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 // RETNNNNNNNNNNNNNNNNNN
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
-
+const mTNs = {
+    megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
+    megnCegT: ["Cég neve"]
+}
 const sampUpdate = (id=-1, usqF=[], mezok="", insD=false, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
 //    console.log(usqF);
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
@@ -91,10 +94,12 @@ export const templates = {
     arrlen: (args) => args.length + "",
     megn: (args) => args[1],
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
-    megnTermekT: (args, eszkoznev, markanev) => {
+    megnTermekT: (args, eszkoznev, markanev, cTn="td") => {
         const a3 = args[3];
-        return `<td>${ eszkoznev }</td> <td class='nowrap'>${markanev.length > 0 ? markanev : "-"}<br>${a3.length > 0 ? a3 : "-n/a-"}</td>`;
+        return `<${cTn} class='c1 tcent'>${ eszkoznev }</${cTn}> <${cTn} class='c2 nowrap'>${markanev.length > 0 ? markanev : "-"}<br>${a3.length > 0 ? a3 : "-n/a-"}</${cTn}>`;
     },
+    megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
+    megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
     tbodybef: (args) => "<tbody>",
     //divbef: (args) => "",
     divbef: (args) => `<div>`,
@@ -195,7 +200,7 @@ export const templates = {
     },
     theadeTermekList: (args) => {
         return tempex[0](
-            ["id", "Eszköznév", "Márka/<br>Típus"],
+            mTNs.megnTermekT,
             undefined, [[2, 0], mezok.termekUpd()], 1
         );
     },
@@ -350,7 +355,7 @@ export const templates = {
     ),
     theadleBeszerzesList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
-        return templates.theade(a);
+        return templates.theade([a[0], ...mTNs.megnTermekT, "Gyártás éve", ...mTNs.megnCegT, ...a.slice(4, a.length)]);
     },
     theadleHelyisegList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
@@ -364,18 +369,32 @@ export const templates = {
 //        console.log(befilts)
         let text = "<tr class='retnrow'>";
         let c = 0;
+        let nv = 0;
+        let ntd = 0;
+
         const endpoint = "";
 //        console.log("TARRRRRR: " + helyiseg)
+        const noWrap = [
+
+        ];
+        const isTD = [
+
+        ];
+
         const befs = [ // i
-            
+            1, 3
         ];
         const befous = [ // befilts
             0, 1
         ];
-        for(let i = 0; i < a.length; i++){
+        text+= "<td>" + a[0] + "</td><td class='nopadding'>" +
+            "<div class='cr'>" + befilts[0] + "</div>" +
+            "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
+            "</td>"
+        for(let i = 4; i < a.length; i++){
 //            console.log("C: " + c)
             if(c < befs.length && befs[c] < i) c++;
-            if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */ + befilts[befous[c]] + "</td>"
+            if(c < befs.length && befs[c] == i) text += /* + a[i] + ": " */ befilts[befous[c]]
             else text += "<td>" + a[i] + "</td>";
         }
         text += `
@@ -418,7 +437,7 @@ export const templates = {
 //        console.log("Bon: "+bon);
         let kieg = "";
         if(both > 0){
-            kieg += '<tr><td colspan="'+ a.length + '">';
+            kieg += '<tr><td colspan="'+ (a.length + 1) + '">';
             if((both & 1) != 0){
 //                console.log("trate: " + hhead)
                 kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg + tend + "";

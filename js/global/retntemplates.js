@@ -54,8 +54,11 @@ export const retnCombinations = {
     helyisegtipuslist: retEx[0]("002", "theadeHelyisegTipusList", "trowHelyisegTipusList"),
     leltaresemenytipuslist: retEx[0]("003", "theadeLeltarEsemenyTipusList", "trowLeltarEsemenyTipusList"),
     ceglist: retEx[0]("004", "theadeCegList", "trowCegList"),
-    megnTermekList: "megn:megnTermekT|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
-    termeklist: retEx[0]("005;0=0=0", "theadeTermekList", "trowTermekList", undefined, "", "?megnTermekList---"),
+    megnCeg: "megn|||00FFFFFF;004",
+    megnTermekT: "megn:megnTermekT|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
+    megnTermekD: "megn:megnTermekD|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
+    megnCegT: "megnCegT|||00FFFFFF;004",
+    termeklist: retEx[0]("005;0=0=0", "theadeTermekList", "trowTermekList", undefined, "", "?megnTermekT---"),
     beszerzeslist: retEx[0]("006", "theadeBeszerzesList", "trowBeszerzesList"),
     emeletlist: retEx[0]("007", "theadeEmeletList", "trowEmeletList"),
     helyiseglist: retEx[0]("008", "theadeHelyisegList", "trowHelyisegList"),
@@ -72,11 +75,14 @@ export const retnCombinations = {
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
         "trowleLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +
         "03FFFFFF;003---05FFFFFF;011---06FFFFFF;00A;0=0=2"+
-        "---FF01FFFF;011---FF01FFFF;00A---FFFF02FF;0FF---040702FF;010;1=0=0:2=0=0:3:4:5",
+        "---FF01FFFF;011---FF01FFFF;00A---FFFF02FF;0FF"+
+        "---FFFF02FF;0FF---?megnTermekD---?megnCeg" + 
+        "---040702FF;006;1=0=0:2=0=0:3:4:5:7=1=0:8=3=0",
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
         "trowleBeszerzesList:theadleHelyisegList|||" +
         "05FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF" +
+        "" +
         "---040602FF;013;0=0=0:1:2",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),

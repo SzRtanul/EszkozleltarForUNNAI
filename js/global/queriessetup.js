@@ -1,13 +1,15 @@
 import { exportedMethods } from "./globaldata.js"
 import { endpoints } from "./endpoints.js";
 import { ActuelThings } from "./actuelthings.js";
-
+const retnThings = [];
 export const endpointsResults = [];
 export const ActuelThingsResults = [];
+export const retnThingsResults = [];
 
 export const whd = [
     endpointsResults,
-    ActuelThingsResults
+    ActuelThingsResults,
+    retnThings
 ];
 
 async function QEnds(array, ltext, method, number){

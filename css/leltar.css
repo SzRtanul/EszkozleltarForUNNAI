@@ -225,3 +225,46 @@ main::after, header::after {
     height: 100%;
     margin: 0px;
 }
+
+.cr{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+d-maxw{
+    /*
+    */
+    display: block;
+}
+
+.nomargin{
+    margin: 0px;
+}
+
+.nopadding{
+    padding: 0px;
+}
+
+.nopadding .dp, .nopadding > d-maxw, .nopadding > div > div{
+    padding: 5px;
+}
+
+.flec{
+    border-top: 1px solid white;
+}
+.alec{
+    border-bottom: 1px solid white;
+}
+.jlec, .cr>.c1{
+    border-right: 1px solid white;
+}
+.llec{
+    border-left: 1px solid white;
+}
+
+
+
+.l{
+    display: grid;
+    grid-template-rows: 1fr;
+}

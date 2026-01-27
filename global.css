@@ -100,3 +100,7 @@ input[type="text"], input[type="number"], input[type="password"], select, button
 .sceneI{
     display: inherit;
 }
+
+.tcent{
+    text-align: center;
+}
