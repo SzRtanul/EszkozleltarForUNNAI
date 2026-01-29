@@ -6,8 +6,14 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 const boreSplit = '<p class="inv">elva</p>';
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
-    megnCegT: ["Cég neve"]
+    megnCegT: ["Cég neve"],
+    customBeszerzesList: (a) => [a[0], [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", ...a.slice(6, a.length-2), "Beszerzés<br>Átvétel"],
 }
+
+function doSplitOnce(str, pos) {
+    return [str.slice(0, pos), str.slice(pos)];
+}
+
 const sampUpdate = (id=-1, usqF=[], mezok="", insD=false, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
 //    console.log(usqF);
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
@@ -96,7 +102,7 @@ export const templates = {
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
     megnTermekT: (args, eszkoznev, markanev, cTn="td") => {
         const a3 = args[3];
-        return `<${cTn} class='c1 tcent'>${ eszkoznev }</${cTn}> <${cTn} class='c2 nowrap'>${markanev.length > 0 ? markanev : "-"}<br>${a3.length > 0 ? a3 : "-n/a-"}</${cTn}>`;
+        return `<${cTn} class='c1 tcent thcent'>${ eszkoznev }</${cTn}> <${cTn} class='c2 nowrap'>${markanev.length > 0 ? markanev : "-"}<br>${a3.length > 0 ? a3 : "-n/a-"}</${cTn}>`;
     },
     megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
@@ -355,7 +361,7 @@ export const templates = {
     ),
     theadleBeszerzesList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
-        return templates.theade([a[0], ...mTNs.megnTermekT, "Gyártás éve", ...mTNs.megnCegT, ...a.slice(4, a.length)]);
+        return templates.theade(mTNs.customBeszerzesList(a));
     },
     theadleHelyisegList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
@@ -387,17 +393,31 @@ export const templates = {
         const befous = [ // befilts
             0, 1
         ];
-        text+= "<td>" + a[0] + "</td><td class='nopadding'>" +
-            "<div class='cr'>" + befilts[0] + "</div>" +
+        const gh =  befilts[0];
+        let on = gh.length-1;
+        let both1 = true;
+        for(;  both1 && on > -1; on--){
+            console.log("On: " + on)
+            both1 = gh[on] !== '<';
+        }
+        const sOnce = doSplitOnce(gh, on+1);
+        console.log("sOnce: " + sOnce[0]);
+        text+= "<td>" + a[0] + "</td><td class='nopadding'" +
+            "" +
+            "><div class='l'><div class='cr'>" + sOnce[0] + "  [" + a[3] + "]" + sOnce[1] + "<div class='tcent'>" + (a[5] == 0 ? "Új" : "Használt") + "</div></div>" +
             "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
-            "</td>"
-        for(let i = 4; i < a.length; i++){
-//            console.log("C: " + c)
+            "</div></td><td class=''>" + a[4] + "</td>"
+        for(let i = 6; i < a.length-2; i++){
+//            console.log("C: " + c);
             if(c < befs.length && befs[c] < i) c++;
             if(c < befs.length && befs[c] == i) text += /* + a[i] + ": " */ befilts[befous[c]]
             else text += "<td>" + a[i] + "</td>";
         }
         text += `
+        <td>
+            <div class='nowrap'>${a[8]}</div>
+            <div class='nowrap'>${a[9]}</div>
+        </td>
     <td class="g2 jfgrid">
         ${
             sampUpdate(

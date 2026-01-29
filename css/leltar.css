@@ -228,7 +228,7 @@ main::after, header::after {
 
 .cr{
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 3fr 1fr;
 }
 
 d-maxw{
@@ -255,7 +255,7 @@ d-maxw{
 .alec{
     border-bottom: 1px solid white;
 }
-.jlec, .cr>.c1{
+.jlec, .cr > .c1{
     border-right: 1px solid white;
 }
 .llec{
@@ -266,5 +266,15 @@ d-maxw{
 
 .l{
     display: grid;
-    grid-template-rows: 1fr;
+    height: 100%;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px;
+}
+
+.cr > .c1{
+    padding: 7px;
+}
+
+.cr > .c2{
+    padding: 7px;
 }
