@@ -7,7 +7,7 @@ const boreSplit = '<p class="inv">elva</p>';
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
     megnCegT: ["Cég neve"],
-    customBeszerzesList: (a) => [a[0], [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", ...a.slice(6, a.length-2), "Beszerzés<br>Átvétel"],
+    customBeszerzesList: (a) => [a[0], [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Havonta fizetendő", "Beszerzés/<br>Átvétel"],
 }
 
 function doSplitOnce(str, pos) {
@@ -406,14 +406,16 @@ export const templates = {
             "" +
             "><div class='l'><div class='cr'>" + sOnce[0] + "  [" + a[3] + "]" + sOnce[1] + "<div class='tcent'>" + (a[5] == 0 ? "Új" : "Használt") + "</div></div>" +
             "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
-            "</div></td><td class=''>" + a[4] + "</td>"
-        for(let i = 6; i < a.length-2; i++){
+            "</div></td><td class=''>" + a[4] + " db</td>";
+        const h = ["Ft"];
+        for(let i = 6; i < a.length-3; i++){
 //            console.log("C: " + c);
             if(c < befs.length && befs[c] < i) c++;
             if(c < befs.length && befs[c] == i) text += /* + a[i] + ": " */ befilts[befous[c]]
-            else text += "<td>" + a[i] + "</td>";
+            else text += "<td>" + a[i] + " " + h[i-6] + "</td>";
         }
         text += `
+        <td>${ a[7] == 1 ? "Igen" : "Nem" }</td>
         <td>
             <div class='nowrap'>${a[8]}</div>
             <div class='nowrap'>${a[9]}</div>
