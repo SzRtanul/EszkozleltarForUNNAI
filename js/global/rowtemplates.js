@@ -7,7 +7,7 @@ const boreSplit = '<p class="inv">elva</p>';
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
     megnCegT: ["Cég neve"],
-    customBeszerzesList: (a) => [a[0], [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Havonta fizetendő", "Beszerzés/<br>Átvétel"],
+    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Havonta fizetendő", "Beszerzés/<br>Átvétel"],
 }
 
 function doSplitOnce(str, pos) {
@@ -106,6 +106,12 @@ export const templates = {
     },
     megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
+    megnHelyiseg: (a, helyisegtipus, emelet, cTn3="td", cTn2="div", cTn="div") =>{
+        return "<"+ cTn3 + " class=e1><"+ cTn2 + " class=d1><"+ cTn + " class=c1>" + a[1] + "</"+ cTn + "><" +
+         cTn + " class=c2>" + helyisegtipus+ "</"+ cTn + "></"+ cTn2 + ">"+
+         (a[7].length > 0 ? ("<" + cTn + " class=c3>" + a[7]+ "</"+ cTn + ">") : "") + "</" + cTn3 + "><"+ 
+         cTn3 + " class=c4>" + emelet+ "</"+ cTn3 + ">";
+    },
     tbodybef: (args) => "<tbody>",
     //divbef: (args) => "",
     divbef: (args) => `<div>`,

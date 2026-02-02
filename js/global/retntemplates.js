@@ -58,6 +58,7 @@ export const retnCombinations = {
     megnTermekT: "megn:megnTermekT|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
     megnTermekD: "megn:megnTermekD|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
     megnCegT: "megnCegT|||00FFFFFF;004",
+    megnHelyisegT: "theade:megnHelyiseg:megn|||02FFFFFF;002;02FFFFFF;007---0100FFFF;008;0=6=0:1=8=0",
     termeklist: retEx[0]("005;0=0=0", "theadeTermekList", "trowTermekList", undefined, "", "?megnTermekT---"),
     beszerzeslist: retEx[0]("006", "theadeBeszerzesList", "trowBeszerzesList"),
     emeletlist: retEx[0]("007", "theadeEmeletList", "trowEmeletList"),
