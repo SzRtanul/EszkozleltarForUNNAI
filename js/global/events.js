@@ -182,8 +182,8 @@ function whataf(
 //        console.log(fullText);
     }
     if(error == 0 && retnrows[0] != 0){
-    //    console.log("Befilter:")
-//        console.log(befFilters);
+        console.log("Befilter:")
+        console.log(befFilters);
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i+=leptek){
             const resultsBef = [];
             let qruak=1;

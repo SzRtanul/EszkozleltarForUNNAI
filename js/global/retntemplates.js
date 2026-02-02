@@ -58,12 +58,14 @@ export const retnCombinations = {
     megnTermekT: "megn:megnTermekT|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
     megnTermekD: "megn:megnTermekD|||00FFFFFF;000---00FFFFFF;001---01FFFFFF;005;0=1=0:1=2=0",
     megnCegT: "megnCegT|||00FFFFFF;004",
-    megnHelyisegT: "theade:megnHelyiseg:megn|||02FFFFFF;002;02FFFFFF;007---0100FFFF;008;0=6=0:1=8=0",
+    megnHelyisegT: ":megnHelyiseg:megn|||02FFFFFF;002---02FFFFFF;007---01FFFFFF;008;0=6=0:1=8=0",
+    megnLeltarT: "trowLeltarList|||?megnHelyisegT---00FFFFFF;009;0=1=0",
     termeklist: retEx[0]("005;0=0=0", "theadeTermekList", "trowTermekList", undefined, "", "?megnTermekT---"),
     beszerzeslist: retEx[0]("006", "theadeBeszerzesList", "trowBeszerzesList"),
     emeletlist: retEx[0]("007", "theadeEmeletList", "trowEmeletList"),
     helyiseglist: retEx[0]("008", "theadeHelyisegList", "trowHelyisegList"),
-    leltarlist: retEx[0]("009", "theadeLeltarList", "trowLeltarList"),
+    helyiseg2list: retEx[0]("008;0=0=0", "theadeHelyiseg2List", "trowHelyiseg2List", undefined, "", "?megnHelyisegT---"),
+    leltarlist: retEx[0]("009;0=1=0", "theadeLeltarList", "trowLeltarList", undefined, "", "?megnHelyisegT---"),
     leltaresemenylist: retEx[0]("00A", "theadeLeltarEsemenyList", "trowLeltarEsemenyList"),
     fallist: retEx[0]("00B", "theadeFalList", "trowFalList"),
     tagozatlist: retEx[0]("00C", "theadeTagozatList", "trowTagozatList"),
@@ -74,11 +76,11 @@ export const retnCombinations = {
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
     customBeszerzesList: 
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
-        "trowleLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +
-        "03FFFFFF;003---05FFFFFF;011---06FFFFFF;00A;0=0=2"+
-        "---FF01FFFF;011---FF01FFFF;00A---FFFF02FF;0FF"+
+        "theadeLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +
+        "03FFFFFF;003---FFFFFFFF;0FF---?leltarlist---06FFFFFF;00A;0=0=2"+
+        "---FF05FFFF;009---FF01FFFF;00A---FFFF02FF;0FF"+
         "---FFFF02FF;0FF---?megnTermekD---?megnCeg" + 
-        "---040702FF;006;1=0=0:2=0=0:3:4:5:7=1=0:8=3=0",
+        "---040702FF;006;2=0=2:3=0=0:4:5:6:8=1=0:9=3=0",
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
         "trowleBeszerzesList:theadleHelyisegList|||" +

@@ -4,11 +4,14 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 // RETNNNNNNNNNNNNNNNNNN
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
+
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
     megnCegT: ["Cég neve"],
     customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Havonta fizetendő", "Beszerzés/<br>Átvétel"],
-}
+    theadeHelyiseg2List: ["Azonosító/Típus<br>Név", "Szint"],
+    theadeLeltarList: () =>  ["Leltári azonosító", ...mTNs.theadeHelyiseg2List, "Mennyiség"],
+};
 
 function doSplitOnce(str, pos) {
     return [str.slice(0, pos), str.slice(pos)];
@@ -102,14 +105,23 @@ export const templates = {
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
     megnTermekT: (args, eszkoznev, markanev, cTn="td") => {
         const a3 = args[3];
-        return `<${cTn} class='c1 tcent thcent'>${ eszkoznev }</${cTn}> <${cTn} class='c2 nowrap'>${markanev.length > 0 ? markanev : "-"}<br>${a3.length > 0 ? a3 : "-n/a-"}</${cTn}>`;
+        return `<${cTn} class='c1 tcent thcent'>${ eszkoznev }</${cTn}>
+        <${cTn} class='c2 nowrap'>
+            ${markanev.length > 0 ? markanev : "-"}
+            <br>${a3.length > 0 ? a3 : "-n/a-"}
+        </${cTn}>`;
     },
     megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
-    megnHelyiseg: (a, helyisegtipus, emelet, cTn3="td", cTn2="div", cTn="div") =>{
-        return "<"+ cTn3 + " class=e1><"+ cTn2 + " class=d1><"+ cTn + " class=c1>" + a[1] + "</"+ cTn + "><" +
-         cTn + " class=c2>" + helyisegtipus+ "</"+ cTn + "></"+ cTn2 + ">"+
-         (a[7].length > 0 ? ("<" + cTn + " class=c3>" + a[7]+ "</"+ cTn + ">") : "") + "</" + cTn3 + "><"+ 
+    megnHelyiseg: (a, helyisegtipus, emelet, cTn3="td", cTni3="div", cTn2="div", cTn="div") =>{
+        return "<"+ cTn3 + " class='e1'><" + 
+                cTni3 + " class='e1 l'><" +
+                    cTn2 + " class='d1 lgridcol2 megnhelyiseg'><"+ 
+                        cTn + " class='c1 tcent jlec'>" + a[1] + "</"+ cTn + "><" +
+                        cTn + " class='c2 tcent'>" + helyisegtipus+ "</"+ cTn + "></"+ cTn2 + ">"+
+                    (a[7].length > 0 ? ("<" + cTn2 + " class='d2 tcent flec'>" + a[7]+ "</"+ cTn2 + ">") : "") + 
+                "</" + cTni3 + ">" +
+            "</" + cTn3 + "><"+ 
          cTn3 + " class=c4>" + emelet+ "</"+ cTn3 + ">";
     },
     tbodybef: (args) => "<tbody>",
@@ -234,16 +246,15 @@ export const templates = {
             undefined, [[5, 0], mezok.helyisegUpd()], 1
         );
     },
-    theadeLeltarList: (args) => {
+    theadeHelyiseg2List: (args) => {
         return tempex[0](
-            /*[
-                "Terem száma", 
-                "Terem",
-                "Eszköz leltári száma",
-                "Eszköz",
-                "Márka",
-                "Darabszám"
-            ]*/ args,
+            mTNs.theadeHelyiseg2List,
+            undefined, [[5, 0], mezok.helyisegUpd()], 1
+        );
+    },
+    theadeLeltarList: (args) => { 
+        return tempex[0](
+            mTNs.theadeLeltarList(),
             undefined, [[7, 0], mezok.leltarUpd()], 1
         );
     },
@@ -318,7 +329,11 @@ export const templates = {
 `),
     trowEmeletList: (args) => otherUpd(args, [4], "emeletUpd"),
     trowHelyisegList: (args) => otherUpd(args, [5], "helyisegUpd"),
-    trowLeltarList: (args) => otherUpd(args, [6], "leltarUpd"),
+    trowHelyiseg2List: (args, megnHelyiseg="") => "<tr>" + megnHelyiseg + udMezC(args[0], [5], mezok.helyisegUpd(args)) +"</tr>",
+    trowLeltarList: (a, megnHelyiseg) => {
+        return "<tr><td>" + a[0] + "</td>" + megnHelyiseg + "<td>" + a[3] + "</td></tr>";
+    },//otherUpd(args, [6], "leltarUpd"),
+    //
     trowLeltarEsemenyList: (args) => otherUpd(args, [8], "leltarEsemenyUpd"),
     trowFalList: (args) => otherUpd(args, [7, 4], "falUpd"),
     trowTagozatList: (args) => otherUpd(args, [9], "tagozatUpd"),

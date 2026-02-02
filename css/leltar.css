@@ -265,7 +265,13 @@ d-maxw{
 .l{
     display: grid;
     height: 100%;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px;
+}
+
+.lgridcol2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0px;
 }
 
@@ -275,4 +281,12 @@ d-maxw{
 
 .cr > .c2{
     padding: 7px;
+}
+
+.megnhelyiseg > .c1{
+    padding: 3px 7px;
+}
+
+.megnhelyiseg > .c2{
+    padding: 3px 7px;
 }
