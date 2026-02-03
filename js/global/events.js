@@ -107,10 +107,24 @@ function doUjratolt(cjust="", responseInput=0){
                         }
                         if(mata < 1){
                             //mode implementation
-                            befIlter.push(matre.length);
-                            for(let mat = 1; mat < matre.length; mat++){
+                            let mat = 1;
+                            matre.length = matre.length & 0b111111; // LIMITÁCIÓ
+                            let matlimn = matre.length;
+                            let bfg = matre.length;
+                            if((matlimn & 1) == 0){
+                                console.log("Fasszopó Kurrrvaaaaaaaa!")
+                                if(matre[1]) bfg = (Number("0b" + matre[1]) << (32 - matre[1].length)) ^ (bfg - 1);
+                                mat = 2;
+                            }
+                            console.log("BFG: ")
+                            console.log(bfg >>> 0)
+                            console.log(matre)
+                            befIlter.push(bfg);
+                            console.log()
+                            for(; mat < matlimn; mat++){
                                 befIlter.push(isNaN(matre[mat]) ? matre[mat] : Number(matre[mat]));
                             }
+                            console.log(befIlter);
                         }
                         befsNum++;
                     }
@@ -162,8 +176,8 @@ function whataf(
     befFilters=[],
     wherebef=[]
 ){
-//    console.log(retnrows)
-//    console.log(befretns)
+//    console.log(retnrows);
+//    console.log(befretns);
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);
@@ -184,19 +198,20 @@ function whataf(
     if(error == 0 && retnrows[0] != 0){
         console.log("Befilter:")
         console.log(befFilters);
-        for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i+=leptek){
+        for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i += leptek){
             const resultsBef = [];
             let qruak=1;
             for(let usqT = 0; usqT < eleje; usqT++){ // befs
                 const memqruak = qruak;
-                const qruakLiminal = befFilters[qruak-1];  // FONTOS!
+                const qruakLiminal = befFilters[qruak-1] & 0b111111;  // FONTOS!
+                const headTown = befFilters[qruak-1];
                 const actualBef = befretns[usqT];
-//                console.log(befretns[usqT])
+//                console.log(befretns[usqT]);
 //                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
 //                console.log(befretns[usqT]);
 //                console.log(qruak);
 //                console.log(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1));
-                if(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1)){
+                if(!(befFilters.length > qruak-1 && qruakLiminal > 1)){
                     console.log("BLEEEEH;");
                     resultsBef.push(actualBef);
                     qruak++;
@@ -210,7 +225,8 @@ function whataf(
                     const qruakArray = [];
                     let memoryRef = actualRowNums[0];
                     if(memoryRef){
-                        qruakArray.push(usqTrow);
+                        if(((headTown >> 31) & 1) == 0) qruakArray.push(usqTrow);
+                        else memoryRef = false;
                         usqTrow++;
                     }
                     //usqTrow++
@@ -226,27 +242,29 @@ function whataf(
 
                     let checkResplit = "";
                     const honnmedd = Math.floor(qruakLiminal / 2);
-//                    console.log(qruakLiminal)
-//                    console.log("CRA: " + qruak)
-                    for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
-                        const conc = resPlit[i + befFilters[qruak]];
-                        notHasNull = conc.length > 0;
-                        if(notHasNull) checkResplit += conc;
+                    console.log("QruakLiminal: " + qruakLiminal);
+//                    console.log("CRA: " + qruak);
+                    if(((headTown >> 30) & 1) == 0){
+                        for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
+                            const conc = resPlit[i + befFilters[qruak]];
+                            notHasNull = conc.length > 0;
+                            if(notHasNull) checkResplit += conc;
+                        }
                     }
 //                    console.log("TRAAAAAA: " + notHasNull + ":" + checkResplit);
                     const checkResplitLength = checkResplit.length;
                     if(actualBef.length > 0 && notHasNull){
                         for(
                            usqTrow, usqTitem = usqThaveHead * usLeptek;
-                           usqTitem < fra.length-1;
-                           usqTrow++, usqTitem+=usLeptek
+                           usqTitem < fra.length - 1;
+                           usqTrow++, usqTitem += usLeptek
                         ){
                             let ortami = true;
                             let checkFraParts = [];
                             const brase = usqTitem;
-//                            console.log("usqItem: " + usqTitem +""+usqThaveHead)
+//                            console.log("usqItem: " + usqTitem +""+usqThaveHead);
                             //console.log("CRAt: " + qruak);
-                            for(qruak = memqruak+honnmedd; qruak < memqruak + qruakLiminal-1; qruak++){ // befFilters
+                            for(qruak = memqruak + honnmedd; qruak < memqruak + qruakLiminal-1; qruak++){ // befFilters
                                 checkFraParts.push(fra[Number(brase + befFilters[qruak])]);
 //                                console.log("GRA: " + brase + ":" + befFilters[qruak] +":"+ Number(brase+befFilters[qruak]))
                             }
@@ -267,17 +285,18 @@ function whataf(
 //                        console.log("ELLEN;");
                         qruak += qruakLiminal;
                     }
-                    if(usqTrow > 0 && qruakArray.length & 1 == 1){
+                    const needFoot = ((headTown >> 29) & 1) == 0;
+                    if(usqTrow > 0 && (qruakArray.length & 1) == 1){
 //                        console.log("KRU")
-                        qruakArray.push(actualRowNums.length - 1);
+                        qruakArray.push(needFoot ? actualRowNums.length - 1 : actualRowNums[usqTrow]);
                     }
-                    else if (usqTrow < actualRowNums.length - 1){
+                    else if (needFoot && usqTrow < actualRowNums.length - 1){
                         /*+ (actualRowNums[0] ? 0 : 1) */
 //                        console.log("KRUe")
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
                     let szen = "";
-                    for(let qere = 0; qere<qruakArray.length; qere+=2){
+                    for(let qere = 0; qere < qruakArray.length; qere += 2){
 //                        console.log("Krak: " + qruakArray[qere] +":"+ qruakArray[qere+1]);
                         szen += /*"\n"+qere+". "+ */actualBef.substring(
                             actualRowNums[qruakArray[qere]], 

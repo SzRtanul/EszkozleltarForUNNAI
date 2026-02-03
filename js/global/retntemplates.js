@@ -80,7 +80,7 @@ export const retnCombinations = {
         "03FFFFFF;003---FFFFFFFF;0FF---?leltarlist---06FFFFFF;00A;0=0=2"+
         "---FF05FFFF;009---FF01FFFF;00A---FFFF02FF;0FF"+
         "---FFFF02FF;0FF---?megnTermekD---?megnCeg" + 
-        "---040702FF;006;2=0=2:3=0=0:4:5:6:8=1=0:9=3=0",
+        "---040702FF;006;2=101=0=2:3=0=0:4:5:6:8=1=0:9=3=0",
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
         "trowleBeszerzesList:theadleHelyisegList|||" +

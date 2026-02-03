@@ -7,6 +7,8 @@ import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
 
+console.log(0b10000000 >> 7)
+
 const retnsInner = {};
 
 const subsite = {};
