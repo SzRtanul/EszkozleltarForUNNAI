@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="../css/leltar.css">
+    <title>UNNAI Leltárprogram</title>
+</head>
+<body>
+    <header>
+        <div class="l">
+            <span><img src="../resources/images/sulilogo_2025__tenyleg_150x150_korfeher.png" alt="Logó"></span>
+            <h3>Újhartyáni Német Nemzetiségi Általános Iskola</h3>
+        </div>
+        <div class="right">
+            <button id="logout" class="right">Kijelentkezés</button>
+        </div>
+    </header>
+    <main class="">
+        <div class="fel content">
+            <h4>Leltár</h4>
+            <div class="urlapok">
+                <!--ELNEVEZÉS-->
+                <form action="" runssubmit="&#x01;" usqF="0-0">
+                    <h5>Elnevezések hozzáadása</h5>
+                    <div>
+                        <label>Kategória kiválasztása</label>
+                        <select name="table" class="settr">
+                            <option value="eszkoz_v">Eszköznév</option>
+                            <option value="marka">Márka</option>
+                            <option value="helyisegtipus">Teremtípus</option>
+                            <option value="leltaresemenytipus">Leltáreseménytípus</option>
+                        </select>
+                        <label>Eszköz elnevezése</label>
+                        <input type="text" name="nev" class="mez">
+                    </div>
+                    <p><input type="submit" value="Hozzáad" class=""></p>
+                    <span class="allapot"></span>
+                </form>
+                <!--CÉG-->
+                <form action="" runssubmit="&#x01;" usqF="0-1">
+                    <h5>Cég hozzáadása</h5>
+                    <mez-p mez="cegUpd"></mez-p>
+                </form>
+                <!--ESZKÖZ-->
+                <form action="" runssubmit="&#x01;" usqF="0-2">
+                    <h5>Termék hozzáadása</h5>
+                    <mez-p mez="termekUpd"></mez-p>
+                </form>
+                
+                 <!--EMELET-->
+                <form action="" usqF="0-4" runssubmit="&#x01;">
+                    <h5>Emelet hozzáadása</h5>
+                    <mez-p mez="emeletUpd"></mez-p>
+                </form>
+                
+                <!--LELTÁR-->
+                <form action="" usqF="0-6" runssubmit="&#x01;">
+                    <h5>Termék hozzáadása helyiséghez</h5>
+                    <mez-p mez="leltarUpd"></mez-p>
+                </form>
+                <!--LELTÁRESEMÉNY-->
+                <form action="" usqF="0-8" runssubmit="&#x01;">
+                    <h5>Leltáresemény hozzáadása</h5>
+                    <mez-p mez="leltarEsemenyUpd"></mez-p>
+                </form>
+            </div>
+            <h4>Épület</h4>
+            <div class="urlapok">
+                <!--FAL-->
+                <form action="" usqF="0-7" runssubmit="&#x01;">
+                    <h5>Alakzat pont hozzáadása helyiséghez</h5>
+                    <mez-p mez="falUpd"></mez-p>
+                </form>
+            </div>
+            <h4>Osztály</h4>
+            <div class="urlapok">
+                <!--TAGOZAT-->
+                <form action="" usqF="0-9" runssubmit="&#x01;">
+                    <h5>Tagozat hozzáadása</h5>
+                    <mez-p mez="tagozatUpd"></mez-p>
+                </form>
+                <!--OSZTÁLY-->
+                <form action="" usqF="0-10" runssubmit="&#x01;">
+                    <h5>Osztály hozzáadása</h5>
+                    <mez-p mez="osztalyUpd"></mez-p>
+                </form>
+                <!--TEREM-->
+                <form action="" usqF="0-11" runssubmit="&#x01;">
+                    <h5>Teremkiosztás hozzáadása</h5>
+                    <mez-p mez="teremKiosztasUpd"></mez-p>
+                </form>
+            </div>
+        </div>
+        <!--TÁBLÁZATOK-->
+        <!--
+        -->
+        <div class="rel">
+            <div class="fel content2">
+                <div>
+                    <h5>Elosztás</h5>
+                    <retn-sh cjust="customBeszerzesList"></retn-sh>
+                </div>
+                <div>
+                    <h5>Elosztás</h5>
+                    <retn-sh cjust="customBeszerzesList2"></retn-sh>
+                </div>
+            </div>
+            <div class="film">
+                <div class="scene scen scen1" fname="helyisegForm">
+                    <!--HELYISÉG-->
+                    <form class="dform" action="" usqF="0-3" runssubmit="&#x01;">
+                        <h5>Beszerzés hozzáadása</h5>
+                        <mez-p mez="beszerzesUpd"></mez-p>
+                    </form>
+                    <button class="rightbottom" runsclick="&#x06;" nextTo="scen:0">Beszerzés hozzáadása</button>
+                </div>
+                <button class="rightbottom scene scen scen0 sceneI" runsclick="&#x06;" nextTo="scen:1">Beszerzés hozzáadása</button>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="../js/leltar.js"></script>
+</body>
+</html>

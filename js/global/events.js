@@ -112,12 +112,12 @@ function doUjratolt(cjust="", responseInput=0){
                             let matlimn = matre.length;
                             let bfg = matre.length;
                             if((matlimn & 1) == 0){
-                                console.log("Fasszopó Kurrrvaaaaaaaa!")
+                                console.log("Fakkkkkk:")
                                 if(matre[1]) bfg = (Number("0b" + matre[1]) << (32 - matre[1].length)) ^ (bfg - 1);
                                 mat = 2;
                             }
                             console.log("BFG: ")
-                            console.log(bfg >>> 0)
+                            console.log((bfg >>> 0).toString(2))
                             console.log(matre)
                             befIlter.push(bfg);
                             console.log()
@@ -156,6 +156,8 @@ function doUjratolt(cjust="", responseInput=0){
         retns[cjust] = rtnV;
     }
     retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
+    console.log("RTNV[" + cjust + "]:--");
+   // console.log(rtnV);
     return rtnV;
 }
 
@@ -206,6 +208,11 @@ function whataf(
                 const qruakLiminal = befFilters[qruak-1] & 0b111111;  // FONTOS!
                 const headTown = befFilters[qruak-1];
                 const actualBef = befretns[usqT];
+                const [needHdr, needBdy, needFtr] = [
+                    ((headTown >> 31) & 1) == 0, 
+                    ((headTown >> 30) & 1) == 0, 
+                    ((headTown >> 29) & 1) == 0
+                ];
 //                console.log(befretns[usqT]);
 //                console.log(`${ befFilters.length > qruak-1 } && ${ befFilters[qruak-1] > 1 } && ${ befFilters[qruak-1] } && ${ qruak-1 }`);
 //                console.log(befretns[usqT]);
@@ -244,12 +251,11 @@ function whataf(
                     const honnmedd = Math.floor(qruakLiminal / 2);
                     console.log("QruakLiminal: " + qruakLiminal);
 //                    console.log("CRA: " + qruak);
-                    if(((headTown >> 30) & 1) == 0){
-                        for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
-                            const conc = resPlit[i + befFilters[qruak]];
-                            notHasNull = conc.length > 0;
-                            if(notHasNull) checkResplit += conc;
-                        }
+                    
+                    for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
+                        const conc = resPlit[i + befFilters[qruak]];
+                        notHasNull = conc.length > 0;
+                        if(notHasNull) checkResplit += conc;
                     }
 //                    console.log("TRAAAAAA: " + notHasNull + ":" + checkResplit);
                     const checkResplitLength = checkResplit.length;
@@ -286,29 +292,34 @@ function whataf(
                         qruak += qruakLiminal;
                     }
                     const needFoot = ((headTown >> 29) & 1) == 0;
+                    console.log(needFoot ? "Igen!!" : "NEM")
                     if(usqTrow > 0 && (qruakArray.length & 1) == 1){
-//                        console.log("KRU")
-                        qruakArray.push(needFoot ? actualRowNums.length - 1 : actualRowNums[usqTrow]);
+                        console.log("KRU: " + needFoot);
+
+                        qruakArray.push(needFoot ? actualRowNums.length - 1 : usqTrow);
                     }
                     else if (needFoot && usqTrow < actualRowNums.length - 1){
                         /*+ (actualRowNums[0] ? 0 : 1) */
-//                        console.log("KRUe")
+                        console.log("KRUe")
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
                     let szen = "";
                     for(let qere = 0; qere < qruakArray.length; qere += 2){
-//                        console.log("Krak: " + qruakArray[qere] +":"+ qruakArray[qere+1]);
+                        //                        console.log("Krak: " + qruakArray[qere] +":"+ qruakArray[qere+1]);
                         szen += /*"\n"+qere+". "+ */actualBef.substring(
                             actualRowNums[qruakArray[qere]], 
                             actualRowNums[qruakArray[qere+1]]
                         );
                     }
-                    //                    console.log("Szen: " + szen);
+                    if(!needFoot){
+                        console.log("Szen: " + szen);
+                    }
                     resultsBef[resLast] += szen;
 /*                    console.log(szen);
                     console.log(usqTrow)
                     console.log(actualRowNums)
-                    console.log("Vége");*/
+                    */
+                   console.log("Vége");
                 }
             }
 //            console.log("HÁÁ")

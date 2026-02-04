@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+    <thead><tr></tr><tr><th>Beszerzés Azonosító</th><th>Eszköznév,Márka/<br>Típus[Gyártás éve],Beszerzési Állapot, Cég</th><th>Mennyiség</th><th>Darabár</th><th>Havonta fizetendő</th><th>Beszerzés/<br>Átvétel</th></tr></thead><tbody><tr class='retnrow'><td>5</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Laptop</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>Aspire E5-575G-3304
+          [3]</div><div class='tcent'>Új</div></div><d-maxW class='dp tcent flec'>def2</d-maxW></div></td><td class=''>5 db</td><td>5000 Ft</td>
+        <td>Nem</td>
+        <td>
+            <div class='nowrap'></div>
+            <div class='nowrap'></div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='5' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="2" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='3' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='5' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="3" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='2002' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='5' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/5' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="5" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="2" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='2002' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='0' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="3" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='5' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='5000' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='0' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/5">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr><td colspan="11"><h4>Helyiséghez hozzárendelve</h4><hr><table><thead><tr></tr><tr><th>Leltári azonosító</th><th>Azonosító/Típus<br>Név</th><th>Szint</th><th>Mennyiség</th><th></th>
+<th class="film"><form runssubmit="" usqf="0" value='insert/epulet/fal' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label>
+<select name="beszerzesID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionBeszerzesList"></retn-p>
+</select><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        +
+    </button>
+</th></tr></thead><tbody><tr><td>19</td><td class='e1'><div class='e1 l'><div class='d1 lgridcol2 megnhelyiseg'><div class='c1 tcent jlec'>F13</div><div class='c2 tcent'>Osztályterem</div></div><div class='d2 tcent flec'>Példa</div></div></td><td class=c4>0</td><td>2002</td></tr></tbody></table></td></tr><tr class='retnrow'><td>11</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>H6518BD 1080p 3200L 20 000:1 HDMI
+          [3]</div><div class='tcent'>Új</div></div><d-maxW class='dp tcent flec'>def2</d-maxW></div></td><td class=''>23 db</td><td>34 Ft</td>
+        <td>Igen</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-03</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='11' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='3' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='11' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="3" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='23' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/11' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="11" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='0' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="3" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='23' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='34' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='1' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-03' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/11">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr><td colspan="11"><h4>Helyiséghez hozzárendelve</h4><hr><table><thead><tr></tr><tr><th>Leltári azonosító</th><th>Azonosító/Típus<br>Név</th><th>Szint</th><th>Mennyiség</th><th></th>
+<th class="film"><form runssubmit="" usqf="0" value='insert/epulet/fal' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label>
+<select name="beszerzesID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionBeszerzesList"></retn-p>
+</select><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        +
+    </button>
+</th></tr></thead><tbody><tr><td>7</td><td class='e1'><div class='e1 l'><div class='d1 lgridcol2 megnhelyiseg'><div class='c1 tcent jlec'>F13</div><div class='c2 tcent'>Osztályterem</div></div><div class='d2 tcent flec'>Példa</div></div></td><td class=c4>0</td><td>24</td></tr><tr><td>10</td><td class='e1'><div class='e1 l'><div class='d1 lgridcol2 megnhelyiseg'><div class='c1 tcent jlec'>F311</div><div class='c2 tcent'>Osztályterem</div></div></div></td><td class=c4>0</td><td>24</td></tr><tr><td>22</td><td class='e1'><div class='e1 l'><div class='d1 lgridcol2 megnhelyiseg'><div class='c1 tcent jlec'></div><div class='c2 tcent'>Osztályterem</div></div><div class='d2 tcent flec'>345</div></div></td><td class=c4>1</td><td>24</td></tr></tbody></table></tbody></table></td></tr><tr class='retnrow'><td>13</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>DLP DNX1123
+          [5]</div><div class='tcent'>Használt</div></div><d-maxW class='dp tcent flec'>yeeee</d-maxW></div></td><td class=''>345 db</td><td>345 Ft</td>
+        <td>Nem</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-02</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='13' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='5' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='13' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24234' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='345' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/13' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="13" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24234' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='1' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='345' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='345' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='0' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-02' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/13">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr class='retnrow'><td>14</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>DLP DNX1123
+          [5]</div><div class='tcent'>Használt</div></div><d-maxW class='dp tcent flec'>yeeee</d-maxW></div></td><td class=''>345 db</td><td>345 Ft</td>
+        <td>Nem</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-02</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='14' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='5' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='14' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24234' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='345' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/14' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="14" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24234' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='1' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='345' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='345' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='0' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-02' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/14">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr class='retnrow'><td>15</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>DLP DNX1123
+          []</div><div class='tcent'>Használt</div></div><d-maxW class='dp tcent flec'>yekie</d-maxW></div></td><td class=''>345 db</td><td>345 Ft</td>
+        <td>Nem</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-02</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='15' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='15' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24234' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='345' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/15' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="15" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24234' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='1' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='345' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='345' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='0' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-02' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/15">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr class='retnrow'><td>16</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>H6518BD 1080p 3200L 20 000:1 HDMI
+          []</div><div class='tcent'>Használt</div></div><d-maxW class='dp tcent flec'>yekie</d-maxW></div></td><td class=''>345 db</td><td>345 Ft</td>
+        <td>Nem</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-02</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='16' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='16' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24234' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='345' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/16' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="16" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24234' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='1' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='345' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='345' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='0' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-02' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/16">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr class='retnrow'><td>17</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>DLP DNX1123
+          []</div><div class='tcent'>Használt</div></div><d-maxW class='dp tcent flec'>yekie</d-maxW></div></td><td class=''>345 db</td><td>345 Ft</td>
+        <td>Igen</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-02</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='17' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='17' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24234' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='345' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/17' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="17" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24234' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='1' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='345' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='345' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='1' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-02' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/17">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr><td colspan="11"><h4>Helyiséghez hozzárendelve</h4><hr><table><thead><tr></tr><tr><th>Leltári azonosító</th><th>Azonosító/Típus<br>Név</th><th>Szint</th><th>Mennyiség</th><th></th>
+<th class="film"><form runssubmit="" usqf="0" value='insert/epulet/fal' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label>
+<select name="beszerzesID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionBeszerzesList"></retn-p>
+</select><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        +
+    </button>
+</th></tr></thead><tbody><tr><td>20</td><td class='e1'><div class='e1 l'><div class='d1 lgridcol2 megnhelyiseg'><div class='c1 tcent jlec'>F13</div><div class='c2 tcent'>Osztályterem</div></div><div class='d2 tcent flec'>Példa</div></div></td><td class=c4>0</td><td>24234</td></tr></tbody></table></td></tr><tr class='retnrow'><td>18</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>DLP DNX1123
+          [5]</div><div class='tcent'>Használt</div></div><d-maxW class='dp tcent flec'>yeeee</d-maxW></div></td><td class=''>345 db</td><td>345 Ft</td>
+        <td>Igen</td>
+        <td>
+            <div class='nowrap'>2025-12-03</div>
+            <div class='nowrap'>2025-12-02</div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='18' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='5' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='18' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='24234' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='345' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/18' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="18" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='24234' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='1' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="5" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='345' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='345' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='1' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='2025-12-03' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='2025-12-02' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/18">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+<tr class='retnrow'><td>22</td><td class='nopadding'><div class='l'><div class='cr'><div class='c1 tcent thcent'>Projektor</div>
+        <div class='c2 nowrap'>
+            Acer
+            <br>P1276 DLP
+          []</div><div class='tcent'>Új</div></div><d-maxW class='dp tcent flec'>yekie</d-maxW></div></td><td class=''> db</td><td> Ft</td>
+        <td>Nem</td>
+        <td>
+            <div class='nowrap'></div>
+            <div class='nowrap'></div>
+        </td>
+    <td class="g2 jfgrid">
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltar' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='22' placeholder='' class='mez woap' disabled><label for=''>Helyiség</label>
+<select name="helyisegID" runschange="" value="6" class="mez  woap">
+    <retn-p no cjust="optionHelyisegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Termék hozzárendelése Helyiséghez
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="0" value='insert/public/leltaresemeny' nextTo="" class="scene scen scen1">
+    <div>
+        
+        <label for=''>Beszerzés</label><input type='text' name='beszerzesID' value='22' placeholder='' class='mez woap' disabled><label for=''>Leltáresemény típus</label>
+<select name="leltarEsemenyTipusID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionLeltarEsemenyTipusList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='2222222' placeholder='' class='mez woap'><label for=''>Dátum</label><input type='datetime-local' name='mikor' value='' placeholder='' class='mez woap'>
+    </div>
+    <p>
+        
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Hozzáad" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Leltáresemény hozzáadása
+    </button>
+</div>
+        
+<div class="film"><form runssubmit="" usqf="1" value='update/public/beszerzes/22' nextTo="" class="scene scen scen1">
+    <div>
+        <label>Id</label><input type="number" value="22" disabled class="">
+        <label for=''>Termék</label>
+<select name="termekID" runschange="" value="6" class="mez  woap">
+    <retn-p no cjust="optionTermekList"></retn-p>
+</select><label for=''>Gyártás éve</label><input type='text' name='gyartaseve' value='2222222' placeholder='' class='mez woap'><label for=''>Használt cikk</label><input type='checkbox' name='hasznalt' value='0' placeholder='' class='mez'><label for=''>Cég</label>
+<select name="cegID" runschange="" value="" class="mez  woap">
+    <retn-p no cjust="optionCegList"></retn-p>
+</select><label for=''>Darabszám</label><input type='text' name='mennyiseg' value='' placeholder='' class='mez woap'><label for=''>Darabár</label><input type='text' name='darabar' value='' placeholder='' class='mez woap'><label for=''>Bérelt (Havi lebontás)</label><input type='checkbox' name='haviberlet' value='0' placeholder='' class='mez'><label for=''>Rendelés dátuma</label><input type='datetime-local' name='beszdat' value='' placeholder='' class='mez'><label for=''>Átvétel dátuma</label><input type='datetime-local' name='atvetel' value='' placeholder='' class='mez'>
+    </div>
+    <p>
+        <button type="button" class="aktuel">
+            <img src="" class="">
+        </button>
+        <button type="button" class="cancel" runsclick="" nextTo="scen:0">Mégse</button>
+        <input type="submit" value="Frissít" class="but">
+    </p>
+    <span class="allapot"></span>
+</form><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">
+        Beszerzés Módosítása
+    </button>
+</div><div class="film"><div class="scene scen scen1"><p>Biztos vagy benne?</p><button class="kuld" runsclick="" value="public/beszerzes/22">Igen</button><button runsclick="" class="cancel" nextTo="scen:0">Mégse</button><p class="allapot"></p></div><button runsclick="" nextTo="scen:1" class="scene scen scen0 sceneI">Beszerzés Törlése</button></div>
+    </td>
+</tr>
+</tbody></table>
+</body>
+</html>
