@@ -392,8 +392,10 @@ export const templates = {
     // 1. customBeszerzesList
     //
     customBeszerzesList: (a, helyiseg, leltaresemeny, hhead="", lehead="", tend="", ...befilts) => {
-//        console.log("Befilts:");
+        //console.log("Befilts:");
 //        console.log(befilts)
+        console.log("ÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁ: ");
+        console.log([helyiseg, leltaresemeny, hhead, lehead, tend, ...befilts]);
         let text = "<tr class='retnrow'>";
         let c = 0;
         let nv = 0;
@@ -483,7 +485,7 @@ export const templates = {
             kieg += '<tr><td colspan="'+ (a.length + 1) + '">';
             if((both & 1) != 0){
 //                console.log("trate: " + hhead)
-                kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg + tend + "";
+                kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg +  tend + "";
             }
             //            console.log("Azon!");
             //            console.log(bon);

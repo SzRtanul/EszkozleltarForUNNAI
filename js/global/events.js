@@ -186,13 +186,13 @@ function whataf(
     const frameBefLiminal = 2;
     const resPlit = /*replaceLast(*/responseInput.substring(frameBefLiminal, responseInput.length)/*, columnSep + "\n", "")*/.split(columnSep);
     const error = responseInput.startsWith("err:") ? 1 : 0;
-    outResBefNums.push(false);
+    outResBefNums.push(0);
     outResBefNums.push(0);
     // Fejléckiírás
     const eleje = wherebef[0];
     if(resHaveThead && retnrows[1] != 0){
 //        console.log("HÁ");
-        outResBefNums[0] = true;
+        outResBefNums[0] = 1;
         fullText = retnrows[1](resPlit.slice(0, leptek), ...befretns.slice(eleje, wherebef[1]));
         outResBefNums.push(fullText.length); // ALAMÉAEA
 //        console.log(fullText);
@@ -223,6 +223,30 @@ function whataf(
                     resultsBef.push(actualBef);
                     qruak++;
                 }
+                else if(!needBdy){
+                    console.log("USQTf: " + usqT);
+                    const actualRowNums = befrownums[usqT];
+                    console.log((actualRowNums[0] >>> 0).toString(2));
+                    console.log(needHdr +":"+needBdy+":"+needFtr);
+                    let qru = "";
+                    if(needHdr && (actualRowNums[0] & 1)){
+//                        console.log("KKKK:")
+                        const textk = actualBef.substring(actualRowNums[1], actualRowNums[2]);
+//                        console.log(textk)
+                        qru += textk;
+                    }
+                    if(needFtr && ((actualRowNums[0] >> 1) & 1)){
+//                        console.log("KFFFF:")
+                        const alen = actualRowNums.length - 1;
+                        const textk = actualBef.substring(actualRowNums[alen - 1], actualRowNums[alen]);
+//                        console.log(textk)
+                        qru += textk;
+                    }
+                    console.log("Qru: ")
+                    console.log(qru)
+                    resultsBef.push(qru);
+                    qruak+= qruakLiminal;
+                }
                 else{
                     let usqTrow=1;
                     let usqTitem=0;
@@ -230,13 +254,12 @@ function whataf(
                     
                     const actualRowNums = befrownums[usqT];
                     const qruakArray = [];
-                    let memoryRef = actualRowNums[0];
+                    let memoryRef = actualRowNums[0] & 1;
                     if(memoryRef){
-                        if(((headTown >> 31) & 1) == 0) qruakArray.push(usqTrow);
+                        if(needHdr) qruakArray.push(usqTrow);
                         else memoryRef = false;
                         usqTrow++;
                     }
-                    //usqTrow++
 //                    console.log("ActualRowNums: " + actualRowNums[0] + ":" + actualRowNums[2])
 
                     
@@ -291,7 +314,7 @@ function whataf(
 //                        console.log("ELLEN;");
                         qruak += qruakLiminal;
                     }
-                    const needFoot = ((headTown >> 29) & 1) == 0;
+                    const needFoot = needFtr;
                     console.log(needFoot ? "Igen!!" : "NEM")
                     if(usqTrow > 0 && (qruakArray.length & 1) == 1){
                         console.log("KRU: " + needFoot);
@@ -299,7 +322,6 @@ function whataf(
                         qruakArray.push(needFoot ? actualRowNums.length - 1 : usqTrow);
                     }
                     else if (needFoot && usqTrow < actualRowNums.length - 1){
-                        /*+ (actualRowNums[0] ? 0 : 1) */
                         console.log("KRUe")
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
@@ -336,6 +358,7 @@ function whataf(
     // tfoot
     if(retnrows[2]!=0) {
 //        console.log("HÁ3");
+        outResBefNums[0] += 2;
         fullText += wherebef.length > 2 ? retnrows[2](
             ...befretns.slice(wherebef[1], wherebef[2])
         ) : retnrows[2]();
