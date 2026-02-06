@@ -91,6 +91,9 @@ export const templates = {
         console.log(retr);
         return "<table>" +retr+ "</table>";
     },
+    justF: () => {
+        return "F";
+    }, 
     theade: (args, koszbe, newFormData) => tempex[0](args, koszbe, newFormData),
     divheade: (args) => {
         let text = "<div class='fleft tbord'>";
@@ -391,6 +394,11 @@ export const templates = {
     //
     // 1. customBeszerzesList
     //
+    customBeszerzesList2: (a, justF="", ...res) => {
+        console.log("Zsuuuuuuuuuuuuuuuu");
+        console.log([justF, ...res]);
+        return justF.length > 2 ? templates.customBeszerzesList(a, ...res) : "";
+    },
     customBeszerzesList: (a, helyiseg="", leltaresemeny="", hhead="", lehead="", tend="", ...befilts) => {
         //console.log("Befilts:");
 //        console.log(befilts)

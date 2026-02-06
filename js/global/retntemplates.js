@@ -80,12 +80,10 @@ export const retnCombinations = {
         "?leltarlist---?leltaresemenylist---?megnTermekD---?megnCeg---" + 
         "040702FF;006;0=101=0=2:1=101=0=0:0=011:1=011:1=110:2=1=0:3=3=0", //
     customBeszerzesList2: 
-        "trow:theade:tbodyend:megn:customBeszerzesList:" +
-        "theadeLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +
-        "03FFFFFF;003---FFFFFFFF;0FF---?leltarlist---06FFFFFF;00A;0=0=2"+
-        "---FF05FFFF;009---FF01FFFF;00A---FFFF02FF;0FF"+
-        "---FFFF02FF;0FF---?megnTermekD---?megnCeg" + 
-        "---040702FF;006;2=101=0=2:3=0=0:4:5:6:8=1=0:9=3=0",
+        "trow:theade:tbodyend:megn:customBeszerzesList2:" +
+        "theadeLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList:justF|||" +
+        "?leltarlist---?leltaresemenylist---?megnTermekD---?megnCeg---08FFFFFF;009---" + 
+        "040702FF;006;4=0=2:0=101=0=2:1=101=0=0:0=011:1=011:1=110:2=1=0:3=3=0",
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
         "trowleBeszerzesList:theadleHelyisegList|||" +
