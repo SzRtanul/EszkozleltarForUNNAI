@@ -78,7 +78,7 @@ export const retnCombinations = {
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
         "theadeLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +
         "?leltarlist---?leltaresemenylist---?megnTermekD---?megnCeg---" + 
-        "040702FF;006;0=101=0=2:1=101=0=0:0=011:1=011:1=110:2=1=0:3=3=0",
+        "040702FF;006;0=101=0=2:1=101=0=0:0=011:1=011:1=110:2=1=0:3=3=0", //
     customBeszerzesList2: 
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
         "theadeLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +

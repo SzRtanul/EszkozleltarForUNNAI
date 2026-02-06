@@ -131,6 +131,7 @@ function doUjratolt(cjust="", responseInput=0){
                     mata++;
                 }
                 templeBefs.push(whataf(
+                    cjust,
                     templeUsq[templeLast], methods, 
                     resrownums, resultBef, resultsBefRowsNums, resultQ, 
                     befIlter, whereBef
@@ -140,7 +141,7 @@ function doUjratolt(cjust="", responseInput=0){
             else{
                 const resrownums = [];
                 templeBefs.push(whataf(
-                    templeUsq[templeLast], methods, resrownums
+                    cjust, templeUsq[templeLast], methods, resrownums
                 ));
                 befRowsNum.push(resrownums);
             }
@@ -169,6 +170,7 @@ function replaceLast(str, search, replace) {
 
 
 function whataf(
+    cjust="",
     responseInput = "",
     retnrows = [0, 0, 0, 0], 
     outResBefNums = [],
@@ -178,8 +180,9 @@ function whataf(
     befFilters=[],
     wherebef=[]
 ){
+    console.log("--" + cjust);
 //    console.log(retnrows);
-//    console.log(befretns);
+    console.log(befretns);
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);
@@ -218,28 +221,27 @@ function whataf(
 //                console.log(befretns[usqT]);
 //                console.log(qruak);
 //                console.log(!(befFilters.length > qruak-1 && befFilters[qruak-1] > 1));
-                if(!(befFilters.length > qruak-1 && qruakLiminal > 1)){
-                    console.log("BLEEEEH;");
-                    resultsBef.push(actualBef);
-                    qruak++;
-                }
-                else if(!needBdy){
-                    console.log("USQTf: " + usqT);
+//console.log()
+                console.log("USQTf: " + usqT + ":" + qruakLiminal);
+                console.log("Qruak: " + qruak)
+                console.log([...resultsBef]);
+                console.log(needHdr + ":" + needBdy + ":" + needFtr);
+                if(!needBdy){
+                    console.log("NOBODY");
                     const actualRowNums = befrownums[usqT];
-                    console.log((actualRowNums[0] >>> 0).toString(2));
-                    console.log(needHdr +":"+needBdy+":"+needFtr);
+//                    console.log((actualRowNums[0] >>> 0).toString(2));
                     let qru = "";
-                    if(needHdr && (actualRowNums[0] & 1)){
+                    if(needHdr && (actualRowNums[0] & 1) == 1){
 //                        console.log("KKKK:")
                         const textk = actualBef.substring(actualRowNums[1], actualRowNums[2]);
 //                        console.log(textk)
                         qru += textk;
                     }
-                    if(needFtr && ((actualRowNums[0] >> 1) & 1)){
-//                        console.log("KFFFF:")
+                    if(needFtr && ((actualRowNums[0] >> 1) & 1) == 1){
+                        console.log("KFFFF:")
                         const alen = actualRowNums.length - 1;
                         const textk = actualBef.substring(actualRowNums[alen - 1], actualRowNums[alen]);
-//                        console.log(textk)
+                        console.log(textk)
                         qru += textk;
                     }
                     console.log("Qru: ")
@@ -247,14 +249,20 @@ function whataf(
                     resultsBef.push(qru);
                     qruak+= qruakLiminal;
                 }
+                else if(headTown == qruakLiminal && !(befFilters.length > qruak-1 && qruakLiminal > 1)){
+                    console.log("ALLIN!");
+                    resultsBef.push(actualBef);
+                    qruak++;
+                }
                 else{
+                    console.log("QRUAKIN!");
                     let usqTrow=1;
                     let usqTitem=0;
                     let notHasNull=true;
                     
                     const actualRowNums = befrownums[usqT];
                     const qruakArray = [];
-                    let memoryRef = actualRowNums[0] & 1;
+                    let memoryRef = (actualRowNums[0] & 1) == 1;
                     if(memoryRef){
                         if(needHdr) qruakArray.push(usqTrow);
                         else memoryRef = false;
@@ -273,7 +281,8 @@ function whataf(
                     let checkResplit = "";
                     const honnmedd = Math.floor(qruakLiminal / 2);
                     console.log("QruakLiminal: " + qruakLiminal);
-//                    console.log("CRA: " + qruak);
+                    console.log("CRA: " + qruak);
+                    console.log("Mem&Qruak: " + (memqruak + honnmedd));
                     
                     for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
                         const conc = resPlit[i + befFilters[qruak]];
@@ -282,9 +291,10 @@ function whataf(
                     }
 //                    console.log("TRAAAAAA: " + notHasNull + ":" + checkResplit);
                     const checkResplitLength = checkResplit.length;
+                    const bUQIT = usqThaveHead * usLeptek;
                     if(actualBef.length > 0 && notHasNull){
                         for(
-                           usqTrow, usqTitem = usqThaveHead * usLeptek;
+                           usqTrow, usqTitem = bUQIT;
                            usqTitem < fra.length - 1;
                            usqTrow++, usqTitem += usLeptek
                         ){
@@ -292,11 +302,12 @@ function whataf(
                             let checkFraParts = [];
                             const brase = usqTitem;
 //                            console.log("usqItem: " + usqTitem +""+usqThaveHead);
-                            //console.log("CRAt: " + qruak);
+                            //const latr = qruak;
                             for(qruak = memqruak + honnmedd; qruak < memqruak + qruakLiminal-1; qruak++){ // befFilters
                                 checkFraParts.push(fra[Number(brase + befFilters[qruak])]);
 //                                console.log("GRA: " + brase + ":" + befFilters[qruak] +":"+ Number(brase+befFilters[qruak]))
                             }
+                            //console.log("CRAt: " + latr + ":" + qruak);
                             const checkFra = checkFraParts.join("");
                             ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
 //                            console.log("TRAAAAAA: " + checkFra + ":" + checkResplit);
@@ -308,12 +319,15 @@ function whataf(
                             }
                             qruak++;
                         }
- //                       console.log("CRA: " + qruak)
+                        if(bUQIT == usqTitem) qruak = memqruak + qruakLiminal;
+                       console.log("CRA: " + qruak)
                     }
                     else{
-//                        console.log("ELLEN;");
+                        console.log("ELLEN;");
+                        console.log("CRAE: " + qruak)
                         qruak += qruakLiminal;
                     }
+                    console.log("CRAh: " + qruak)
                     const needFoot = needFtr;
                     console.log(needFoot ? "Igen!!" : "NEM")
                     if(usqTrow > 0 && (qruakArray.length & 1) == 1){

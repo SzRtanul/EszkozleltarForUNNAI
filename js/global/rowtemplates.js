@@ -391,7 +391,7 @@ export const templates = {
     //
     // 1. customBeszerzesList
     //
-    customBeszerzesList: (a, helyiseg, leltaresemeny, hhead="", lehead="", tend="", ...befilts) => {
+    customBeszerzesList: (a, helyiseg="", leltaresemeny="", hhead="", lehead="", tend="", ...befilts) => {
         //console.log("Befilts:");
 //        console.log(befilts)
         console.log("ÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁ: ");
@@ -417,13 +417,13 @@ export const templates = {
             0, 1
         ];
         const gh =  befilts[0];
-        let on = gh.length-1;
+        let on = (gh?.length || 0) - 1 ;
         let both1 = true;
         for(;  both1 && on > -1; on--){
             console.log("On: " + on)
             both1 = gh[on] !== '<';
         }
-        const sOnce = doSplitOnce(gh, on+1);
+        const sOnce = on > 0 ? doSplitOnce(gh, on + 1) : "";
         console.log("sOnce: " + sOnce[0]);
         text+= "<td>" + a[0] + "</td><td class='nopadding'" +
             "" +
