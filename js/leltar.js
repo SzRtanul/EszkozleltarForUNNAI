@@ -6,6 +6,7 @@ import { qInserts } from "./global/endpoints.js";
 import { utJSON, utschema, uttable } from "./global/actuelthings.js";
 import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
+import { doFilm, setToFilm } from "./global/film.js";
 
 console.log(0b10000000 >> 7)
 
@@ -324,30 +325,18 @@ function changeview(e){
     // if(chdiv[name]) chdiv[name].classList.add();
 }
 
-function doFilm(e){
-    const hovas = e.target.getAttribute("nextTo")?.split(';');
-    const film = e.target.closest(".film");
-    if(film  && hovas){
-        for(let i = 0; i < hovas.length; i++){
-            const hova = hovas[i].split(':');
-            const hol = hova[1];
-            const tipus = hova[0];
-            if(hova?.length > 1){
-                for(const jel of film.querySelectorAll("."+tipus + ".sceneI")){
-                    jel.classList.remove("sceneI");
-                }
-                for(const jel of film.getElementsByClassName(tipus+hol)){
-                    jel.classList.add("sceneI");
-                }
-            }
-        }
-    }
-}
-
 function doSelVal(e){
     console.log("fut");
     //console.log(e.target);
     e.target.setAttribute("value", e.target.value);
+}
+
+function doSetParam(e){
+    const d = e.target;
+    console.log(d)
+    const dn = d.getAttribute("attri");
+    console.log(dn)
+    if(dn) d.setAttribute(dn, d.value);
 }
 
 const runnable = [
@@ -358,7 +347,9 @@ const runnable = [
     doUpdate,
     // 6.
     doFilm,
-    doSelVal
+    doSelVal,
+    setToFilm,
+    doSetParam
 ];
 
 async function doRun(e, eType = ""){
@@ -373,10 +364,10 @@ async function doRun(e, eType = ""){
 
 function eventSample(eventtype = "click", environment=document){
   //  console.log("Run it!")
-    environment.addEventListener(eventtype, (e) => {
+    environment.addEventListener(eventtype, async (e) => {
         e.stopPropagation();
         console.log(e.target.attributes);
-        doRun(e, eventtype);
+        await doRun(e, eventtype);
     });
 }
 

@@ -100,22 +100,6 @@
             <!--
             -->
             <div>
-                <h5>Eszközlista</h5>
-                <retn-sh cjust="eszkozlist"></retn-sh>
-            </div>
-            <div>
-                <h5>Márka lista</h5>
-                <retn-sh cjust="markalist"></retn-sh>
-            </div>
-            <div>
-                <h5>Helyiségtípus lista</h5>
-                <retn-sh cjust="helyisegtipuslist"></retn-sh>
-            </div>
-            <div>
-                <h5>Leltáresemény típus lista</h5>
-                <retn-sh cjust="leltaresemenytipuslist"></retn-sh>
-            </div>
-            <div>
                 <h5>Cég lista</h5>
                 <retn-sh cjust="ceglist"></retn-sh>
             </div>
@@ -175,6 +159,28 @@
             </div>
             <!--
             -->
+        </div>
+        <div class="fel content2">
+            <div class="film">
+                <select runschange="&#x09;&#x06;" attri="nextTo">
+                    <option value="s:eszk" selected>Eszköznév</option>
+                    <option value="s:mark">Márka</option>
+                    <option value="s:helyt">Helyiségtípus</option>
+                    <option value="s:lelest">Leltáresemény típus</option>
+                </select>
+                <div class="scene s seszk sceneI">
+                    <retn-sh cjust="eszkozlist"></retn-sh>
+                </div>
+                <div class="scene s smark">
+                    <retn-sh cjust="markalist"></retn-sh>
+                </div>
+                <div class="scene s shelyt">
+                    <retn-sh cjust="helyisegtipuslist"></retn-sh>
+                </div>
+                <div class="scene s slelest">
+                    <retn-sh cjust="leltaresemenytipuslist"></retn-sh>
+                </div>
+            </div>
         </div>
         <div class="fel content2">
             <div>

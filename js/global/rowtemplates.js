@@ -8,7 +8,7 @@ const boreSplit = '<p class="inv">elva</p>';
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
     megnCegT: ["Cég neve"],
-    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Havonta fizetendő", "Beszerzés/<br>Átvétel"],
+    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Fizetési intervallum", "Beszerzés/<br>Átvétel"],
     theadeHelyiseg2List: ["Azonosító/Típus<br>Név", "Szint"],
     theadeLeltarList: () =>  ["Leltári azonosító", ...mTNs.theadeHelyiseg2List, "Mennyiség"],
 };
@@ -258,19 +258,19 @@ export const templates = {
     theadeLeltarList: (args) => { 
         return tempex[0](
             mTNs.theadeLeltarList(),
-            undefined, [[7, 0], mezok.leltarUpd()], 1
+            undefined, [[6, 0], mezok.leltarUpd()], 1
         );
     },
     theadeLeltarEsemenyList: (args) => {
         return tempex[0](
             args,
-            undefined, [[6, 0], mezok.leltarEsemenyUpd()], 1
+            undefined, [[8, 0], mezok.leltarEsemenyUpd()], 1
         );
     },
     theadeFalList: (args) => {
         return tempex[0](
             args,
-            undefined, [[8, 0], mezok.falUpd()], 1
+            undefined, [[7, 0], mezok.falUpd()], 1
         );
     },
     theadeTagozatList: (args) => {
@@ -354,19 +354,23 @@ export const templates = {
             )
         )
     ),
-    trowleLeltarEsemenyList: (a, ...befilts) => templates.trow(
-        a,
-        udMezC(
-            [a[0], a[1]],
-            8,
-            mezok.leltarUpd(
-                [a[0], a[1]], 
-                true
-            )
-        ),
-        befilts, 
-        [2], [0]
-    ),
+    trowleLeltarEsemenyList: (a, ...befilts) => {
+        const templ = templates.trow(
+            a,
+            udMezC(
+                [a[0], a[1]],
+                8,
+                mezok.leltarEsemenyUpd(
+                    [a[0], a[1]], 
+                    true
+                )
+            ),
+            befilts, 
+            [2], [0]
+        );
+        //console.log(templ)
+        return templ;
+    },
     trowleBeszerzesList: (a) => templates.trow(
         a,
         "<td class='g1 jfgrid'>" +
@@ -446,7 +450,7 @@ export const templates = {
             else text += "<td>" + a[i] + " " + h[i-6] + "</td>";
         }
         text += `
-        <td>${ a[7] == 1 ? "Igen" : "Nem" }</td>
+        <td>${ !a[7] ? "Egyszeri" : a[7] }</td>
         <td>
             <div class='nowrap'>${a[8]}</div>
             <div class='nowrap'>${a[9]}</div>
