@@ -333,10 +333,14 @@ function doSelVal(e){
 
 function doSetParam(e){
     const d = e.target;
-    console.log(d)
+    console.log(d);
     const dn = d.getAttribute("attri");
-    console.log(dn)
+    console.log(dn);
     if(dn) d.setAttribute(dn, d.value);
+}
+
+function doConnectToDivForm(e){
+    // e.target cjust(?), usqT, id: JSON 
 }
 
 const runnable = [

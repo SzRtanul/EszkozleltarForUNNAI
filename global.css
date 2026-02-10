@@ -113,4 +113,5 @@ input[type="text"], input[type="number"], input[type="password"], select, button
 
 .pad-uns{
     padding: unset;
+    text-align: unset;
 }

@@ -104,11 +104,15 @@ export const retnCombinations = {
     optionTagozatList: retEx[3]("00C", "optionTagozatList"),
     optionOsztalyList: retEx[3]("00D", "optionOsztalyList"),
     optionTeremList: retEx[3]("00E", "optionTeremKiosztasList"),
-    userperson: 
+    userperson:
         "getDataLength:retlist:retheadlist:personev:theade:tablerow:tbodyend:|||" +
         "00FFFFFF;30A---0102FFFF;30A;0=1=2:_0---03FFFFFF;30A;0:1",
     profilev: "theade:profilev:tbodyend|||010002FF;309",
   //  personev: retEx[0]("30A")
+}
+
+export const newRet = {
+    valami: "sorok---sorkeret---keret"
 }
 
 export const retnCombinationResults = {

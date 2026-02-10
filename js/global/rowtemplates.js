@@ -108,7 +108,7 @@ export const templates = {
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
     megnTermekT: (args, eszkoznev, markanev, cTn="td") => {
         const a3 = args[3];
-        return `<${cTn} class='c1 tcent thcent'>${ eszkoznev }</${cTn}>
+        return `<${cTn} class='c1 tcent'>${ eszkoznev }</${cTn}>
         <${cTn} class='c2 nowrap'>
             ${markanev.length > 0 ? markanev : "-"}
             <br>${a3.length > 0 ? a3 : "-n/a-"}

@@ -161,6 +161,7 @@ input[type="submit"]{
 td, th{
     border:  1px solid white;
     padding: 5px;
+    text-align: center;
 }
 
 td > h4, td table{
@@ -299,10 +300,19 @@ button{
     font-size: 11px;
 }
 
+.jfgrid > button{
+    min-height: unset;
+}
+
 td > button{
     color: white;
     background-color: #414141;
     border: 1px solid #ffffff;
-    border-radius: 20%;
-    padding: 0px 3px;
+    border-radius: 50% 0%;
+    padding: 0px 16px;
+    min-height: unset;
+}
+
+td > button:hover{
+    background-color: #535252;
 }
