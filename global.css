@@ -106,3 +106,11 @@ input[type="text"], input[type="number"], input[type="password"], select, button
     justify-content: center;
     align-items: center;
 }
+
+.thcent{
+    text-align: center;
+}
+
+.pad-uns{
+    padding: unset;
+}

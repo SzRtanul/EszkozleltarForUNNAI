@@ -290,3 +290,19 @@ d-maxw{
 .megnhelyiseg > .c2{
     padding: 3px 7px;
 }
+
+.megnhelyiseg > .d2{
+    padding: 3px 7px;
+}
+
+button{
+    font-size: 11px;
+}
+
+td > button{
+    color: white;
+    background-color: #414141;
+    border: 1px solid #ffffff;
+    border-radius: 20%;
+    padding: 0px 3px;
+}

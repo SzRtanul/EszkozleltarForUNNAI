@@ -8,9 +8,9 @@ const boreSplit = '<p class="inv">elva</p>';
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
     megnCegT: ["Cég neve"],
-    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Fizetési intervallum", "Beszerzés/<br>Átvétel"],
-    theadeHelyiseg2List: ["Azonosító/Típus<br>Név", "Szint"],
-    theadeLeltarList: () =>  ["Leltári azonosító", ...mTNs.theadeHelyiseg2List, "Mennyiség"],
+    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Teljesítés intervalluma", "Beszerzés/<br>Átvétel"],
+    theadeHelyiseg2List: ["Azonosító | Helyiségtípus<br>Szint [ Név ]"],
+    theadeLeltarList: () =>  [...mTNs.theadeHelyiseg2List, "Mennyiség"],
 };
 
 function doSplitOnce(str, pos) {
@@ -117,15 +117,14 @@ export const templates = {
     megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
     megnHelyiseg: (a, helyisegtipus, emelet, cTn3="td", cTni3="div", cTn2="div", cTn="div") =>{
-        return "<"+ cTn3 + " class='e1'><" + 
-                cTni3 + " class='e1 l'><" +
+        return "<"+ cTn3 + " class='e1 pad-uns'><" + 
+                cTni3 + " class='e1 l  megnhelyiseg'><" +
                     cTn2 + " class='d1 lgridcol2 megnhelyiseg'><"+ 
                         cTn + " class='c1 tcent jlec'>" + a[1] + "</"+ cTn + "><" +
                         cTn + " class='c2 tcent'>" + helyisegtipus+ "</"+ cTn + "></"+ cTn2 + ">"+
-                    (a[7].length > 0 ? ("<" + cTn2 + " class='d2 tcent flec'>" + a[7]+ "</"+ cTn2 + ">") : "") + 
+                    ("<" + cTn2 + " class='d2 tcent flec'>" + emelet + ". emelet" + (a[7].length > 0 ? " [ " + a[7] + " ]" : "")+ "</"+ cTn2 + ">") + 
                 "</" + cTni3 + ">" +
-            "</" + cTn3 + "><"+ 
-         cTn3 + " class=c4>" + emelet+ "</"+ cTn3 + ">";
+            "</" + cTn3 + ">";
     },
     tbodybef: (args) => "<tbody>",
     //divbef: (args) => "",
@@ -187,7 +186,7 @@ export const templates = {
         </div>
         `
     },
-    optionHead: ()=> "<option value=''></option>",
+    optionHead: () => "<option value=''></option>",
     optionList: (args, text=args[1], id=0) => "<option value=" + args[id] + ">"+ text + "</option>",
     // Customs
     theadeEszkozList: (args) => { 
@@ -334,7 +333,7 @@ export const templates = {
     trowHelyisegList: (args) => otherUpd(args, [5], "helyisegUpd"),
     trowHelyiseg2List: (args, megnHelyiseg="") => "<tr>" + megnHelyiseg + udMezC(args[0], [5], mezok.helyisegUpd(args)) +"</tr>",
     trowLeltarList: (a, megnHelyiseg) => {
-        return "<tr><td>" + a[0] + "</td>" + megnHelyiseg + "<td>" + a[3] + "</td></tr>";
+        return "<tr>" + megnHelyiseg + "<td class='thcent'>" + a[3] + " db</td></tr>";
     },//otherUpd(args, [6], "leltarUpd"),
     //
     trowLeltarEsemenyList: (args) => otherUpd(args, [8], "leltarEsemenyUpd"),
@@ -437,7 +436,7 @@ export const templates = {
         }
         const sOnce = on > 0 ? doSplitOnce(gh, on + 1) : "";
         console.log("sOnce: " + sOnce[0]);
-        text+= "<td>" + a[0] + "</td><td class='nopadding'" +
+        text+= "<td>" + a[0] + "</td><td class='pad-uns'" +
             "" +
             "><div class='l'><div class='cr'>" + sOnce[0] + "  [" + a[3] + "]" + sOnce[1] + "<div class='tcent'>" + (a[5] == 0 ? "Új" : "Használt") + "</div></div>" +
             "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
