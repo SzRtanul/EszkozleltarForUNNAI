@@ -74,6 +74,7 @@ export const retnCombinations = {
     eszkozszuksegletlist: retEx[0]("015", "theadeEszkozSzuksegletList", "trowEszkozSzuksegletList"),
     termekszuksegletlist: retEx[0]("016", "theadeTermekSzuksegletList", "trowTermekSzuksegletList"),
     tervrajz: "helyiseg:emelet|||00FFFFFF;00F---01FFFFFF;007;0=1=1",
+    exaempty: retEx[0]("019"),
     customBeszerzesList: 
         "trow:theade:tbodyend:megn:customBeszerzesList:" +
         "theadeLeltarList:trowleLeltarEsemenyList:theadleBeszerzesList|||" +

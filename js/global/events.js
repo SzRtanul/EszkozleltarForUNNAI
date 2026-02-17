@@ -13,6 +13,14 @@ export const exportedRetnMethods = {
     whataf: whataf
 }
 
+export function makeUpdateForm(e){
+    // e.target 
+    const item = e.target;
+    const allPs = item.getAttribute("params")?.split(";"); // Sorrend: cjust(?), usqT, id: JSON
+    
+    const virtForm = "";
+}
+
 function doFrissit(retns){
     let result = "";
     for(let i = retns.length-1; i > -1 ; i--){
@@ -29,6 +37,7 @@ function doFrissit(retns){
 }
 
 function doUjratolt(cjust="", responseInput=0){
+    console.log("doUjratolt: " + cjust)
     let res = [];
     const two = retnCombinations[cjust]?.split("|||");
     if(!two || two.length<2){
@@ -68,7 +77,7 @@ function doUjratolt(cjust="", responseInput=0){
             const reqNum = Number("0x"+ cja.substring(10, 12));
             if(!isNaN(reqType) && !isNaN(reqNum) && reqType < whd.length && reqNum<whd[reqType].length){
                 templeUsq.push(
-                    yeP==yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum]
+                    yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum]
                 );
                 templeLast++;
             }
@@ -183,6 +192,7 @@ function whataf(
     console.log("--" + cjust);
 //    console.log(retnrows);
     console.log(befretns);
+    console.log(responseInput)
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
     const leptek = responseInput.charCodeAt(1);

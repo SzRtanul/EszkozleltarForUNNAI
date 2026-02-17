@@ -29,6 +29,7 @@ export const endpoints = [
     "gettable/public/eszkozszuksegletossz_v",
     "gettable/public/termekszuksegletossz_v",
     // 25.
+    "gettable/public/exaempty"
 ];
 
 export const endpointUn = [

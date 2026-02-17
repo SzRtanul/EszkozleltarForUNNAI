@@ -339,10 +339,6 @@ function doSetParam(e){
     if(dn) d.setAttribute(dn, d.value);
 }
 
-function doConnectToDivForm(e){
-    // e.target cjust(?), usqT, id: JSON 
-}
-
 const runnable = [
     doKuldIns,
     doKuldUpd,
@@ -353,7 +349,8 @@ const runnable = [
     doFilm,
     doSelVal,
     setToFilm,
-    doSetParam
+    doSetParam,
+    makeUpdateForm
 ];
 
 async function doRun(e, eType = ""){
