@@ -224,7 +224,14 @@ export async function UIUpdate(){
     //exportedMethods.doEnvAutoJumpJelenet(urlap, "NextTo");
 }
 
-
+function writeStatus(allapotKijelzok, statcode){
+    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, statcode < 300 ?
+		"Küldés sikeres!" :
+		(
+			statcode == 404 ? "Program hiba" : "Hibás formátum[Program hiba] vagy egyedi kulcsérték ütközés áll fent!"
+		) 
+	);
+}
 
 //Kuld
 async function doKuld(e, afterMethod=()=>""){
@@ -266,9 +273,9 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     let stat = { st: 0 };
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
     console.log("Stat: " + stat.st);
-    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, stat.st < 300 ? "Küldés sikeres!" : "Küldés sikertelen!");
+	writeStatus(allapotKijelzok);
     if(stat.st < 300){
-        await afterMethod(e, sikeresKeres, response, );
+        await afterMethod(e, sikeresKeres, response);
     }
     console.log(tr);
 }
@@ -280,14 +287,14 @@ async function doDelete(e){
     };
     console.log(e);
     const del = e.target.closest(".retnrow");
-    const allapot = e.target.closest(".film")?.querySelector(".allapot");
+    const allapot = e.target.closest(".film")?.querySelectorAll(".allapot");
     const value = "delete/" + e.target.value;
     await exportedMethods.exampleREST(value, "POST", "", stat);
     console.log("Stat: " + stat.st);
     console.log(del);
     if(stat.st < 300 && del) del.remove();
     else if(allapot){
-        allapot.innerHTML = "A törlés sikertelen.";
+        allapot.innerHTML = stat.st == 404 ? "Program hiba" : "A rekord nem létezik,\n vagy más tábla rekordja hivatkozik rá.";
     }
    // else e.target.classList.add("redborder");
    console.log(value);
@@ -350,7 +357,7 @@ const runnable = [
     doSelVal,
     setToFilm,
     doSetParam,
-    makeUpdateForm
+//    makeUpdateForm
 ];
 
 async function doRun(e, eType = ""){
