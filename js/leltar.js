@@ -273,7 +273,7 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     let stat = { st: 0 };
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
     console.log("Stat: " + stat.st);
-	writeStatus(allapotKijelzok);
+	writeStatus(allapotKijelzok, stat.st);
     if(stat.st < 300){
         await afterMethod(e, sikeresKeres, response);
     }

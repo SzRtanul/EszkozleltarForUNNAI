@@ -32,7 +32,7 @@ async function doQueryUpdates(){
     for(let i = 0; i < endpoints.length; i++){
         linmeth = endpoints[i].split(":");
         const foszlam = endpointsResults.push("")-1;
-        promises.push(QEnds(endpointsResults, linmeth[0]+"", linmeth[1] || "POST", foszlam));
+        if(linmeth[0]) promises.push(QEnds(endpointsResults, linmeth[0]+"", linmeth[1] || "POST", foszlam));
     }
 
     for(const key in ActuelThings){
