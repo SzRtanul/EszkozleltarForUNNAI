@@ -20,6 +20,15 @@ const retnUpdatable = [];
 
 await exportedQMethods.doQueryUpdates();
 
+
+class GridDiv extends HTMLElement {
+	connectedCallback() {
+		const gridarea = this.getAttribute("TA");
+		console.log("EHY: " + gridarea);
+		if(gridarea) this.style.setProperty("grid-area", gridarea);
+	}
+}
+
 class Retn extends HTMLElement {
   connectedCallback() {
     const shadow = this.attachShadow({mode: 'open'});
@@ -161,6 +170,7 @@ class SubSite extends HTMLElement{
     } 
 }
 
+customElements.define('g-div', GridDiv);
 customElements.define('retn-sh', Retn);
 customElements.define('retn-p', RetnP);
 customElements.define('mez-p', MezP);

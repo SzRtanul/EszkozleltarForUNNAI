@@ -8,7 +8,7 @@ const boreSplit = '<p class="inv">elva</p>';
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
     megnCegT: ["Cég neve"],
-    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ ", Cég", "Mennyiség", "Darabár", "Teljesítés intervalluma", "Beszerzés/<br>Átvétel"],
+    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ "/<br>Cég", "Mennyiség", "Darabár", "Teljesítés intervalluma", "Beszerzés/<br>Átvétel"],
     theadeHelyiseg2List: ["Azonosító | Helyiségtípus<br>Szint [ Név ]"],
     theadeLeltarList: () =>  [...mTNs.theadeHelyiseg2List, "Mennyiség"],
 };
@@ -108,7 +108,7 @@ export const templates = {
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
     megnTermekT: (args, eszkoznev, markanev, cTn="td") => {
         const a3 = args[3];
-        return `<${cTn} class='c1 tcent'>${ eszkoznev }</${cTn}>
+        return `<${cTn} class='c1${cTn != "td" ? " tcent" : ""}'>${ eszkoznev }</${cTn}>
         <${cTn} class='c2 nowrap'>
             ${markanev.length > 0 ? markanev : "-"}
             <br>${a3.length > 0 ? a3 : "-n/a-"}
@@ -440,50 +440,49 @@ export const templates = {
             "" +
             "><div class='l'><div class='cr'>" + sOnce[0] + "  [" + a[3] + "]" + sOnce[1] + "<div class='tcent'>" + (a[5] == 0 ? "Új" : "Használt") + "</div></div>" +
             "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
-            "</div></td><td class=''>" + a[4] + " db</td>";
-        const h = ["Ft"];
-        for(let i = 6; i < a.length-3; i++){
-//            console.log("C: " + c);
-            if(c < befs.length && befs[c] < i) c++;
-            if(c < befs.length && befs[c] == i) text += /* + a[i] + ": " */ befilts[befous[c]]
-            else text += "<td>" + a[i] + " " + h[i-6] + "</td>";
-        }
-        text += `
-        <td>${ !a[7] ? "Egyszeri" : a[7] }</td>
-        <td>
-            <div class='nowrap'>${a[8]}</div>
-            <div class='nowrap'>${a[9]}</div>
-        </td>
-    <td class="g2 jfgrid">
-        ${
-            sampUpdate(
-                a[0], [6, 0],
-                mezok.leltarUpd(a, true),
-                true, "Hozzáad",
-                "Termék hozzárendelése Helyiséghez",
-                "div"
-            )
-        }
-        ${
-            sampUpdate(
-                a[0], [8, 0],
-                mezok.leltarEsemenyUpd(a, true),
-                true, "Hozzáad",
-                "Leltáresemény hozzáadása",
-                "div"
-            )
-        }
-        ${
-            udMezC(
-                a[0], 3, mezok.beszerzesUpd(a),
-                "Beszerzés Módosítása",
-                "Beszerzés Törlése",
-                undefined, "div"
-            )
-        }
+            "</div></td>" +
+        `<td>
+			<div class="cBL-TA">
+				<g-div TA="a">${ a[6] } Ft</g-div>
+				<g-div TA="b">${ !a[7] ? "Egyszeri" : a[7] }</g-div>
+				<g-div TA="c"> ${a[4]} db</g-div>
+				<g-div TA="d">
+					<div class='nowrap'>${a[8]}</div>
+					<div class='nowrap'>${a[9]}</div>
+				</g-div>
+			</div>
+		</td>
+   <td>
+		<div class="g2 jfgrid">
+			${
+				sampUpdate(
+					a[0], [6, 0],
+					mezok.leltarUpd(a, true),
+					true, "Hozzáad",
+					"Termék hozzárendelése Helyiséghez",
+					"div"
+				)
+			}
+			${
+				sampUpdate(
+					a[0], [8, 0],
+					mezok.leltarEsemenyUpd(a, true),
+					true, "Hozzáad",
+					"Leltáresemény hozzáadása",
+					"div"
+				)
+			}
+			${
+				udMezC(
+					a[0], 3, mezok.beszerzesUpd(a),
+					"Beszerzés Módosítása",
+					"Beszerzés Törlése",
+					undefined, "div"
+				)
+			}
+		</div>
     </td>
-</tr>
-`;
+</tr>`;
 //        console.log(helyiseg.length);
 //        console.log(leltaresemeny.length);
 //        console.log(tend);

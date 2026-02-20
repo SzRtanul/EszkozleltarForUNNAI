@@ -162,6 +162,7 @@ td, th{
     border:  1px solid white;
     padding: 5px;
     text-align: center;
+	height: 1px;
 }
 
 td > h4, td table{
@@ -259,7 +260,7 @@ d-maxw{
 .jlec, .cr > .c1{
     border-right: 1px solid white;
 }
-.llec{
+.llec, .blec{
     border-left: 1px solid white;
 }
 
@@ -315,4 +316,22 @@ td > button{
 
 td > button:hover{
     background-color: #535252;
+}
+
+.cBL-TA{
+	display: grid;
+	height: 100%;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-areas: 
+		"a a"
+		"d b"
+		"d c"
+	;
+	gap: 13px;
+	background: white;
+}
+
+.cBL-TA *{
+	background: blue;
+	padding: 4px;
 }
