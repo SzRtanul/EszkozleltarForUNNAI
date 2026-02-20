@@ -6,9 +6,14 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 const boreSplit = '<p class="inv">elva</p>';
 
 const mTNs = {
-    megnTermekT: ["Eszköznév", "Márka/<br>Típus"],
+    megnTermekT: ["Eszköznév", "Márka<br>Típus"],
     megnCegT: ["Cég neve"],
-    customBeszerzesList: (a) => ["Beszerzés Azonosító", [mTNs.megnTermekT + "[" + "Gyártás éve" + "]", "Beszerzési Állapot" ]+ "/<br>Cég", "Mennyiség", "Darabár", "Teljesítés intervalluma", "Beszerzés/<br>Átvétel"],
+    customBeszerzesList: (a) => 
+		[
+			"Beszerzés Azonosító",
+			mTNs.megnTermekT.join("<br>") + 
+			"<br>Gyártás éve<br>Beszerzési Állapot<br>Cég",
+			"", "Darabár<br>Teljesítés intervalluma<br>Mennyiség<br>Beszerzés/<br>Átvétel"],
     theadeHelyiseg2List: ["Azonosító | Helyiségtípus<br>Szint [ Név ]"],
     theadeLeltarList: () =>  [...mTNs.theadeHelyiseg2List, "Mennyiség"],
 };
