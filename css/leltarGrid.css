@@ -3,6 +3,27 @@ dg-div{
 	height: 100%;
 }
 
+th > dg-div{
+	gap: 13px;
+	background: white;
+
+}
+
+td > dg-div{
+	gap: 13px;
+	background: white;
+}
+
+th > dg-div > *{
+	background: blue;
+	padding: 4px;
+}
+
+td > dg-div > *{
+	background: blue;
+	padding: 4px;
+}
+
 .cBL-TA{
 	grid-template-columns: repeat(3, minmax(max-content, 1fr));
 	grid-template-areas: 
@@ -10,11 +31,18 @@ dg-div{
 		"e e b"
 		"d a a"
 	;
-	gap: 13px;
-	background: white;
 }
 
 .cBL-TA * {
-	background: blue;
-	padding: 4px;
+	/*
+	*/
+}
+
+.megnTermek-TA{
+	grid-template-columns: minmax(max-content, 1fr) minmax(max-content, 2fr);
+	grid-template-areas: 
+		"a b"
+		"a b"
+		"c c"
+	;
 }

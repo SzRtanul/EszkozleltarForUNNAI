@@ -15,7 +15,7 @@ function genGDivs(clist="", elements=[]){
 
 const gComb = {
 	cBL: "cBL-TA",
-	megnTermekD: "", 
+	megnTermekD: "megnTermek-TA", 
 };
 
 const mTNs = {
@@ -140,7 +140,17 @@ export const templates = {
         <${cTn} class='c2 nowrap'>
             ${markanev.length > 0 ? markanev : "-"}
             <br>${a3.length > 0 ? a3 : "-n/a-"}
-        </${cTn}>`;
+        </${cTn}>`
+/*		genGDivs(gComb.megnTermekD,
+			[
+				eszkoznev,
+				`
+					${markanev.length > 0 ? markanev : "-"}
+					<br>${a3.length > 0 ? a3 : "-n/a-"}
+				`
+			]
+		)*/
+;
     },
     megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
