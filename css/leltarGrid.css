@@ -1,0 +1,20 @@
+dg-div{
+	display: grid;
+	height: 100%;
+}
+
+.cBL-TA{
+	grid-template-columns: repeat(minmax(0px, 1fr), 3);
+	grid-template-areas: 
+		"d d c"
+		"d d b"
+		"e a a"
+	;
+	gap: 13px;
+	background: white;
+}
+
+.cBL-TA * {
+	background: blue;
+	padding: 4px;
+}
