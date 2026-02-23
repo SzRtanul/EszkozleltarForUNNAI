@@ -4,11 +4,11 @@ dg-div{
 }
 
 .cBL-TA{
-	grid-template-columns: repeat(minmax(0px, 1fr), 3);
+	grid-template-columns: repeat(3, minmax(max-content, 1fr));
 	grid-template-areas: 
-		"d d c"
-		"d d b"
-		"e a a"
+		"e e c"
+		"e e b"
+		"d a a"
 	;
 	gap: 13px;
 	background: white;

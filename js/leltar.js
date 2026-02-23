@@ -37,6 +37,7 @@ class Retn extends HTMLElement {
     shadow.innerHTML = 
     `<link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../css/leltar.css">
+    <link rel="stylesheet" href="../css/leltarGrid.css">
     <div></div>`;
     const div = shadow.querySelector("div");
     if(name) {

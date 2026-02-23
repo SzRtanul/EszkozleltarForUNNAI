@@ -5,13 +5,18 @@ import { mezok, defUrlap } from "./rowftemplates.js";
 // https://www.youtube.com/watch?v=WjubCNND84w
 const boreSplit = '<p class="inv">elva</p>';
 
-function genGDivs(elements=[]){
-	let kim = "";
+function genGDivs(clist="", elements=[]){
+	let kim = "<dg-div class='" + clist + "'>";
 	for(let i = 0; i < elements.length; i++){
 		kim += "<g-div TA='" + String.fromCharCode(i + 97) + "'>" + elements[i] + "</g-div>";
 	}
-	return kim;
+	return kim + "</dg-div>";
 }
+
+const gComb = {
+	cBL: "cBL-TA",
+	megnTermekD: "", 
+};
 
 const mTNs = {
     megnTermekT: ["Eszköznév", "Márka<br>Típus"],
@@ -21,18 +26,17 @@ const mTNs = {
 			"Beszerzés Azonosító",
 			mTNs.megnTermekT.join("<br>") + 
 			"<br>Gyártás éve<br>Beszerzési Állapot<br>Cég",
-			`
-	<div class="cBL-TA">
-		<g-div TA="a">Darabár</g-div>
-		<g-div TA="b">Teljesítés intervalluma</g-div>
-		<g-div TA="c">Mennyiség</g-div>
-		<g-div TA="e">Beszerzési Állapot</g-div>
-		<g-div TA="d">
-			<div class='nowrap'>Beszerzés</div>
-			<div class='nowrap'>Átvétel</div>
-		</g-div>
-	</div>
-`],
+			genGDivs(gComb.cBL,
+				[
+					"Darabár",
+					"Teljesítés intervalluma",
+					"Mennyiség",
+					"Beszerzési állapot",
+					"<div class='nowrap'>Beszerzés</div>" +
+					"<div class='nowrap'>Átvétel</div>"
+				]
+			)
+],
     theadeHelyiseg2List: ["Azonosító | Helyiségtípus<br>Szint [ Név ]"],
     theadeLeltarList: () =>  [...mTNs.theadeHelyiseg2List, "Mennyiség"],
 };
@@ -462,21 +466,21 @@ export const templates = {
         console.log("sOnce: " + sOnce[0]);
         text+= "<td>" + a[0] + "</td><td class='pad-uns'" +
             "" +
-            "><div class='l'><div class='cr'>" + sOnce[0] + "  [" + a[3] + "]" + sOnce[1] + "</div>" +
+            "><div class='l'><div class='cr'>" + sOnce[0] + "<br>" + a[3] + sOnce[1] + "</div>" +
             "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
             "</div></td>" +
-        `<td>
-			<dg-div class="cBL-TA">
-				<g-div TA="a">${ a[6] } Ft</g-div>
-				<g-div TA="b">${ !a[7] ? "Egyszeri" : a[7] }</g-div>
-				<g-div TA="c"> ${a[4]} db</g-div>
-				${ "<g-div TA='e' class=''>" + (a[5] == 0 ? "Új" : "Használt") + "</g-div>" }
-				<g-div TA="d">
-					<div class='nowrap'>B: ${a[8]}</div>
-					<div class='nowrap'>A: ${a[9]}</div>
-				</g-div>
-			</dg-div>
-		</td>
+			"<td>" +
+				genGDivs(gComb.cBL,
+					[
+						a[6], 
+						!a[7] ? "Egyszeri" : a[7], 
+						a[4],
+						a[5] == 0 ? "Új" : "Használt",
+						`<div class='nowrap'>B: ${a[8]}</div>
+						<div class='nowrap'>A: ${a[9]}</div>`
+					]
+				) +
+		`</td>
 		<td>
 			<div class="g2 jfgrid">
 			${
