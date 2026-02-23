@@ -25,7 +25,7 @@ const mTNs = {
 		[
 			"Beszerzés Azonosító",
 			mTNs.megnTermekT.join("<br>") + 
-			"<br>Gyártás éve<br>Beszerzési Állapot<br>Cég",
+			"<br>Gyártás éve<br>Cég",
 			genGDivs(gComb.cBL,
 				[
 					"Darabár",
