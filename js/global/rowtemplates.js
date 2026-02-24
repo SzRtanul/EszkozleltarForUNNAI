@@ -8,14 +8,38 @@ const boreSplit = '<p class="inv">elva</p>';
 function genGDivs(clist="", elements=[]){
 	let kim = "<dg-div class='" + clist + "'>";
 	for(let i = 0; i < elements.length; i++){
-		kim += "<g-div TA='" + String.fromCharCode(i + 97) + "'>" + elements[i] + "</g-div>";
+		kim += "<g-div TA='" + String.fromCharCode(i + 97) + "'><div>" + elements[i] + "</div></g-div>";
 	}
 	return kim + "</dg-div>";
 }
 
 const gComb = {
 	cBL: "cBL-TA",
+	cBLtrmk: "cBL-trmk-TA",
 	megnTermekD: "megnTermek-TA", 
+};
+
+const mZF = {
+	cBLtrmk: (...a) => {
+		console.log("CROP? ")
+		console.log(a)
+		const gh = a[0]; // befilts
+        let on = (gh?.length || 0) - 1;
+        let both1 = true;
+		let orhn = 0;
+        for(;  both1 && on > -1; on--){
+            console.log("On: " + on)
+            both1 = gh[on] !== '<';
+			if(!both1 && orhn < 2){
+				orhn++;
+				both1 = true;
+			}
+        }
+        const sOnce = on > 0 ? doSplitOnce(gh, on + 1) : "";
+		return "<dg-div class='cBL-trmk-TA'><g-div TA='a'>" + sOnce[0] + "<br>" + a[1]/*a[3]*/ + sOnce[1] + "</g-div>" +
+            "<g-div TA='b' class='flec'>" + a[2]/*befilts[1]*/ + "</g-div>" +
+            "</dg-div>"
+	}
 };
 
 const mTNs = {
@@ -24,8 +48,14 @@ const mTNs = {
     customBeszerzesList: (a) => 
 		[
 			"Beszerzés Azonosító",
-			mTNs.megnTermekT.join("<br>") + 
-			"<br>Gyártás éve<br>Cég",
+			genGDivs(gComb.cBLtrmk+"2",
+				[
+					mTNs.megnTermekT[0],
+					mTNs.megnTermekT[1] +
+					"<br>Gyártás éve",
+					"Cég"
+				]
+			),
 			genGDivs(gComb.cBL,
 				[
 					"Darabár",
@@ -144,15 +174,20 @@ export const templates = {
 /*		genGDivs(gComb.megnTermekD,
 			[
 				eszkoznev,
-				`
-					${markanev.length > 0 ? markanev : "-"}
-					<br>${a3.length > 0 ? a3 : "-n/a-"}
-				`
+			
 			]
 		)*/
 ;
     },
-    megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
+//    megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
+	megnTermekD: (a, eszkoznev, markanev) => genGDivs(
+		gComb.megnTermekD,
+		[
+			eszkoznev,	
+			`${markanev.length > 0 ? markanev : "-"}
+			<br>${a[3].length > 0 ? a[3] : "-n/a-"}`
+		]
+	),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
     megnHelyiseg: (a, helyisegtipus, emelet, cTn3="td", cTni3="div", cTn2="div", cTn="div") =>{
         return "<"+ cTn3 + " class='e1 pad-uns'><" + 
@@ -465,32 +500,26 @@ export const templates = {
         const befous = [ // befilts
             0, 1
         ];
-        const gh =  befilts[0];
-        let on = (gh?.length || 0) - 1 ;
-        let both1 = true;
-        for(;  both1 && on > -1; on--){
-            console.log("On: " + on)
-            both1 = gh[on] !== '<';
-        }
-        const sOnce = on > 0 ? doSplitOnce(gh, on + 1) : "";
-        console.log("sOnce: " + sOnce[0]);
-        text+= "<td>" + a[0] + "</td><td class='pad-uns'" +
-            "" +
-            "><div class='l'><div class='cr'>" + sOnce[0] + "<br>" + a[3] + sOnce[1] + "</div>" +
-            "<d-maxW class='dp tcent flec'>" + befilts[1] + "</d-maxW>" +
-            "</div></td>" +
-			"<td>" +
-				genGDivs(gComb.cBL,
-					[
-						a[6], 
-						!a[7] ? "Egyszeri" : a[7], 
-						a[4],
-						a[5] == 0 ? "Új" : "Használt",
-						`<div class='nowrap'>B: ${a[8]}</div>
-						<div class='nowrap'>A: ${a[9]}</div>`
-					]
+       
+        text+= "<td>" + a[0] + "</td><td class='pad-uns'>" +
+            	mZF.cBLtrmk(
+					befilts[0],
+					a[3],
+					befilts[1]
 				) +
-		`</td>
+            "</td>" +
+			"<td class='pad-uns'>" +
+			genGDivs(gComb.cBL,
+				[
+					a[6] + " Ft", 
+					!a[7] ? "Egyszeri" : a[7], 
+					a[4] + " db",
+					a[5] == 0 ? "Új" : "Használt",
+					`<div class='nowrap'>B: ${a[8]}</div>
+					<div class='nowrap'>A: ${a[9]}</div>`
+				]
+			) +
+			`</td>
 		<td>
 			<div class="g2 jfgrid">
 			${

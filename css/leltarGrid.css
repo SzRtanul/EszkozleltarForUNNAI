@@ -3,33 +3,49 @@ dg-div{
 	height: 100%;
 }
 
+dg-div > *{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
 th > dg-div{
 	gap: 13px;
 	background: white;
 
 }
 
-td > dg-div{
+td  dg-div{
 	gap: 13px;
 	background: white;
 }
 
 th > dg-div > *{
 	background: blue;
+}
+
+td dg-div > *{
+	background: #1c388cb0;
+}
+
+td g-div > div{
 	padding: 4px;
 }
 
-td > dg-div > *{
-	background: blue;
-	padding: 4px;
+.megnTermek-TA{
+	grid-template-columns: repeat(2, minmax(max-content, 1fr));
+	grid-template-areas: 
+		"a b"
+	;
 }
 
 .cBL-TA{
 	grid-template-columns: repeat(3, minmax(max-content, 1fr));
 	grid-template-areas: 
-		"e e c"
+		"e e a"
 		"e e b"
-		"d a a"
+		"d c c"
 	;
 }
 
@@ -38,11 +54,21 @@ td > dg-div > *{
 	*/
 }
 
-.megnTermek-TA{
-	grid-template-columns: minmax(max-content, 1fr) minmax(max-content, 2fr);
+.cBL-trmk-TA{
+	grid-template-columns: minmax(max-content, 1fr);
 	grid-template-areas: 
-		"a b"
+		"a"
+		"b"
+	;
+}
+
+.cBL-trmk-TA2{
+	grid-template-columns: (2, minmax(max-content, 1fr));
+	grid-template-areas: 
 		"a b"
 		"c c"
 	;
+}
+
+.cBL-trmk-TA2 > g-div[TA='b']{
 }
