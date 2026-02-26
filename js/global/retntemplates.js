@@ -88,9 +88,9 @@ export const retnCombinations = {
     customLeltarList: 
         "trow:theade:tbodyend:megn:customLeltarList:" +
         "trowleBeszerzesList:theadleHelyisegList|||" +
-        "05FFFFFF;012---FF01FFFF;012---FFFF02FF;0FF" +
+        "050102FF;009---" +
         "" +
-        "---040602FF;013;0=0=0:1:2",
+        "040602FF;008;0=101=0=1:0=011:0=100",
     optionEszkozList: retEx[3]("000"),
     optionMarkaList: retEx[3]("001"),
     optionHelyisegTipusList: retEx[3]("002"),

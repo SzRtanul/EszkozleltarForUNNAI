@@ -13,6 +13,25 @@ export const exportedRetnMethods = {
     whataf: whataf
 }
 
+export function doParseCHTML(oHTML=""){
+	let output = "";
+	const stack = [];
+	const allt = oHTML.split('\x00')
+	for(let i = 0; i < allt.length; i++){
+		if(allt[i]?.length < 2) continue;
+		const actE = allt[i];
+		let oSgn = 0;
+		const vlSgn = [' ', '<'];
+		const vl = [-1, -1];
+		const uhti = actE[0] >>> 0;
+		for(let j = 0; oSgn < vlSgn.length && j < actE.length; j++){
+			if(actE[j] == vlSgn[oSgn]) vl[oSgn] = j;
+			oSgn++;
+		}
+
+	}
+}
+
 export function makeUpdateForm(e){
     // e.target 
     const item = e.target;
