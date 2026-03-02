@@ -95,15 +95,18 @@ ${ defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, i
 
 
 const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
-    return '<'+ctn+' class="film">' +
-            '<div class="scene scen scen1">' +
-                '<p>Biztos vagy benne?</p>' +
-                '<button class="kuld" runsclick="\x04" value="' + exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1] + '">Igen</button>' +
-                '<button runsclick="\x06" class="cancel" nextTo="scen:0">Mégse</button>' +
-                '<p class="allapot"></p>' +
-            '</div>' +
-            '<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">'+ gombfelirat +'</button>' +
-        '</' + ctn + '>';
+	return `
+\x00\x01${ ctn } class="film"
+\x00\x01div class="scene scen scen1"
+\x00\x00p>Biztos vagy benne?
+\x00\x00button class="kuld" runsclick="\x04" value="${ 
+	exportedMethods.getSchemTabValFromUsqF(usqF[0]) + "/" + usqF[1]
+}">Igen
+\x00\x00button runsclick="\x06" class="cancel" nextTo="scen:0">Mégse
+\x00\x00p class="allapot"
+\x00\x02button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">${ gombfelirat }
+\x00\x02
+\x00\xFF`;
 };
 
 const udMezC = (id, endptr, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
@@ -169,18 +172,12 @@ export const templates = {
     megnTermek: (args, eszkoznev, markanev) => `${ eszkoznev } [${markanev} - ${args[3]}]`,
     megnTermekT: (args, eszkoznev, markanev, cTn="td") => {
         const a3 = args[3];
-        return `<${cTn} class='c1${cTn != "td" ? " tcent" : ""}'>${ eszkoznev }</${cTn}>
-        <${cTn} class='c2 nowrap'>
-            ${markanev.length > 0 ? markanev : "-"}
-            <br>${a3.length > 0 ? a3 : "-n/a-"}
-        </${cTn}>`
-/*		genGDivs(gComb.megnTermekD,
-			[
-				eszkoznev,
-			
-			]
-		)*/
-;
+		return `
+\x00\x00${cTn} class='c1${cTn != "td" ? " tcent" : ""}'>${ eszkoznev }
+\x00\x00${cTn} class='c2 nowrap'>
+	${markanev.length > 0 ? markanev : "-"}
+	<br>${a3.length > 0 ? a3 : "-n/a-"}
+\x00\xFF`;
     },
 //    megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
 	megnTermekD: (a, eszkoznev, markanev) => genGDivs(
@@ -193,14 +190,16 @@ export const templates = {
 	),
     megnCegT: (args) => "<td class='nowrap tcent'>" + args[1] + "</td>",
     megnHelyiseg: (a, helyisegtipus, emelet, cTn3="td", cTni3="div", cTn2="div", cTn="div") =>{
-        return "<"+ cTn3 + " class='e1 pad-uns'><" + 
-                cTni3 + " class='e1 l  megnhelyiseg'><" +
-                    cTn2 + " class='d1 lgridcol2 megnhelyiseg'><"+ 
-                        cTn + " class='c1 tcent jlec'>" + a[1] + "</"+ cTn + "><" +
-                        cTn + " class='c2 tcent'>" + helyisegtipus+ "</"+ cTn + "></"+ cTn2 + ">"+
-                    ("<" + cTn2 + " class='d2 tcent flec'>" + emelet + ". emelet" + (a[7].length > 0 ? " [ " + a[7] + " ]" : "")+ "</"+ cTn2 + ">") + 
-                "</" + cTni3 + ">" +
-            "</" + cTn3 + ">";
+		return `
+\x00\x01${ cTn3 } class='e1 l  megnhelyiseg'
+\x00\x01${ cTni3 } class='e1 l  megnhelyiseg'
+\x00\x01${ cTn2 } class='d1 lgridcol2 megnhelyiseg'
+\x00\x00${ cTn } class='c1 tcent jlec'>${ a[1] }
+\x00\x00${ cTn } class='c2 tcent'>${ helyisegtipus }
+\x00\x02${ cTn2 } class='d2 tcent flec'>${ emelet }. emelet${ (a[7].length > 0 ? " [ " + a[7] + " ]" : "") }
+\x00\x04
+\x00\xFF
+`;
     },
     tbodybef: (args) => "<tbody>",
     //divbef: (args) => "",
@@ -232,35 +231,23 @@ export const templates = {
         return "<div style='position: relative;'>" + helyisegek + "</div>"
     },
     helyiseg: (args) => {
-        return `
-        <div class="film"
-            style="
-                position: absolute;
-                top: ${args[3]}px;
-                left: ${args[4]}px;
-        ">
-            <ul class="grayblack liview scen">
-                <li>Alakzatpontok</li>
-                ${
-                    udMezC(args[0], [1], mezok.helyisegUpd(args, true), undefined, undefined, undefined, "li")
-                }
-            </ul>
-            <button 
-                class='helyiseg' 
-                style="
-                    position: absolute; 
-                    /*top: calc(${args[3]}px * var(--scale-v)); 
-                    left: calc(${args[4]}px * var(--scale-v)); 
-                    width: calc(${args[5]}px * var(--scale-v)); 
-                    height: calc(${args[6]}px * var(--scale-v)); */
-                    top: ${0}px;
-                    left: ${0}px;
-                    width: ${args[5]}px;
-                    height: ${args[6]}px;
-                    ${ args[9] != "" ? "clip-path: polygon(" + args[9] + ");" : "" }
-            "></button>
-        </div>
-        `
+		return `
+\x00\x01div class="film" style="
+	position: absolute;
+	top: ${args[3]}px;
+	left: ${args[4]}px;"
+\x00\x01ul class="grayblack liview scen"
+\x00\x00li>Alakzatpontok
+\x00\xFF ${ udMezC(args[0], [1], mezok.helyisegUpd(args, true), undefined, undefined, undefined, "li") }
+\x00\x02button class='helyiseg' style="
+	position: absolute;
+	top: ${0}px;
+	left: ${0}px;
+	width: ${args[5]}px;
+	height: ${args[6]}px;
+	${ args[9] != "" ? "clip-path: polygon(" + args[9] + ");" : "" }"
+\x00\x02
+\x00\xFF`;
     },
     optionHead: () => "<option value=''></option>",
     optionList: (args, text=args[1], id=0) => "<option value=" + args[id] + ">"+ text + "</option>",
