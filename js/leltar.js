@@ -8,8 +8,6 @@ import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
 import { doFilm, setToFilm } from "./global/film.js";
 
-console.log(0b10000000 >> 7)
-
 const retnsInner = {};
 
 const subsite = {};
@@ -24,7 +22,6 @@ await exportedQMethods.doQueryUpdates();
 class GridDiv extends HTMLElement {
 	connectedCallback() {
 		const gridarea = this.getAttribute("TA");
-		console.log("EHY: " + gridarea);
 		if(gridarea) this.style.setProperty("grid-area", gridarea);
 	}
 }
@@ -53,17 +50,14 @@ class Retn extends HTMLElement {
     eventSample("submit", shadow);
     eventSample("change", shadow);
     if(retn){
-        console.log("Fa")
         div.innerHTML = retn;
         if(!this.hasAttribute("no")) retnsInner[cjust].push(div);
     }
     else{
-        console.log("Nem fa: " + cjust);
         /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
         div.innerHTML = retns[cjust];
         if(!this.hasAttribute("no")) retnsInner[cjust] = [div];
     }
-//    console.log(retnsInner)
   }
 }
 
@@ -84,30 +78,22 @@ class RetnP extends HTMLElement {
             } 
         }
         if(!cjust) return;
-        //  console.log("VellYou!!!: " + value);
-        //  console.log(div)
         const retn = retns[cjust];
         if(retn){
-            //        console.log("Fa")
             div.innerHTML = retn;
             retnsInner[cjust].push(div);
         }
         else{
-            //        console.log("Nem fa");
             /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
             div.innerHTML = retns[cjust];
             retnsInner[cjust] = [div];
             retnUpdatable.push(cjust);
         }
-        //    console.log(retnsInner);
-        // console.log("Run: " + value);
         if(value && div.tagName == 'SELECT'){
             const dq = div.querySelector("* [value='"+ value +"']");
             dq?.setAttribute("selected", "");
         }
         this.remove();
-       // console.log("YellYe");
-       // console.log(div)
 
         /*queueMicrotask(() => {
             //div.value=div.getAttribute("value");
@@ -153,7 +139,6 @@ class SubSite extends HTMLElement{
         currentRequest.setRequestHeader("Pragma", "no-cache");
 
         currentRequest.onload = async function () {
-            console.log("EN")
             if (currentRequest.status >= 200 && currentRequest.status < 300) {   
                 let iHTML = currentRequest.responseText;
                 shadow.innerHTML = iHTML;
@@ -161,13 +146,11 @@ class SubSite extends HTMLElement{
             } else {
                 console.error("Request failed with status:", currentRequest.status);
             }
-            console.log("ENNAE")
         };
         currentRequest.onerror = function () {
             console.error("Request failed due to network error");
         };
         currentRequest.send();
-        console.log("ONPREM")
     } 
 }
 
@@ -187,13 +170,10 @@ let view = new DataView(buffer);
 view.setUint32(0, num); // 4 bájt beírása
 
 let str = String.fromCharCode(...new Uint8Array(buffer));
-console.log(str);
 
 const logout = document.getElementById("logout");
 
 const test = document.querySelector("form");
-console.log("Itt:")
-console.log(test.attributes);
 
 logout.addEventListener("click", () => {
     window.location.pathname = "";
@@ -201,14 +181,9 @@ logout.addEventListener("click", () => {
 
 /*
 export async function UIUpdate(){
-    console.log("UPDATING UI1")
-    console.log("UPDATING UI2")
     const listofretns = document.querySelectorAll("[cjust].retn:not([cjust=''])");
-    console.log(listofretns);
     exportedRetnMethods.doFrissit(listofretns);
-    console.log("UPDATING UI3")
     //addEvents();
-    console.log("UPDATING UI4")
 }
 */
 
@@ -247,7 +222,6 @@ function writeStatus(allapotKijelzok, statcode){
 //Kuld
 async function doKuld(e, afterMethod=()=>""){
     e.preventDefault();
-console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     const urlap = e.target;
     const attrs = {};
     for(const attr of urlap.attributes){
@@ -283,32 +257,25 @@ console.log("EE: SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     }
     let stat = { st: 0 };
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
-    console.log("Stat: " + stat.st);
 	writeStatus(allapotKijelzok, stat.st);
     if(stat.st < 300){
         await afterMethod(e, sikeresKeres, response);
     }
-    console.log(tr);
 }
 
 async function doDelete(e){
-    console.log("Flááke");
     let stat = {
         st: 404,
     };
-    console.log(e);
     const del = e.target.closest(".retnrow");
     const allapot = e.target.closest(".film")?.querySelectorAll(".allapot");
     const value = "delete/" + e.target.value;
     await exportedMethods.exampleREST(value, "POST", "", stat);
-    console.log("Stat: " + stat.st);
-    console.log(del);
     if(stat.st < 300 && del) del.remove();
     else if(allapot){
         allapot.innerHTML = stat.st == 404 ? "Program hiba" : "A rekord nem létezik,\n vagy más tábla rekordja hivatkozik rá.";
     }
    // else e.target.classList.add("redborder");
-   console.log(value);
 }
 
 function doInject(e){
@@ -335,7 +302,6 @@ function doUpdate(e){
 // Mi
 
 function kiscica(e){
-    console.log("Ez működhet.")
 }
 
 function changeview(e){
@@ -344,16 +310,12 @@ function changeview(e){
 }
 
 function doSelVal(e){
-    console.log("fut");
-    //console.log(e.target);
     e.target.setAttribute("value", e.target.value);
 }
 
 function doSetParam(e){
     const d = e.target;
-    console.log(d);
     const dn = d.getAttribute("attri");
-    console.log(dn);
     if(dn) d.setAttribute(dn, d.value);
 }
 
@@ -372,20 +334,15 @@ const runnable = [
 ];
 
 async function doRun(e, eType = ""){
-//    console.log("runs"+eType)
     const runs = e.target.getAttribute("runs"+eType) || "";
-//    console.log(runs);
     for(let i = 0; i < runs.length; i++){
-       console.log("Ruin: " + runs.charCodeAt(i));
         await runnable[runs.charCodeAt(i)-1](e);
     }
 }
 
 function eventSample(eventtype = "click", environment=document){
-  //  console.log("Run it!")
     environment.addEventListener(eventtype, async (e) => {
         e.stopPropagation();
-        console.log(e.target.attributes);
         await doRun(e, eventtype);
     });
 }

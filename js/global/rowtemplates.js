@@ -21,14 +21,11 @@ const gComb = {
 
 const mZF = {
 	cBLtrmk: (...a) => {
-		console.log("CROP? ")
-		console.log(a)
 		const gh = a[0]; // befilts
         let on = (gh?.length || 0) - 1;
         let both1 = true;
 		let orhn = 0;
         for(;  both1 && on > -1; on--){
-            console.log("On: " + on)
             both1 = gh[on] !== '<';
 			if(!both1 && orhn < 2){
 				orhn++;
@@ -36,9 +33,12 @@ const mZF = {
 			}
         }
         const sOnce = on > 0 ? doSplitOnce(gh, on + 1) : "";
-		return "<dg-div class='cBL-trmk-TA'><g-div TA='a'>" + sOnce[0] + "<br>" + a[1]/*a[3]*/ + sOnce[1] + "</g-div>" +
-            "<g-div TA='b' class='flec'>" + a[2]/*befilts[1]*/ + "</g-div>" +
-            "</dg-div>"
+		return `
+\x00\x01dg-div class='cBL-trmk-TA'>
+\x00\x00g-div TA='a'>${ sOnce[0] + "<br>" + a[1]/*a[3]*/ + sOnce[1] }
+\x00\x00g-div TA='b' class='flec'>${ a[2]/*befilts[1]*/ }
+\x00\x02
+\x00\xFF`;
 	}
 };
 
@@ -74,19 +74,25 @@ const mTNs = {
 function doSplitOnce(str, pos) {
     return [str.slice(0, pos), str.slice(pos)];
 }
-
-const sampUpdate = (id=-1, usqF=[], mezok="", insD=false, kuldFelirat, gombfelirat="Módosítás", ctn="td")=>{
-//    console.log(usqF);
+const sampUpdate = (
+	id=-1, 
+	usqF=[], 
+	mezok="", 
+	insD=false, 
+	kuldFelirat, 
+	gombfelirat="Módosítás", 
+	ctn="td"
+)=>{
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
-//    console.log("Con: " + value);
-    return `
-<${ctn} class="film">` + 
-    defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) + 
-    `<button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">
-        ${gombfelirat}
-    </button>
-</${ctn}>`
+	const ane = `
+\x00\x01${ctn} class="film">
+${ defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) }
+\x00\x00button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">${gombfelirat}
+\x00\x02
+\x00\xFF`;
+	return ane;
 };
+
 
 const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
     return '<'+ctn+' class="film">' +
@@ -120,8 +126,6 @@ const otherUpd = (args=[], usqF, myUpd="", egyebbf="", egyebbh="") => {
 
 const tempex = [
     (args, koszbe="", nFD=[], befTHlen=0)=>{
-        console.log(args);
-        console.log(koszbe)
         let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
         for(let i = 0; i < args.length; i++){
             ret+="<th>"+args[i]+"</th>";
@@ -146,7 +150,6 @@ const tempex = [
 export const templates = {
     // Defaults
     table: (args, retr="") => {
-        console.log(retr);
         return "<table>" +retr+ "</table>";
     },
     justF: () => {
@@ -440,7 +443,6 @@ export const templates = {
             befilts, 
             [2], [0]
         );
-        //console.log(templ)
         return templ;
     },
     trowleBeszerzesList: (a) => templates.trow(
@@ -471,22 +473,15 @@ export const templates = {
     // 1. customBeszerzesList
     //
     customBeszerzesList2: (a, justF="", ...res) => {
-        console.log("Zsuuuuuuuuuuuuuuuu");
-        console.log([justF, ...res]);
         return justF.length > 2 ? templates.customBeszerzesList(a, ...res) : "";
     },
     customBeszerzesList: (a, helyiseg="", leltaresemeny="", hhead="", lehead="", tend="", ...befilts) => {
-        //console.log("Befilts:");
-//        console.log(befilts)
-        console.log("ÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁ: ");
-        console.log([helyiseg, leltaresemeny, hhead, lehead, tend, ...befilts]);
         let text = "<tr class='retnrow'>";
         let c = 0;
         let nv = 0;
         let ntd = 0;
 
         const endpoint = "";
-//        console.log("TARRRRRR: " + helyiseg)
         const noWrap = [
 
         ];
@@ -551,39 +546,26 @@ export const templates = {
 		</div>
     </td>
 </tr>`;
-//        console.log(helyiseg.length);
-//        console.log(leltaresemeny.length);
-//        console.log(tend);
 
         const bon = ((helyiseg.length > 0 ? 1 : 0) & 1) ^ ((((leltaresemeny.length > 0 ? 1 : 0) & 1) << 1));
         let both = bon;
-//        console.log("Bon: "+bon);
         let kieg = "";
         if(both > 0){
             kieg += '<tr><td colspan="'+ (a.length + 1) + '">';
             if((both & 1) != 0){
-//                console.log("trate: " + hhead)
                 kieg += "<h4>Helyiséghez hozzárendelve</h4><hr>" + hhead + helyiseg +  tend + "";
             }
-            //            console.log("Azon!");
-            //            console.log(bon);
-            //            console.log(both & 2)
-            //            console.log((both & 2) != 0);
             if((both & 2) != 0){
-//                console.log("trat: " + lehead)
                 kieg += "<h4>Leltáreseményben érintett</h4><hr>" + lehead + leltaresemeny + tend + "";
             }
             kieg+= '</td></tr>';
         }
-//        console.log("HJ: " + lehead + leltaresemeny + "</tbody></table>")
         return text + kieg;
     },
     //
     // 2. customLeltarList
     //
     customLeltarList: (a, beszerzes,/* eszkozszukseglet, termekszukseglet, */ bhead, tend, ...befilts) => {
-//        console.log("Befilts:");
-//        console.log(befilts);
         let text = "<tr class='retnrow'>";
         let c = 0;
         const befs = [ // i
@@ -593,7 +575,6 @@ export const templates = {
             0, 1
         ];
         for(let i = 0; i < a.length-2; i++){
-            console.log("C: " + c);
             if(c < befs.length && befs[c] < i) c++;
             if(c < befs.length && befs[c] == i) text += "<td>"/* + a[i] + ": " */+ befilts[befous[c]] + "</td>"
             else text += "<td>" + a[i] + "</td>";

@@ -39,29 +39,14 @@ async function doQueryUpdates(){
         ActuelThingsResults.push(ActuelThings[key]());
     }
     
-    console.log("Szeretem én ezt?: ");
-    console.log("Nem.");
-    console.log(promises)
     try {
         await Promise.all(
             promises.map(p => withTimeout(p, 5000)) // 5 másodperces limit mindegyikre
         );
-        console.log("YEEEEEY")
-       /* let text="";
-        const en = endpointsResults[17];
-        for(let i = 0; i<en.length; i++){
-            text += en.charCodeAt(i)+";";
-        }
-        console.log(text);
-        console.log(en.split("\x00"));*/
-        console.log(endpointsResults)
     }
     catch(e){
-        console.log("Hiba történt az adatok lekérése során:v")
-        console.log(e)
-        
+        console.error("Hiba történt az adatok lekérése során:\n" + e)
     }
-    console.log("Nem.");
 }
 
 export const exportedQMethods = {
