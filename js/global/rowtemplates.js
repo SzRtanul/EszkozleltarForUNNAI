@@ -386,17 +386,22 @@ export const templates = {
     trowLeltarEsemenyTipusList: (args) => nevUp(args, 15, "Leltáresemény típus neve"),
     trowCegList: (args) => otherUpd(args, [1], "cegUpd"),
     trowTermekList: (args, megnTermek) => {
-        return "<tr class='retnrow'><td>" + args[0] + "</td>" + megnTermek + "" + udMezC(args[0], [2], mezok.termekUpd(args))+"</tr>";
-    },//otherUpd(args, [2], "termekUpd"),
+   		return `
+\x00\x01tr class='retnrow'
+\x00\x00td>${ args[0] }
+\x00\xFF${ megnTermek }${ udMezC(args[0], [2], mezok.termekUpd(args)) }
+\x00\x02
+\x00\xFF`;
+	},//otherUpd(args, [2], "termekUpd"),
     trowBeszerzesList: (args) => otherUpd(args, [3], "beszerzesUpd", `
-<td class="film"><button>Termék hozzáadása helyiséghez</button></td>
-<td class="film"><button>Leltár esemény regisztrálása</button></td>
-`),
+\x00\x00td class="film"><button>Termék hozzáadása helyiséghez</button>
+\x00\x00td class="film"><button>Leltár esemény regisztrálása</button>`),
     trowEmeletList: (args) => otherUpd(args, [4], "emeletUpd"),
     trowHelyisegList: (args) => otherUpd(args, [5], "helyisegUpd"),
-    trowHelyiseg2List: (args, megnHelyiseg="") => "<tr>" + megnHelyiseg + udMezC(args[0], [5], mezok.helyisegUpd(args)) +"</tr>",
+    trowHelyiseg2List: (args, megnHelyiseg="") => 
+		"<tr>" + megnHelyiseg + udMezC(args[0], [5], mezok.helyisegUpd(args))+"</tr>",
     trowLeltarList: (a, megnHelyiseg) => {
-        return "<tr>" + megnHelyiseg + "<td class='thcent'>" + a[3] + " db</td></tr>";
+        return "\n\x00\x00tr>" + megnHelyiseg + "<td class='thcent'>" + a[3] + " db</td>";
     },//otherUpd(args, [6], "leltarUpd"),
     //
     trowLeltarEsemenyList: (args) => otherUpd(args, [8], "leltarEsemenyUpd"),
@@ -463,7 +468,7 @@ export const templates = {
         return justF.length > 2 ? templates.customBeszerzesList(a, ...res) : "";
     },
     customBeszerzesList: (a, helyiseg="", leltaresemeny="", hhead="", lehead="", tend="", ...befilts) => {
-        let text = "<tr class='retnrow'>";
+        let text = "\n\x00\x01tr class='retnrow'";
         let c = 0;
         let nv = 0;
         let ntd = 0;
@@ -482,58 +487,53 @@ export const templates = {
         const befous = [ // befilts
             0, 1
         ];
-       
-        text+= "<td>" + a[0] + "</td><td class='pad-uns'>" +
-            	mZF.cBLtrmk(
-					befilts[0],
-					a[3],
-					befilts[1]
-				) +
-            "</td>" +
-			"<td class='pad-uns'>" +
-			genGDivs(gComb.cBL,
-				[
-					a[6] + " Ft", 
-					!a[7] ? "Egyszeri" : a[7], 
-					a[4] + " db",
-					a[5] == 0 ? "Új" : "Használt",
-					`<div class='nowrap'>B: ${a[8]}</div>
-					<div class='nowrap'>A: ${a[9]}</div>`
-				]
-			) +
-			`</td>
-		<td>
-			<div class="g2 jfgrid">
-			${
-				sampUpdate(
-					a[0], [6, 0],
-					mezok.leltarUpd(a, true),
-					true, "Hozzáad",
-					"Termék hozzárendelése Helyiséghez",
-					"div"
-				)
-			}
-			${
-				sampUpdate(
-					a[0], [8, 0],
-					mezok.leltarEsemenyUpd(a, true),
-					true, "Hozzáad",
-					"Leltáresemény hozzáadása",
-					"div"
-				)
-			}
-			${
-				udMezC(
-					a[0], 3, mezok.beszerzesUpd(a),
-					"Beszerzés Módosítása",
-					"Beszerzés Törlése",
-					undefined, "div"
-				)
-			}
-		</div>
-    </td>
-</tr>`;
-
+      text += `
+\x00\x00td>${a[0]}
+\x00\x01td class='pad-uns'>${ mZF.cBLtrmk(befilts[0], a[3], befilts[1]) }
+\x00\x03td class='pad-uns'>
+\x00\x01dg-div class="${ gComb.cBL}"
+\x00\x00g-div TA="a">${ a[6] + " Ft" }
+\x00\x00g-div TA="b">${ !a[7] ? "Egyszeri" : a[7] }
+\x00\x00g-div TA="c">${ a[4] + " db" }
+\x00\x00g-div TA="d">${ a[5] == 0 ? "Új" : "Használt" }
+\x00\x01g-div TA="e">
+\x00\x01div
+\x00\x00div class='nowrap'>B: ${a[8]}
+\x00\x00div class='nowrap'>A: ${a[9]}
+\x00\x09td
+\x00\x01dg-div
+\x00\x01g-div TA="a"><!-- Leltár -->
+\x00\x03g-div TA="b"><!-- Leltáresemény -->
+\x00\x01td
+\x00\x01div class="g2 jfgrid">
+${ 
+	sampUpdate(
+		a[0], [6, 0], 
+		mezok.leltarUpd(a, true),
+		true, "Hozzáad", 
+		"Termék hozzárendelése Helyiséghez", 
+		"div"
+	)
+}
+${
+	sampUpdate(
+		a[0], [8, 0],
+		mezok.leltarEsemenyUpd(a, true),
+		true, "Hozzáad",
+		"Leltáresemény hozzáadása",
+		"div"
+	)
+}
+${
+	udMezC(
+		a[0], 3, mezok.beszerzesUpd(a),
+		"Beszerzés Módosítása",
+		"Beszerzés Törlése",
+		undefined, "div"
+	)
+}
+\x00\x06
+\x00\xFF`;
         const bon = ((helyiseg.length > 0 ? 1 : 0) & 1) ^ ((((leltaresemeny.length > 0 ? 1 : 0) & 1) << 1));
         let both = bon;
         let kieg = "";
