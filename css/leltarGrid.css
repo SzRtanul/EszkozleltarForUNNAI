@@ -72,3 +72,11 @@ td g-div > div{
 
 .cBL-trmk-TA2 > g-div[TA='b']{
 }
+
+.cBL-leltandleltes{
+	grid-template-columns: (1, minmax(max-content, 1fr));
+	grid-template-areas: 
+		"a"
+		"b"
+	;
+}

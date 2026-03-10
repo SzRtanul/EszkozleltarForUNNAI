@@ -8,6 +8,7 @@ import { formDRef, modDRef } from "./global/retntemplates.js";
 import { mezok, insUrlap } from "./global/rowftemplates.js";
 import { doFilm, setToFilm } from "./global/film.js";
 
+const retnsHParent = {};
 const retnsInner = {};
 
 const subsite = {};
@@ -19,147 +20,13 @@ const retnUpdatable = [];
 await exportedQMethods.doQueryUpdates();
 
 
-class GridDiv extends HTMLElement {
-	connectedCallback() {
-		const gridarea = this.getAttribute("TA");
-		if(gridarea) this.style.setProperty("grid-area", gridarea);
-	}
+function gEAdd(){
+	eventSample("click", shadow);
+	//eventSample("Enter", shadow);
+	eventSample("submit", shadow);
+	eventSample("change", shadow);
 }
 
-class Retn extends HTMLElement {
-  connectedCallback() {
-    const shadow = this.attachShadow({mode: 'open'});
-    const cjust = this.getAttribute("cjust");
-    const name = this.getAttribute("fref");
-    shadow.innerHTML = 
-    `<link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="../css/leltar.css">
-    <link rel="stylesheet" href="../css/leltarGrid.css">
-    <div></div>`;
-    const div = shadow.querySelector("div");
-    if(name) {
-        if(urlapInner[name])urlapInner[name].push(div);
-        else{
-            urlapInner[name] = [div];
-        } 
-    }
-    if(!cjust) return;
-    const retn = retns[cjust];
-    eventSample("click", shadow);
-    //eventSample("Enter", shadow);
-    eventSample("submit", shadow);
-    eventSample("change", shadow);
-    if(retn){
-        div.innerHTML = retn;
-        if(!this.hasAttribute("no")) retnsInner[cjust].push(div);
-    }
-    else{
-        /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
-        div.innerHTML = retns[cjust];
-        if(!this.hasAttribute("no")) retnsInner[cjust] = [div];
-    }
-  }
-}
-
-let iterat = 0;
-
-class RetnP extends HTMLElement { 
-    connectedCallback() {
-        iterat++;
-        const cjust = this.getAttribute("cjust");
-        const name = this.getAttribute("fref");
-        const div = this.parentElement;
-        const value = div.value || div.getAttribute("value");
-
-        if(name) {
-            if(urlapInner[name]) urlapInner[name].push(div);
-            else{
-                urlapInner[name] = [div];
-            } 
-        }
-        if(!cjust) return;
-        const retn = retns[cjust];
-        if(retn){
-            div.innerHTML = retn;
-            retnsInner[cjust].push(div);
-        }
-        else{
-            /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
-            div.innerHTML = retns[cjust];
-            retnsInner[cjust] = [div];
-            retnUpdatable.push(cjust);
-        }
-        if(value && div.tagName == 'SELECT'){
-            const dq = div.querySelector("* [value='"+ value +"']");
-            dq?.setAttribute("selected", "");
-        }
-        this.remove();
-
-        /*queueMicrotask(() => {
-            //div.value=div.getAttribute("value");
-            div.value = value;
-        });*/
-    }
-}
-
-class MezP extends HTMLElement{
-    connectedCallback() {
-        const name = this.getAttribute("mez");
-        this.outerHTML = insUrlap(mezok[name](), "Hozzáad")
-    }
-}
-
-class CHDiv{
-    connectedCallback() {
-        const name = this.getAttribute("fname");
-        if(name) chdiv[name] = this;        
-    }
-}
-
-class SubSite extends HTMLElement{
-    connectedCallback() {
-        const name = this.getAttribute("fname");
-        if (currentRequest[name]) {
-            currentRequest.abort();
-        }
-        else{
-            currentRequest[name] = new XMLHttpRequest();
-        }
-        const shadow = this.attachShadow({mode: 'open'});
-        shadow.innerHTML = "";
-        subsite[name] = shadow;
-        eventSample("click", shadow);
-        //eventSample("Enter", shadow);
-        eventSample("submit", shadow);
-        eventSample("change", shadow);
-
-        currentRequest.open("GET", "content/" + melyik + "?nocache=" + new Date().getTime(), true);
-        //currentRequest.withCredentials = true;
-        currentRequest.setRequestHeader("Cache-Control", "no-store");
-        currentRequest.setRequestHeader("Pragma", "no-cache");
-
-        currentRequest.onload = async function () {
-            if (currentRequest.status >= 200 && currentRequest.status < 300) {   
-                let iHTML = currentRequest.responseText;
-                shadow.innerHTML = iHTML;
-            //    sessionStorage.setItem("oldal", melyik);
-            } else {
-                console.error("Request failed with status:", currentRequest.status);
-            }
-        };
-        currentRequest.onerror = function () {
-            console.error("Request failed due to network error");
-        };
-        currentRequest.send();
-    } 
-}
-
-customElements.define('g-div', GridDiv);
-customElements.define('retn-sh', Retn);
-customElements.define('retn-p', RetnP);
-customElements.define('mez-p', MezP);
-customElements.define('ch-d', CHDiv);
-customElements.define('sub-s', SubSite);
 
 
 
@@ -347,7 +214,201 @@ function eventSample(eventtype = "click", environment=document){
     });
 }
 
-eventSample();
-//eventSample("Enter");
-eventSample("submit");
-eventSample("change");
+// Custom line
+
+class GridDiv extends HTMLElement {
+	connectedCallback() {
+		const gridarea = this.getAttribute("TA");
+		if(gridarea) this.style.setProperty("grid-area", gridarea);
+	}
+}
+
+class MarkS extends HTMLElement{
+	disconnectedCallback() {
+    	console.log('disconnected');
+  	}	
+}
+
+class Retn extends HTMLElement {
+	constructor(){
+		this.locate = -1;
+		this.cjust = "";
+		this.name = "";
+		this.rI = null;
+		this.uI = null;
+	}
+
+	disconnectedCallback() {
+    //	console.log('disconnected');
+		this.rI[0][locate] = false;
+	}
+
+	
+
+  	connectedCallback() {
+		const shadow = this.attachShadow({mode: 'open'});
+		this.cjust = this.getAttribute("cjust");
+		this.name = this.getAttribute("fref");
+		const filtOsz = this.getAttribute("flos");
+		const filtVals = this.getAttribute("flvs");
+
+		shadow.innerHTML = 
+		`<link rel="stylesheet" href="../global.css">
+		<link rel="stylesheet" href="../css/leltar.css">
+		<link rel="stylesheet" href="../css/leltarGrid.css">
+		<mark-s></mark-s>`;
+		const div = shadow.querySelector("mark-s");
+		let isUr = false;
+
+		if(name) {
+			if(urlapInner[name]) urlapInner[name].push(div);
+			else{
+				urlapInner[name] = [div];
+			} 
+		}
+		//
+		if(!cjust) return;
+		const retn = retns[cjust];
+		gEAdd();
+		if(!retn){
+			/*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
+			div.innerHTML = retns[cjust];
+//			if(!this.hasAttribute("no")) 
+			this.rI = retnsInner[cjust];
+			this.rI.push([true]);
+			this.rI.push([div]);
+		}
+		else{
+			if(false && this.hasAttribute("no")){
+				div.innerHTML = retn;
+			}
+			else{
+				let i = -1;
+				const rhplen = this.rI[0].length;
+				const retH = this.rI[0];
+				do{
+					i++;
+				}while(i < rhplen && retH[i]);
+
+				if((i >>> 0) < rhplen){
+					div.appendChild(this.rI[1][i]);
+					retH[i] = true;
+				} 
+				else {
+					div.innerHTML = retn;
+					this.rI[1].push(div);
+					retH.push(true);
+				}
+				this.locate = i;
+			}
+		}
+	}
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		console.log(`Attribute ${name} has changed.`);
+	}
+}
+
+
+let iterat = 0;
+
+class RetnP extends HTMLElement { 
+    connectedCallback() {
+        iterat++;
+        const cjust = this.getAttribute("cjust");
+        const name = this.getAttribute("fref");
+        const div = this.parentElement;
+        const value = div.value || div.getAttribute("value");
+
+        if(name) {
+            if(urlapInner[name]) urlapInner[name].push(div);
+            else{
+                urlapInner[name] = [div];
+            } 
+        }
+        if(!cjust) return;
+        const retn = retns[cjust];
+        if(retn){
+            div.innerHTML = retn;
+            retnsInner[cjust].push(div);
+        }
+        else{
+            /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
+            div.innerHTML = retns[cjust];
+            retnsInner[cjust] = [div];
+            retnUpdatable.push(cjust);
+        }
+        if(value && div.tagName == 'SELECT'){
+            const dq = div.querySelector("* [value='"+ value +"']");
+            dq?.setAttribute("selected", "");
+        }
+        this.remove();
+
+        /*queueMicrotask(() => {
+            //div.value=div.getAttribute("value");
+            div.value = value;
+        });*/
+    }
+}
+
+class MezP extends HTMLElement{
+    connectedCallback() {
+        const name = this.getAttribute("mez");
+        this.outerHTML = insUrlap(mezok[name](), "Hozzáad")
+    }
+}
+
+class CHDiv{
+    connectedCallback() {
+        const name = this.getAttribute("fname");
+        if(name) chdiv[name] = this;        
+    }
+}
+
+class SubSite extends HTMLElement{
+    connectedCallback() {
+        const name = this.getAttribute("fname");
+        if (currentRequest[name]) {
+            currentRequest.abort();
+        }
+        else{
+            currentRequest[name] = new XMLHttpRequest();
+        }
+        const shadow = this.attachShadow({mode: 'open'});
+        shadow.innerHTML = "";
+        subsite[name] = shadow;
+        eventSample("click", shadow);
+        //eventSample("Enter", shadow);
+        eventSample("submit", shadow);
+        eventSample("change", shadow);
+
+        currentRequest.open("GET", "content/" + melyik + "?nocache=" + new Date().getTime(), true);
+        //currentRequest.withCredentials = true;
+        currentRequest.setRequestHeader("Cache-Control", "no-store");
+        currentRequest.setRequestHeader("Pragma", "no-cache");
+
+        currentRequest.onload = async function () {
+            if (currentRequest.status >= 200 && currentRequest.status < 300) {   
+                let iHTML = currentRequest.responseText;
+                shadow.innerHTML = iHTML;
+            //    sessionStorage.setItem("oldal", melyik);
+            } else {
+                console.error("Request failed with status:", currentRequest.status);
+            }
+        };
+        currentRequest.onerror = function () {
+            console.error("Request failed due to network error");
+        };
+        currentRequest.send();
+    } 
+}
+
+customElements.define('g-div', GridDiv);
+customElements.define('mark-s', MarkS);
+customElements.define('retn-sh', Retn);
+customElements.define('retn-p', RetnP);
+customElements.define('mez-p', MezP);
+customElements.define('ch-d', CHDiv);
+customElements.define('sub-s', SubSite);
+
+gEAdd();

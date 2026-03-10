@@ -468,26 +468,8 @@ export const templates = {
         return justF.length > 2 ? templates.customBeszerzesList(a, ...res) : "";
     },
     customBeszerzesList: (a, helyiseg="", leltaresemeny="", hhead="", lehead="", tend="", ...befilts) => {
-        let text = "\n\x00\x01tr class='retnrow'";
-        let c = 0;
-        let nv = 0;
-        let ntd = 0;
-
-        const endpoint = "";
-        const noWrap = [
-
-        ];
-        const isTD = [
-
-        ];
-
-        const befs = [ // i
-            1, 3
-        ];
-        const befous = [ // befilts
-            0, 1
-        ];
-      text += `
+        let text = `
+\x00\x01tr class='retnrow'
 \x00\x00td>${a[0]}
 \x00\x01td class='pad-uns'>${ mZF.cBLtrmk(befilts[0], a[3], befilts[1]) }
 \x00\x03td class='pad-uns'>
@@ -501,10 +483,14 @@ export const templates = {
 \x00\x00div class='nowrap'>B: ${a[8]}
 \x00\x00div class='nowrap'>A: ${a[9]}
 \x00\x09td
-\x00\x01dg-div
+\x00\x01dg-div class="cBL-leltandleltes"
 \x00\x01g-div TA="a"><!-- Leltár -->
-\x00\x03g-div TA="b"><!-- Leltáresemény -->
-\x00\x01td
+\x00\x01select
+\x00\x00option>li1
+\x00\x05g-div TA="b"><!-- Leltáresemény -->
+\x00\x01select
+\x00\x00option>uli1
+\x00\x05td
 \x00\x01div class="g2 jfgrid">
 ${ 
 	sampUpdate(
