@@ -26,9 +26,11 @@ export function doParseCHTML(oHTML=""){
 	const allt = oHTML.split(/^\x00|\n\x00/g);
 	for(let i = 0; i < allt.length; i++){
 		let actE = allt[i];
-		if(actE?.length == 0) continue;
+		if(!actE || actE.length == 0) continue;
 		if(actE.charCodeAt(0) == 0xFF){
+			console.log("Kuraf: " + actE.substring(1, actE.length));
 			output += actE.substring(1, actE.length);
+			console.log("Kurafi:\n" + output);
 			continue;
 		}
 		// Kilépés szám

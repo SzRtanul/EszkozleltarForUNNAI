@@ -36,7 +36,6 @@ export class SubSite extends HTMLElement{
 	}
 	
 	doXHRGen(){
-
         this.cR.onload = async () => {
             if (this.cR.status >= 200 && this.cR.status < 300) {   
                 let iHTML = this.cR.responseText;
@@ -65,7 +64,7 @@ export class SubSite extends HTMLElement{
 		const prnt = this.parentElement;
 		if(gl.subs[name]) subs[name].willDisconnect();
 		gl.subs[name] = this;
-        this.shdw = prnt.attachShadow({mode: 'open'});
+        this.shdw = prnt//.attachShadow({mode: 'open'});
         gEAdd(this.shdw);
 		if(fname) this.doUpd(fname);
 		this.remove();
