@@ -8,7 +8,6 @@ export const retns = {};
 export const retnsUsQsAndRowsNums = {};
 
 export const exportedRetnMethods = {
-    doFrissit: doFrissit,
     doUjratolt: doUjratolt,
     whataf: whataf
 }
@@ -94,21 +93,7 @@ export function makeUpdateForm(e){
     const virtForm = "";
 }
 
-function doFrissit(retns){
-    let result = "";
-    for(let i = retns.length-1; i > -1 ; i--){
-        let elozo = window.performance.now();
-        const cja=retns[i].getAttribute("cjust");
-        result = doUjratolt(cja);
-        const start = performance.now();
-        retns[i].innerHTML = result;
-        requestAnimationFrame(() => {
-            const end = performance.now();
-        });
-    }
-}
-
-function doUjratolt(cjust="", responseInput=0){
+function doUjratolt(cjust="", responseInput=0, szur=""){
     let res = [];
     const two = retnCombinations[cjust]?.split("|||");
     if(!two || two.length<2){
@@ -245,7 +230,9 @@ function whataf(
     befrownums=[],
     befusqs = [],
     befFilters=[],
-    wherebef=[]
+    wherebef=[],
+	szuroszlop=[],
+	szur=""
 ){
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
@@ -266,7 +253,8 @@ function whataf(
     }
     if(error == 0 && retnrows[0] != 0){
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i += leptek){
-            const resultsBef = [];
+           
+		   const resultsBef = [];
             let qruak=1;
             for(let usqT = 0; usqT < eleje; usqT++){ // befs
                 const memqruak = qruak;
@@ -316,6 +304,7 @@ function whataf(
                     const usLeptek = befusqs[usqT].charCodeAt(1);
                     const fra = befusqs[usqT].split(columnSep);
                     const usqThaveHead = befusqs[usqT][0] == "T" ? 1 : 0;
+					const checkResplitParts = [];
 
                     let checkResplit = "";
                     const honnmedd = Math.floor(qruakLiminal / 2);
@@ -323,8 +312,9 @@ function whataf(
                     for(let qruak = memqruak; qruak < memqruak + honnmedd; qruak++){
                         const conc = resPlit[i + befFilters[qruak]];
                         notHasNull = conc.length > 0;
-                        if(notHasNull) checkResplit += conc;
+                        if(notHasNull) checkResplitParts.push(conc);
                     }
+					checkResplit = checkResplitParts.join(columnSep);
                     const checkResplitLength = checkResplit.length;
                     const bUQIT = usqThaveHead * usLeptek;
                     if(actualBef.length > 0 && notHasNull){
@@ -340,7 +330,7 @@ function whataf(
                             for(qruak = memqruak + honnmedd; qruak < memqruak + qruakLiminal-1; qruak++){ // befFilters
                                 checkFraParts.push(fra[Number(brase + befFilters[qruak])]);
                             }
-                            const checkFra = checkFraParts.join("");
+                            const checkFra = checkFraParts.join(columnSep);
                             ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
                             if(ortami != memoryRef){
                                 qruakArray.push(usqTrow);
