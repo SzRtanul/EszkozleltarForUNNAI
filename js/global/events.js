@@ -1,10 +1,11 @@
+import { gl } from "./globvars.js"
 import { whd } from "./queriessetup.js";
 import { retnCombinations } from "./retntemplates.js";
 import { templates } from "./rowtemplates.js";
 
 const columnSep = "\x00";
 
-export const retns = {};
+export const retns = gl.retns;
 export const retnsUsQsAndRowsNums = {};
 
 export const exportedRetnMethods = {
@@ -42,7 +43,14 @@ export function doParseCHTML(oHTML=""){
 			const stk = stack.splice(stack.length - uhti, uhti);
 			output += rJoin(stk, "\n")
 		}
-		if(actE.length < 2) continue;
+		let is = "";
+		for(let it = 0; it < actE.length; it++){
+			is += actE.charCodeAt(it) + ";";
+		}
+		
+		if(actE.length < 2 || actE.charCodeAt(1) < 33) continue;
+		if(actE.length < 14) 
+			console.log("ActE: " + actE.length + ":" + actE + ":" + is);
 		let oSgn = 0;
 		let oKezd = 0;
 		const vlSgn = [' ', '>'];
@@ -82,7 +90,7 @@ export function doParseCHTML(oHTML=""){
 	return output;
 }
 
-function aTF(text=""){
+export function aTF(text=""){
 	const acl = doParseCHTML("\x00\xFF" + text);
 	return acl;
 }

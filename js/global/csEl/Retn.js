@@ -1,4 +1,6 @@
-
+import { gl } from "../globvars.js";
+import { gEAdd } from "../gEv.js";
+import { exportedRetnMethods } from "../events.js";
 
 export class Retn extends HTMLElement {
 	constructor(){
@@ -6,10 +8,10 @@ export class Retn extends HTMLElement {
 		this.locate = -1;
 		this.cjust = "";
 		this.name = "";
-		this.rI = retnsInner;
-		this.rHP = retnsHParent;
-		this.rHN = retnsHasName;
-		this.uI = urlapInner;
+		this.rI = gl.rI;
+		this.rHP = gl.rtHP;
+		this.rHN = gl.rtHN;
+		this.uI = gl.uI;
 	}
 
 	disconnectedCallback() {
@@ -35,18 +37,18 @@ export class Retn extends HTMLElement {
 		let isUr = 0;
 
 		if(name) {
-			if(urlapInner[name]) urlapInner[name].push(div);
+			if(this.uI[name]) this.uI[name].push(div);
 			else{
-				urlapInner[name] = [div];
+				this.uI[name] = [div];
 			} 
 		}
 		//
 		if(!cjust) return;
-		const retn = retns[cjust];
+		const retn = gl.retns[cjust];
 		gEAdd(shadow);
 		if(!retn){
 			/*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
-			div.innerHTML = retns[cjust];
+			div.innerHTML = gl.retns[cjust];
 //			if(!this.hasAttribute("no")) 
 			this.rHP[cjust] = [0];
 			this.rI[cjust] = [div];

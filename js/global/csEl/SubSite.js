@@ -1,6 +1,6 @@
 import { gl, connJS } from "../globvars.js";
 import { gEAdd } from "../gEv.js";
-import { doParseCHTML } from "../events.js";
+import { aTF } from "../events.js";
 
 export function inithyS(){
 	const es = event?.state;
@@ -39,7 +39,7 @@ export class SubSite extends HTMLElement{
         this.cR.onload = async () => {
             if (this.cR.status >= 200 && this.cR.status < 300) {   
                 let iHTML = this.cR.responseText;
-                this.shdw.innerHTML = doParseCHTML(iHTML);
+                this.shdw.innerHTML = aTF(iHTML);
 				
 				const connst = connJS[this.fname?.split("\.")[0]]?.split(", ") || [];
 				for(let i = 0; i < connst.length; i++){

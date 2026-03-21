@@ -1,4 +1,5 @@
-
+import { gl } from "../globvars.js"
+import { exportedRetnMethods } from "../events.js"
 
 let iterat = 0;
 
@@ -11,22 +12,22 @@ export class RetnP extends HTMLElement {
         const value = div.value || div.getAttribute("value");
 
         if(name) {
-            if(urlapInner[name]) urlapInner[name].push(div);
+            if(gl.uI[name]) gl.uI[name].push(div);
             else{
-                urlapInner[name] = [div];
+                gl.uI[name] = [div];
             } 
         }
         if(!cjust) return;
-        const retn = retns[cjust];
+        const retn = gl.retns[cjust];
         if(retn){
             div.innerHTML = retn;
-            retnsInner[cjust].push(div);
+            gl.rI[cjust].push(div);
         }
         else{
             /*retns[cjust] = */exportedRetnMethods.doUjratolt(cjust);
-            div.innerHTML = retns[cjust];
-            retnsInner[cjust] = [div];
-            retnUpdatable.push(cjust);
+            div.innerHTML = gl.retns[cjust];
+            gl.rI[cjust] = [div];
+            gl.rtU.push(cjust);
         }
         if(value && div.tagName == 'SELECT'){
             const dq = div.querySelector("* [value='"+ value +"']");

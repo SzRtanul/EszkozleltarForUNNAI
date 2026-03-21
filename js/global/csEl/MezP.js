@@ -1,3 +1,4 @@
+import { insUrlap, mezok } from  "../rowftemplates.js";
 
 export class MezP extends HTMLElement{
     connectedCallback() {

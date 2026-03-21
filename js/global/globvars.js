@@ -1,6 +1,7 @@
 export const gl = {
 	nie: {}, // niemand
-
+	
+	retns: {},
 	// ILLU
 	rtHN: {}, // retnHasName
 	rtHNI: {}, // retnsHNIntv
