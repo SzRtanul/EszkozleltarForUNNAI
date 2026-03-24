@@ -2,6 +2,7 @@ import { gl } from "../globvars.js";
 import { doKuld, doDelete } from "./doKuld.js";
 import { doAfter } from "./doAfter.js";
 import { doValt } from "../csEl/SubSite.js";
+import { retreload, upload, uploadI } from "../csEl/Retn.js";
 import { loginKuld } from "./loginM.js";
 import { doFilm, setToFilm} from "./film.js";
 
@@ -15,11 +16,11 @@ function doReplace(e){
 }
 
 function doKuldIns(e){
-    doKuld(e, doAfter);
+    doKuld(e, uploadI);
 }
 
 function doKuldUpd(e){
-    doKuld(e, doAfter);
+    doKuld(e, upload);
 }
 
 function doUpdate(e){
@@ -55,5 +56,5 @@ export const runnable = [
 	doValt,
 	// 11.
 	loginKuld,
-//    makeUpdateForm
+	retreload,
 ];

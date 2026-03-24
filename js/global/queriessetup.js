@@ -23,7 +23,7 @@ function withTimeout(promise, ms) {
   return Promise.race([promise, timeout]);
 }
 
-async function doQueryUpdates(){
+export async function doQueryUpdates(){
     endpointsResults.length = 0;
     ActuelThingsResults.length = 0;
     let promises = [];

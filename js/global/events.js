@@ -21,17 +21,24 @@ export function rJoin(arr=[], sp=""){
 	return output.substring(0, output.length - (sp?.length || 0));
 }
 
-export function doParseCHTML(oHTML=""){
+function doParseCHTML(oHTML=""){
 	let output = "";
 	const stack = [];
-	const allt = oHTML.split(/^\x00|\n\x00/g);
+	const allt = oHTML.split(/\n\x00/);
+/*	let s = "";
+	for(let i = 0; i < oHTML.length; i++){
+		s += oHTML.charCodeAt(i) + ";";
+	}
+	console.log(s);
+*/
+
 	for(let i = 0; i < allt.length; i++){
 		let actE = allt[i];
 		if(!actE || actE.length == 0) continue;
 		if(actE.charCodeAt(0) == 0xFF){
-			console.log("Kuraf: " + actE.substring(1, actE.length));
+//			console.log("Kuraf: " + actE.substring(1, actE.length));
 			output += actE.substring(1, actE.length);
-			console.log("Kurafi:\n" + output);
+//			console.log("Kurafi:\n" + output);
 			continue;
 		}
 		// Kilépés szám
@@ -43,14 +50,14 @@ export function doParseCHTML(oHTML=""){
 			const stk = stack.splice(stack.length - uhti, uhti);
 			output += rJoin(stk, "\n")
 		}
-		let is = "";
+/*		let is = "";
 		for(let it = 0; it < actE.length; it++){
 			is += actE.charCodeAt(it) + ";";
 		}
-		
+*/		
 		if(actE.length < 2 || actE.charCodeAt(1) < 33) continue;
-		if(actE.length < 14) 
-			console.log("ActE: " + actE.length + ":" + actE + ":" + is);
+//		if(actE.length < 14) 
+//			console.log("ActE: " + actE.length + ":" + actE + ":" + is);
 		let oSgn = 0;
 		let oKezd = 0;
 		const vlSgn = [' ', '>'];
@@ -91,7 +98,7 @@ export function doParseCHTML(oHTML=""){
 }
 
 export function aTF(text=""){
-	const acl = doParseCHTML("\x00\xFF" + text);
+	const acl = doParseCHTML("\n\x00\xFF\n" + text);
 	return acl;
 }
 
@@ -216,11 +223,13 @@ function doUjratolt(cjust="", responseInput=0, szur=""){
     }
     const tspl = templeBefs;
     let rtnV = "";
+	const bon = responseInput === 0;
     if(templeLast > -1){
         rtnV = templeBefs[templeLast];
-        retns[cjust] = rtnV;
+        if(bon) retns[cjust] = rtnV;
     }
-    retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
+    if(bon) 
+		retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
     return rtnV;
 }
 

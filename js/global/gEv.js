@@ -10,6 +10,7 @@ export async function doRun(e, eType = ""){
 export function eventSample(eventtype = "click", environment=document){
     environment.addEventListener(eventtype, async (e) => {
         e.stopPropagation();
+		console.log("Ehj");
         await doRun(e, eventtype);
     });
 }

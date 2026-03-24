@@ -1,6 +1,42 @@
 import { gl } from "../globvars.js";
 import { gEAdd } from "../gEv.js";
 import { exportedRetnMethods } from "../events.js";
+import { doQueryUpdates } from "../queriessetup.js";
+
+export async function retreload(e){
+	const tr = e.target;
+	const cjust = tr.getAttribute("cjust");
+	const ret = tr.parentElement;
+	const retin = ret?.querySelector(".alekten");
+	if(retin){
+		doQueryUpdates();
+		doUjratolt(cjust);
+		ret.outerHTML = gl.retns[cjust];
+	}
+}
+
+export function upload(e, uu, resp, isInsert=false){
+	console.log("Te retkes gechi!:");
+	console.log(e.target)
+	const tr = e.target;
+	const ret = tr.closest(".alekten");
+	if(ret){
+		const cjust = ret.getAttribute("cjust");
+		const rep = exportedRetnMethods.doUjratolt(cjust, resp);
+		if(isInsert){
+			ret.querySelector("aaa").insertBefore(rep, ret.children[0]);
+		}
+		else{
+			tr.outerHTML = rep;
+		}
+	}
+}
+
+export function uploadI(...e){
+	console.log("Te retkes fasszopó kurva!");
+	console.log(e[0]);
+	upload(e[0], e[1], e[2], true);
+}
 
 export class Retn extends HTMLElement {
 	constructor(){
@@ -32,7 +68,7 @@ export class Retn extends HTMLElement {
 		`<link rel="stylesheet" href="../global.css">
 		<link rel="stylesheet" href="../css/leltar.css">
 		<link rel="stylesheet" href="../css/leltarGrid.css">
-		<mark-s></mark-s>`;
+		<mark-s class="alekten"></mark-s>`;
 		const div = shadow.querySelector("mark-s");
 		let isUr = 0;
 

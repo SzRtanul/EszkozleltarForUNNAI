@@ -3,16 +3,30 @@ import { gl } from "../globvars.js";
 import { exportedMethods } from "../globaldata.js";
 import { formDRef, modDRef } from "../retntemplates.js";
 
+function writeStatus(allapotKijelzok, statcode){
+    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, statcode < 300 ?
+		"Küldés sikeres!" :
+		(
+			statcode == 404 ? "Program hiba" : "Hibás formátum[Program hiba] vagy egyedi kulcsérték ütközés áll fent!"
+		) 
+	);
+}
 
 //Kuld
 export async function doKuld(e, afterMethod=()=>""){
     e.preventDefault();
     const urlap = e.target;
     const attrs = {};
+	const fullE = {}
     for(const attr of urlap.attributes){
         attrs[attr.nodeName] = attr.nodeValue;
     }
-    if(!(typeof urlap === "object")){ return 0; };
+    
+	for(const attr in e){
+        fullE[attr] = e[attr];
+    }
+    
+	if(!(typeof urlap === "object")){ return 0; };
     const allapotKijelzok = urlap.getElementsByClassName("allapot");
     //const fname = urlap.getAttribute("name") || false;
     const fvalue = attrs["value"];
@@ -44,7 +58,9 @@ export async function doKuld(e, afterMethod=()=>""){
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
 	writeStatus(allapotKijelzok, stat.st);
     if(stat.st < 300){
-        await afterMethod(e, sikeresKeres, response);
+		console.log("Te rothadt kurva!:")
+		console.log(e);
+        await afterMethod(fullE, sikeresKeres, response);
     }
 }
 

@@ -23,11 +23,3 @@ export async function doAfter(e, sikeresKeres){
     //exportedMethods.doEnvAutoJumpJelenet(urlap, "NextTo");
 }
 
-function writeStatus(allapotKijelzok, statcode){
-    exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, statcode < 300 ?
-		"Küldés sikeres!" :
-		(
-			statcode == 404 ? "Program hiba" : "Hibás formátum[Program hiba] vagy egyedi kulcsérték ütközés áll fent!"
-		) 
-	);
-}
