@@ -58,8 +58,6 @@ export async function doKuld(e, afterMethod=()=>""){
     const response = await exportedMethods.exampleREST(tr, urlap.getAttribute("method") || "post", ddtxt, stat);
 	writeStatus(allapotKijelzok, stat.st);
     if(stat.st < 300){
-		console.log("Te rothadt kurva!:")
-		console.log(e);
         await afterMethod(fullE, sikeresKeres, response);
     }
 }

@@ -137,7 +137,7 @@ const tempex = [
             ret += "<th></th>";
         }
         if(nFD.length > 0) ret += sampUpdate(undefined, nFD[0], nFD[1], true, nFD[2] || "Hozzáad", nFD[3] || "+", "th");
-        ret+= "</tr></thead><tbody>";
+        ret+= "</tr></thead><tbody adj='afterbegin'>";
         return ret;
     },
     (args=[], after="", classtext="")=>{
@@ -152,6 +152,10 @@ const tempex = [
 
 export const templates = {
     // Defaults
+	nothing: (a, bef) => {
+		console.log("Te ...: " + bef);
+		return bef;
+	},
     table: (args, retr="") => {
         return "<table>" +retr+ "</table>";
     },
@@ -201,7 +205,7 @@ export const templates = {
 \x00\xFF
 `;
     },
-    tbodybef: (args) => "<tbody>",
+    tbodybef: (args) => "<tbody adj='afterbegin'>",
     //divbef: (args) => "",
     divbef: (args) => `<div>`,
     divend: (args) => "</div>",

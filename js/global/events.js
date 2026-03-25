@@ -112,10 +112,16 @@ export function makeUpdateForm(e){
 
 function doUjratolt(cjust="", responseInput=0, szur=""){
     let res = [];
-    const two = retnCombinations[cjust]?.split("|||");
+	const lkl = cjust?.startsWith('-') ?
+		cjust.substring(1, cjust.length) :
+		retnCombinations[cjust]
+	;
+	console.log("LKL: " + lkl)
+    const two = lkl?.split("|||");
     if(!two || two.length<2){
         return;
     }
+	console.log("Fut")
     const metnames = two[0].split(":");
     const templeBefs = [];
     const templeUsq = [];
@@ -226,8 +232,12 @@ function doUjratolt(cjust="", responseInput=0, szur=""){
 	const bon = responseInput === 0;
     if(templeLast > -1){
         rtnV = templeBefs[templeLast];
-        if(bon) retns[cjust] = rtnV;
+			console.log("RTNV")
+        if(bon) {
+			retns[cjust] = rtnV;
+		}
     }
+	console.log(rtnv)
     if(bon) 
 		retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
     return rtnV;

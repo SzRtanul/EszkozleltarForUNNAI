@@ -16,25 +16,28 @@ export async function retreload(e){
 }
 
 export function upload(e, uu, resp, isInsert=false){
-	console.log("Te retkes gechi!:");
-	console.log(e.target)
 	const tr = e.target;
 	const ret = tr.closest(".alekten");
 	if(ret){
+		console.log("EHJ:\n"+resp)
 		const cjust = ret.getAttribute("cjust");
-		const rep = exportedRetnMethods.doUjratolt(cjust, resp);
+		const rep = exportedRetnMethods.doUjratolt(
+			"-nothing|||?" + cjust + "---FF00FFFF;0FF;:_0=101", resp
+		);
+		console.log("REP:\n"+rep)
 		if(isInsert){
-			ret.querySelector("aaa").insertBefore(rep, ret.children[0]);
+			const ehn = ret.querySelector("[adj]")
+			const adj = ehn.getAttribute("adj");
+			ehn.insertAdjacentHTML(adj, rep);
 		}
 		else{
-			tr.outerHTML = rep;
+			const ahn = tr.closest(".retnrow");
+			ahn.outerHTML = rep;
 		}
 	}
 }
 
 export function uploadI(...e){
-	console.log("Te retkes fasszopó kurva!");
-	console.log(e[0]);
 	upload(e[0], e[1], e[2], true);
 }
 
@@ -68,7 +71,7 @@ export class Retn extends HTMLElement {
 		`<link rel="stylesheet" href="../global.css">
 		<link rel="stylesheet" href="../css/leltar.css">
 		<link rel="stylesheet" href="../css/leltarGrid.css">
-		<mark-s class="alekten"></mark-s>`;
+		<mark-s class="alekten" cjust='${cjust}'></mark-s>`;
 		const div = shadow.querySelector("mark-s");
 		let isUr = 0;
 
