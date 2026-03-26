@@ -94,6 +94,7 @@ function doParseCHTML(oHTML=""){
 		}
 	}
 	output += rJoin(stack, "\n");
+	console.log("OUTT: " + output);
 	return output;
 }
 
@@ -242,14 +243,10 @@ function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
 	const bon = responseInput === 0;
     if(templeLast > -1){
         rtnV = templeBefs[templeLast];
-		console.log(bon)
-		console.log("RTNV");
-		console.log(templeBefs)
         if(bon) {
 			retns[cjust] = rtnV;
 		}
     }
-//	console.log(rtnV);
     if(bon) 
 		retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
     return rtnV;
@@ -384,13 +381,15 @@ function whataf(
                     }
                     else{
                         qruak += qruakLiminal;
+						usqTitem = fra.length - 1;
+						usqTrow = usqTitem / usLeptek;
                     }
                     const needFoot = needFtr;
                     if(usqTrow > 0 && (qruakArray.length & 1) == 1){
-
-                        qruakArray.push(needFoot ? actualRowNums.length - 1 : usqTrow);
+						qruakArray.push(needFoot ? actualRowNums.length - 1 : usqTrow);
                     }
                     else if (needFoot && usqTrow < actualRowNums.length - 1){
+						console.log("LSZ: " + usqTrow + ":" + actualRowNums.length);
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
                     let szen = "";

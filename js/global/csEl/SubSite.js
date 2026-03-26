@@ -61,13 +61,13 @@ export class SubSite extends HTMLElement{
         const name = this.getAttribute("sname");
 		const fname = gl.hyS[name] || this.getAttribute("fname");
 		this.fname = fname;
-		const prnt = this.parentElement;
+		const prnt = this;
 		if(gl.subs[name]) subs[name].willDisconnect();
 		gl.subs[name] = this;
         this.shdw = prnt//.attachShadow({mode: 'open'});
         gEAdd(this.shdw);
 		if(fname) this.doUpd(fname);
-		this.remove();
+//		this.remove();
     }
 
 	willDisconnect() {
