@@ -9,22 +9,23 @@ export async function retreload(e){
 	const ret = tr.parentElement;
 	const retin = ret?.querySelector(".alekten");
 	if(retin){
-		doQueryUpdates();
-		doUjratolt(cjust);
+		await doQueryUpdates();
+		exportedRetnMethods.doUjratolt(cjust);
 		ret.outerHTML = gl.retns[cjust];
 	}
 }
 
-export function upload(e, uu, resp, isInsert=false){
+export async function upload(e, uu, resp, isInsert=false){
 	const tr = e.target;
 	const ret = tr.closest(".alekten");
 	if(ret){
-		console.log("EHJ:\n"+resp)
+		console.log("EHJ:\n" + resp)
 		const cjust = ret.getAttribute("cjust");
+		await doQueryUpdates();
 		const rep = exportedRetnMethods.doUjratolt(
-			"-nothing|||?" + cjust + "---FF00FFFF;0FF;:_0=101", resp
+			cjust, resp, true
 		);
-		console.log("REP:\n"+rep)
+		console.log("REP:\n" + rep)
 		if(isInsert){
 			const ehn = ret.querySelector("[adj]")
 			const adj = ehn.getAttribute("adj");

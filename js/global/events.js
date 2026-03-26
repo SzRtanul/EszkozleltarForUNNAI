@@ -110,7 +110,7 @@ export function makeUpdateForm(e){
     const virtForm = "";
 }
 
-function doUjratolt(cjust="", responseInput=0, szur=""){
+function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
     let res = [];
 	const lkl = cjust?.startsWith('-') ?
 		cjust.substring(1, cjust.length) :
@@ -135,7 +135,8 @@ function doUjratolt(cjust="", responseInput=0, szur=""){
             const rn = cja.substring(1, cja.length);
             if(rn.length > 0){
                 const retn = retns[rn];
-                if(!retn){
+                if(true || !retn){
+					console.log("BOBER")
                     /*retns[rn] = */doUjratolt(rn);
                 }
                 const rUBRs = retnsUsQsAndRowsNums[rn];
@@ -149,12 +150,21 @@ function doUjratolt(cjust="", responseInput=0, szur=""){
             const methods = [];
             for(let i = 0; i < 8; i+=2){
                 const metnum = Number("0x"+cja.substring(i,i+2));
-                methods.push(!isNaN(metnum) && metnum != 255 ? templates[metnames[metnum]] : 0);
+                methods.push(
+					(i == 0 || !justRow) && !isNaN(metnum) && metnum != 255 ? 
+						templates[metnames[metnum]] : 0
+				);
             }
             const reqType = Number("0x"+ cja.substring(9, 10));
             const reqNum = Number("0x"+ cja.substring(10, 12));
-            if(!isNaN(reqType) && !isNaN(reqNum) && reqType < whd.length && reqNum<whd[reqType].length){
-                templeUsq.push(
+            if(
+				!isNaN(reqType) &&
+				!isNaN(reqNum) &&
+				reqType < whd.length &&
+				reqNum<whd[reqType].length
+			){
+				console.log("TempleRef:\n" + responseInput);
+				templeUsq.push(
                     yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum]
                 );
                 templeLast++;
@@ -232,12 +242,14 @@ function doUjratolt(cjust="", responseInput=0, szur=""){
 	const bon = responseInput === 0;
     if(templeLast > -1){
         rtnV = templeBefs[templeLast];
-			console.log("RTNV")
+		console.log(bon)
+		console.log("RTNV");
+		console.log(templeBefs)
         if(bon) {
 			retns[cjust] = rtnV;
 		}
     }
-	console.log(rtnv)
+//	console.log(rtnV);
     if(bon) 
 		retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
     return rtnV;
