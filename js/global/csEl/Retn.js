@@ -56,7 +56,7 @@ export class Retn extends HTMLElement {
 
 	disconnectedCallback() {
     //	console.log('disconnected');
-		this.rHP[this.cjust][locate] = 0;
+		this.rHP[this.cjust][this.locate] = 0;
 	}
 
   	connectedCallback() {

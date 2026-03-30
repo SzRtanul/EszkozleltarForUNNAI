@@ -3,11 +3,11 @@ import { doKuld } from "./doKuld.js";
 import { doValtM } from "../csEl/SubSite.js";
 
 function loginAfter(e){
-//	gl.subs["global"].doUpd("leltar");
-	doValtM("global", "leltar")
+	doValtM("global", "telawiew.html")
 }
 
 // Mi
 export function loginKuld(e){
-	doKuld(e, loginAfter);
+	//doKuld(e, loginAfter);
+	loginAfter();
 }

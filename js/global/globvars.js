@@ -17,8 +17,3 @@ export const gl = {
 	rtU: [], // retnUpdatable
 	hyS: {}, // hystorySubsites
 };
-
-export const connJS = {
-//	leltar: "lel.js, lel.ezz, el.kk",
-//	kk: ";kk"
-}

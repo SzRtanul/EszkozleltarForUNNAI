@@ -1,4 +1,6 @@
 .center-all{
+  /*
+  */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,12 +61,11 @@ p button{
   background-color: white;
 }
 
-.d-none{
+/*.d-none{
   display: none;
-}
+}*/
 
 .modal {
-  display: none;
   position: fixed;
   z-index: 1;
   left: 0;

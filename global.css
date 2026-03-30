@@ -94,11 +94,11 @@ input[type="text"], input[type="number"], input[type="password"], select, button
 }
 /* This SCENE */
 .scene{
-    display: none;
+    display: none !important;
 }
 
 .sceneI{
-    display: inherit;
+    display: inherit !important;
 }
 
 .tcent{

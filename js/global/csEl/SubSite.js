@@ -1,4 +1,5 @@
-import { gl, connJS } from "../globvars.js";
+import { gl } from "../globvars.js";
+import { connJS } from "../../globsub.js";
 import { gEAdd } from "../gEv.js";
 import { aTF } from "../events.js";
 
@@ -41,12 +42,13 @@ export class SubSite extends HTMLElement{
                 let iHTML = this.cR.responseText;
                 this.shdw.innerHTML = aTF(iHTML);
 				
-				const connst = connJS[this.fname?.split("\.")[0]]?.split(", ") || [];
-				for(let i = 0; i < connst.length; i++){
-					const sc = document.createElement("script");
-					sc.type = "module";
-					sc.src = `js/${connst[i] + ".js" + "?v=" + new Date().getTime()}`;
-					this.shdw.appendChild(sc);
+				const connst = connJS[this.fname?.split("\.")[0]];
+				if(connst){
+					await connst(this.shdw);
+//					const sc = document.createElement("script");
+//					sc.type = "module";
+//					sc.src = `js/${connst[i] + ".js" + "?v=" + new Date().getTime()}`;
+//					this.shdw.appendChild(sc);
 				}
             } else {
                 console.error("Request failed with status:", this.cR.status);
@@ -62,7 +64,7 @@ export class SubSite extends HTMLElement{
 		const fname = gl.hyS[name] || this.getAttribute("fname");
 		this.fname = fname;
 		const prnt = this;
-		if(gl.subs[name]) subs[name].willDisconnect();
+		if(gl.subs[name]) gl.subs[name].willDisconnect();
 		gl.subs[name] = this;
         this.shdw = prnt//.attachShadow({mode: 'open'});
         gEAdd(this.shdw);

@@ -2,19 +2,22 @@ const filmek = {};
 const dFilmek = {};
 
 function doFilm(e){
+	console.log("Ez fut egyáltalán?")
     const hovas = e.target.getAttribute("nextTo")?.split(';');
     const film = e.target.closest(".film");
+	console.log(film);
+	console.log(hovas)
     if(film  && hovas){
         for(let i = 0; i < hovas.length; i++){
             const hova = hovas[i].split(':');
             const hol = hova[1];
             const tipus = hova[0];
             if(hova?.length > 1){
-                for(const jel of film.querySelectorAll("."+tipus + ".sceneI")){
-                    jel.classList.remove("sceneI");
+                for(const jel of film.querySelectorAll("."+tipus)){
+                    jel.classList.add("scene");
                 }
                 for(const jel of film.getElementsByClassName(tipus+hol)){
-                    jel.classList.add("sceneI");
+                    jel.classList.remove("scene");
                 }
             }
         }
