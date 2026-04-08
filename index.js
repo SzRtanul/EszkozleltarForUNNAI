@@ -20,6 +20,13 @@ import { SubSite, inithyS } from "./js/global/csEl/SubSite.js";
 // csE1vg
 inithyS();
 
+window.addEventListener('popstate', (e) => {
+//	console.log("%c Mozgás az előzményekben! URL: " + document.location.href, "color: orange; font-weight: bold;");
+//	if (!event.persisted) {
+		inithyS();
+//	}
+});
+
 await exportedQMethods.doQueryUpdates();
 
 const delay = ms => new Promise(res => setTimeout(res, ms));

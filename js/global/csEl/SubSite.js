@@ -3,20 +3,13 @@ import { connJS } from "../../globsub.js";
 import { gEAdd } from "../gEv.js";
 import { aTF } from "../events.js";
 
-export function inithyS(){
-	const es = event?.state;
-	const sh = sessionStorage.getItem("hyS")
-	if(es) gl.hyS = es;
-	else if(sh) gl.hyS = JSON.parse(sh);
-}
-
 export function doValtM(wh, val){
 	gl.subs[wh].doUpd(val);
     const url = new URL(window.location.href);
 
 	const pushorrepl = true ? "pushState" : "replaceState";
 	gl.hyS[wh] = val;
-    history[pushorrepl](gl.hyS, '', url);
+    history[pushorrepl](structuredClone(gl.hyS), '', url);
 	sessionStorage.setItem("hyS", JSON.stringify(gl.hyS));
 }
 
@@ -25,6 +18,17 @@ export function doValt(e){
 	const wh = bt.getAttribute("which");
 	const val = bt.value;
 	doValtM(wh, val)
+}
+
+export function inithyS(){
+	const es = event?.state;
+	const sh = sessionStorage.getItem("hyS")
+	if(es) gl.hyS = es;
+	else if(sh) gl.hyS = JSON.parse(sh);
+	for(const g in gl.hyS){
+		const val = gl.hyS[g];
+		if(gl.subs[g]) gl.subs[g].doUpd(val);
+	}
 }
 
 export class SubSite extends HTMLElement{

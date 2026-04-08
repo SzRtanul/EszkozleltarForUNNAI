@@ -94,7 +94,7 @@ function doParseCHTML(oHTML=""){
 		}
 	}
 	output += rJoin(stack, "\n");
-	console.log("OUTT: " + output);
+//	console.log("OUTT: " + output);
 	return output;
 }
 

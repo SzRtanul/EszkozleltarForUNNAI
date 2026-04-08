@@ -598,4 +598,6 @@ ${
         }
         return text + kieg;
     },
+	eszkttyp: (args, bef) => `
+`
 };

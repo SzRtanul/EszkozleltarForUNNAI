@@ -1,0 +1,43 @@
+ul{
+	background-color: white;
+	list-style: none;
+	padding-inline-start: 10px;
+	font-family: 'Arial', 'Monaco';
+}
+
+li{
+	min-height: 0px;
+	line-height: 1.3;
+	margin-inline-start: -10px;
+	padding-left: 13px;
+	padding-right: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+li::before{
+}
+
+li:hover{
+	background-color: #BBFFBB;
+}
+
+.myd{
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: "A B";
+}
+
+g-div[TA="A"]{
+	justify-content: start;
+}
+
+g-div[TA="A"] > ul{
+	overflow: hidden;
+	/*
+	width: 100px;
+	*/
+	height: calc(100%);
+	margin: 0px;
+	padding: 0px;
+}
