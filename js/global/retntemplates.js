@@ -67,6 +67,14 @@ export const retnCombinations = {
     helyiseg2list: retEx[0]("008;0=0=0", "theadeHelyiseg2List", "trowHelyiseg2List", undefined, "", "?megnHelyisegT---"),
     leltarlist: retEx[0]("009;0=1=0", "theadeLeltarList", "trowLeltarList", undefined, "", "?megnHelyisegT---"),
     leltaresemenylist: retEx[0]("00A", "theadeLeltarEsemenyList", "trowLeltarEsemenyList"),
+	dshb_termeklist: "ulbef:ulend:dshbLi:dshbLiTermek|||"+
+		"030001FF;005---020001FF;001;0---020001FF;000;1",
+    dshb_leltarlist:
+		"theade:trow:tbodyend:dshbLeltarList:tbodybef|||"+
+		"010002FF;009---030402FF;006;0=0=2",
+    dshb_leltaresemenylist:
+		"theade:trow:tbodyend:dshbLeltarList:tbodybef|||"+
+		"010002FF;00A---030402FF;006;0=0=0",
     fallist: retEx[0]("00B", "theadeFalList", "trowFalList"),
     tagozatlist: retEx[0]("00C", "theadeTagozatList", "trowTagozatList"),
     osztalylist: retEx[0]("00D", "theadeOsztalyList", "trowOsztalyList"),

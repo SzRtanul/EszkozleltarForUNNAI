@@ -1,10 +1,57 @@
 import { exportedMethods } from "./globaldata.js"
-import { endpoints } from "./endpoints.js";
+import { endpoints, nonPKendpoints } from "./endpoints.js";
 import { ActuelThings } from "./actuelthings.js";
+
+const usqHeaders = [];
 const retnThings = [];
 export const endpointsResults = [];
 export const ActuelThingsResults = [];
 export const retnThingsResults = [];
+
+class TN{
+	constructor(text){
+		this.text=text;
+	}
+}
+
+class Sec{
+	constructor(os, lI, sL, lU){
+		this.offset = 0;
+		this.lastItemsID = 0;
+		this.secLength = 0;
+		this.lastUpdated = 0;
+	}
+}
+
+class PSec{
+	constructor(os, uI, lU){
+		this.offset64 = 1;
+		this.usedIDs = 0; //64bit
+		this.lastUpdated = 0;
+	}
+}
+
+class FSec{
+	constructor(fn, sL, lU){
+		this.fnumber = 0;
+		this.secLength = 0;
+		this.lastUpdated = 0;
+	}
+}
+
+const sec = [ // Table
+	[ "", ], // texts
+	[[], ], /*  */
+];
+
+const primarysec = [
+	["", ],
+];
+
+const foreignsec = [
+	[["", ""], ["", ""] ],
+	[[[], [],], [[], [],]]
+];
 
 export const whd = [
     endpointsResults,
@@ -12,8 +59,19 @@ export const whd = [
     retnThings
 ];
 
+export const whdl =[
+	endpoints,
+	nonPKendpoints
+];
+
+
+export async function QEnd(ltext, method="POST", dbthings=""){
+    return await exportedMethods.exampleREST(ltext + "?alk=" + Number(Math.random() * 5000), method, "") || "";
+}
+
 async function QEnds(array, ltext, method, number){
-    array[number] = await exportedMethods.exampleREST(ltext + "?alk=" + Number(Math.random() * 5000), method, "") || "";
+	array[number] = new TN(await QEnd(ltext, method));
+	if(number == 5) console.log(array[number]);
 }
 
 function withTimeout(promise, ms) {

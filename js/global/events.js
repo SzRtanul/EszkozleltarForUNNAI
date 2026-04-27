@@ -24,6 +24,7 @@ export function rJoin(arr=[], sp=""){
 function doParseCHTML(oHTML=""){
 	let output = "";
 	const stack = [];
+	const kidstack = [];
 	const allt = oHTML.split(/\n\x00/);
 /*	let s = "";
 	for(let i = 0; i < oHTML.length; i++){
@@ -41,8 +42,12 @@ function doParseCHTML(oHTML=""){
 //			console.log("Kurafi:\n" + output);
 			continue;
 		}
+		if(actE.charCodeAt(0) == 0xFE){
+			
+			continue;
+		}
 		// Kilépés szám
-		let uhti = (actE[0].charCodeAt(0)) >>> 0;
+		let uhti = (actE.charCodeAt(0)) >>> 0;
 		const htk = uhti & 1;
 		uhti = (uhti >> 1) & 0b1111111;
 		// Tartalom elé satcked végek
@@ -111,18 +116,20 @@ export function makeUpdateForm(e){
     const virtForm = "";
 }
 
-function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
-    let res = [];
+function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], szur=0){
+    let [cjust, yEn] = cjuste.split(":");
+	yEn = Number(yEn);
+	let res = [];
 	const lkl = cjust?.startsWith('-') ?
 		cjust.substring(1, cjust.length) :
 		retnCombinations[cjust]
 	;
-	console.log("LKL: " + lkl)
+	//console.log("LKL: " + lkl)
     const two = lkl?.split("|||");
-    if(!two || two.length<2){
+    if(!two || two.length < 2){
         return;
     }
-	console.log("Fut")
+	//console.log("Fut")
     const metnames = two[0].split(":");
     const templeBefs = [];
     const templeUsq = [];
@@ -130,14 +137,17 @@ function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
     let templeLast = -1;
     let yeP = 0;
     const ye = two[1]?.split("---");
-    const yelen = ye.length-1;
+    const yelen = !isNaN(yEn) ? yEn : ye.length-1;
+	if(yelen >= ye.length) return "";
+	
     for(const cja of ye){
+		if(yeP > yelen) break;
         if(cja.startsWith("?")){
             const rn = cja.substring(1, cja.length);
             if(rn.length > 0){
                 const retn = retns[rn];
-                if(true || !retn){
-					console.log("BOBER")
+                if(true || cjutte === cjust && !retn){ // cjust-6
+					//console.log("BOBER")
                     /*retns[rn] = */doUjratolt(rn);
                 }
                 const rUBRs = retnsUsQsAndRowsNums[rn];
@@ -164,9 +174,9 @@ function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
 				reqType < whd.length &&
 				reqNum<whd[reqType].length
 			){
-				console.log("TempleRef:\n" + responseInput);
+			//	console.log("TempleRef:\n" + responseInput);
 				templeUsq.push(
-                    yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum]
+                    yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum].text
                 );
                 templeLast++;
             }
@@ -220,18 +230,22 @@ function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
                     }
                     mata++;
                 }
+				const gg = yeP == yelen;
                 templeBefs.push(whataf(
                     cjust,
                     templeUsq[templeLast], methods, 
-                    resrownums, resultBef, resultsBefRowsNums, resultQ, 
+                    resrownums, gg ? szur : undefined, gg ? offlim : undefined,
+					resultBef, resultsBefRowsNums, resultQ,
                     befIlter, whereBef
                 ));
                 befRowsNum.push(resrownums);
             }
             else{
                 const resrownums = [];
+				const gg = yeP == yelen;
                 templeBefs.push(whataf(
-                    cjust, templeUsq[templeLast], methods, resrownums
+                    cjust, templeUsq[templeLast], methods, resrownums, 
+					gg ? szur : undefined, gg ? offlim : undefined
                 ));
                 befRowsNum.push(resrownums);
             }
@@ -240,7 +254,7 @@ function doUjratolt(cjust="", responseInput=0, justRow=false, szur=""){
     }
     const tspl = templeBefs;
     let rtnV = "";
-	const bon = responseInput === 0;
+	const bon = responseInput === 0 && szur === 0 && !yEn && isNaN(yEn);
     if(templeLast > -1){
         rtnV = templeBefs[templeLast];
         if(bon) {
@@ -260,17 +274,17 @@ function replaceLast(str, search, replace) {
 
 
 function whataf(
-    cjust="",
+    cjust = "",
     responseInput = "",
     retnrows = [0, 0, 0, 0], 
     outResBefNums = [],
+	szur = ["", []],
+	offlim=[-1,-1],
     befretns = [],
-    befrownums=[],
+    befrownums = [],
     befusqs = [],
-    befFilters=[],
-    wherebef=[],
-	szuroszlop=[],
-	szur=""
+    befFilters = [],
+    wherebef = []
 ){
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
@@ -291,19 +305,26 @@ function whataf(
     }
     if(error == 0 && retnrows[0] != 0){
         for(let row = resHaveThead, i = resHaveThead * leptek; i < resPlit.length-1; row++, i += leptek){
-           
+           if(row < offlim[0]) continue;
+		   if(row > offlim[0] + (offlim[1]>>>0)) break;
+
+			// Szűrés
+
 		   const resultsBef = [];
             let qruak=1;
             for(let usqT = 0; usqT < eleje; usqT++){ // befs
                 const memqruak = qruak;
-                const qruakLiminal = befFilters[qruak-1] & 0b111111;  // FONTOS!
-                const headTown = befFilters[qruak-1];
+				const beee = befFilters[qruak-1];
+				const [beme, off, lim] = isNaN(beee) ? beee.split("-").map(Number) : [Number(beee), -1, -1];
+                const qruakLiminal = beme & 0b111111;  // FONTOS!
+                const headTown = beme;
                 const actualBef = befretns[usqT];
                 const [needHdr, needBdy, needFtr] = [
                     ((headTown >> 31) & 1) == 0, 
                     ((headTown >> 30) & 1) == 0, 
                     ((headTown >> 29) & 1) == 0
                 ];
+                const befOL = [off, lim]; // BefFilters-ből lekérni!
                 if(!needBdy){
                     const actualRowNums = befrownums[usqT];
                     let qru = "";
@@ -320,7 +341,10 @@ function whataf(
                     qruak+= qruakLiminal;
                 }
                 else if(headTown == qruakLiminal && !(befFilters.length > qruak-1 && qruakLiminal > 1)){
-                    resultsBef.push(actualBef);
+                    if(befOL[0]+befOL[1] == -2) resultsBef.push(actualBef);
+					else resultsBef.push(actualBef.substring(
+						actualRowNums[befOL[0]], actualRowNums[befOL[0] + befOL[1]]
+					));
                     qruak++;
                 }
                 else{
@@ -369,7 +393,11 @@ function whataf(
                                 checkFraParts.push(fra[Number(brase + befFilters[qruak])]);
                             }
                             const checkFra = checkFraParts.join(columnSep);
-                            ortami = checkResplitLength == checkFra.length && checkResplit === checkFra;
+							ortami = ((befOL[0] <= usqTrow) &&
+								(befOL[1] >>> 0) >= usqTrow) &&
+								checkResplitLength == checkFra.length &&
+								checkResplit === checkFra
+							;
                             if(ortami != memoryRef){
                                 qruakArray.push(usqTrow);
                                 //Szétválasztás, csoportosítás
@@ -389,7 +417,7 @@ function whataf(
 						qruakArray.push(needFoot ? actualRowNums.length - 1 : usqTrow);
                     }
                     else if (needFoot && usqTrow < actualRowNums.length - 1){
-						console.log("LSZ: " + usqTrow + ":" + actualRowNums.length);
+						//console.log("LSZ: " + usqTrow + ":" + actualRowNums.length);
                         for(let jk = 2; jk > 0; jk--) qruakArray.push(actualRowNums.length - jk);
                     }
                     let szen = "";
@@ -404,8 +432,17 @@ function whataf(
                     resultsBef[resLast] += szen;
                 }
             }
-            fullText += aTF(retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef));
-            outResBefNums.push(fullText.length);
+			try{
+				fullText += aTF(retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef));
+				outResBefNums.push(fullText.length);
+			} catch(err){
+				console.error(err.message);
+				console.log(fullText);
+				console.log(resPlit)
+				console.log(i);
+				console.log(leptek);
+				console.log(resPlit.length);
+			}
         }
     }
     else if(retnrows[3] != 0){

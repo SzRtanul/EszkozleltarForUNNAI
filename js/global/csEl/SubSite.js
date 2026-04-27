@@ -49,10 +49,6 @@ export class SubSite extends HTMLElement{
 				const connst = connJS[this.fname?.split("\.")[0]];
 				if(connst){
 					await connst(this.shdw);
-//					const sc = document.createElement("script");
-//					sc.type = "module";
-//					sc.src = `js/${connst[i] + ".js" + "?v=" + new Date().getTime()}`;
-//					this.shdw.appendChild(sc);
 				}
             } else {
                 console.error("Request failed with status:", this.cR.status);

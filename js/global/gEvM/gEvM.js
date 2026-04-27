@@ -4,7 +4,7 @@ import { doAfter } from "./doAfter.js";
 import { doValt } from "../csEl/SubSite.js";
 import { retreload, upload, uploadI } from "../csEl/Retn.js";
 import { loginKuld } from "./loginM.js";
-import { doFilm, setToFilm} from "./film.js";
+import { doFilm, setToFilm} from "../csEl/Film.js";
 
 function doInject(e){
     doAfter(e)

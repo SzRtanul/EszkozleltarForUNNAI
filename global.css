@@ -1,9 +1,9 @@
-html{
-	height: 100vh;
-	width: 100vw;
+.nopp{
+	min-height: 100vh;
+	min-width: 100vw;
 }
 
-sub-s, body{
+html, body > sub-s, body{
 	width: 100%;
 	height: 100%;
 }
@@ -11,13 +11,16 @@ sub-s, body{
 body{
 	/*
 	*/
-	overflow: hidden;
 	padding: 0;
 	margin: 0;
 	background-image: url("resources/images/Honlapra-1.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
+}
+
+sub-s{
+
 }
 
 form[disabled] [type='submit']{

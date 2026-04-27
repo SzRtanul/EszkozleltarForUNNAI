@@ -2,6 +2,8 @@ import { doAfter } from "./doAfter.js";
 import { gl } from "../globvars.js";
 import { exportedMethods } from "../globaldata.js";
 import { formDRef, modDRef } from "../retntemplates.js";
+import { qInserts } from "../endpoints.js";
+import {  } from "../actuelthings.js";
 
 function writeStatus(allapotKijelzok, statcode){
     exportedMethods.doUrlapAllapotFrissites(allapotKijelzok, statcode < 300 ?

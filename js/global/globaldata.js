@@ -151,93 +151,89 @@ function getSchemTabValFromUsqF(usqF){
     return usesDB.join("/");
 }
 
-function getDBThings(urlap, mode=0, JSONValue={}, viewObjects=[]){
-    const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
-    //const myUrlap = urlap.elements;
-    let fullText = "";
-    let columns = "";
-    let values = "";
-    for(const mezo of myUrlap){
-        // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
-        if(mezo.name && mezo.name.length > 0){
-            const text = 
-                mezo.type !== "checkbox" ? 
-                    (mezo.classList.contains("xhr") ? 
-                    getCryptoHash(mezo.value) : 
-                    mezo.value) : 
-                    (mezo.checked ? 1 : 0) + ""
-                    ;
-                    if(mezo.classList.contains("mez")){
-                        if(mode == 0){
-                            columns += mezo.name + ",";
-                    values += getMez(mezo, text);
-                }
-                else if(mode == 1){
-                    values += mezo.name + "=" + getMez(mezo, text);
-                }
-                else if(mode == 2){
-                    values += getMez(mezo, text);
-                }
-            }
-            if(mezo.classList.contains("settr")){
-                JSONValue[mezo.name] = text;
-            }
-            if(mezo.classList.contains("view")){
-                viewObjects.push(mezo);
-            }
-        }
-    }
+const modes = [
+	(cav, nav) => {
+		cav[0] += nav[0] + ",";
+		cav[1] += nav[1];
+	},
+	(cav, nav) => {
+		cav[1] += nav[0] + "=" + nav[1];
+	},
+	(cav, nav) => {
+		cav[1] += nav[1];
+	},
+	(cav, nav) => {
+		cav[1] += nav[0] + " and " + nav[1];
+	},
+];
+
+const binModes = [
+	(cav)=>{
+	},
+];
+
+function makeModes(mode, cav=[], nav=[]){
+	if(mode >= 0 && mode < modes.length){
+		modes[mode](cav, nav);
+	}
+}
+
+function toBin(cav=[], mode){
+	let [columns, values] = cav;
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
-    
-    /*num = txtenc.encode(values).length-1;
-    console.log("Text hossz: " + num);
-    view.setUint32(0, num>>>0);
-    const num32ui = new Uint8Array(buffer);
-    console.log("Num32UI: " + num32ui)
-    num32ui.reverse();
-    
-    const bits = [...num32ui].map(b => b.toString(2).padStart(8, "0")).join(" ");
-    console.log(bits);
-    const str = String.fromCharCode(...num32ui);
-    const decodedBytes = Uint8Array.from(str, c => c.charCodeAt(0));
-    
-    const bitstream = [...decodedBytes].map(b => b.toString(2).padStart(8, "0")).join("");
-    console.log(bitstream);*/
     
     const encodedValues = txtenc.encode(values.slice(0, -1)); // values.length-1 helyett a végét vágjuk le
     num = encodedValues.length;
-    // 1. Kiszámoljuk a méreteket
+    
+	// Méretszámítás
     const colData = (mode == 0) ? txtenc.encode(columns + "\x00") : new Uint8Array(0);
     const totalSize = colData.length + 4 + encodedValues.length;
 
-    // 2. Létrehozunk egy akkora puffert, amibe minden belefér
     const finalBuffer = new Uint8Array(totalSize);
     const view = new DataView(finalBuffer.buffer);
 
-    // 3. Másolás
     let offset = 0;
 
-    // Ha mode == 0, beírjuk a columns-t
     if (mode == 0) {
         finalBuffer.set(colData, 0);
         offset += colData.length;
     }
 
-    // Beírjuk a hosszt 4 bájton (Little-Endian, mert a kódodban reverse-öltél)
     view.setUint32(offset, num, true); 
     offset += 4;
-
-    // Beírjuk a szöveg bájtokat
     finalBuffer.set(encodedValues, offset);
     
     const decoder = new TextDecoder('latin1');
     console.log("Nyers szöveges nézet: " + decoder.decode(finalBuffer));
-
-    //fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
-    //console.log("Full: " + fullText);
+	// let fullText = 0;
+    // fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
+    // console.log("Full: " + fullText);
     return finalBuffer.buffer;
+}
 
-
+function getDBThings(urlap, mode=0, JSONValue={}){
+    const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
+    //const myUrlap = urlap.elements;
+	const cav = ["", ""];
+	const [columns, values] = cav;
+    for(const mezo of myUrlap){
+        // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
+        if(mezo.name && mezo.name.length > 0){
+            const text = mezo.type !== "checkbox" ? 
+				(mezo.classList.contains("xhr") ? 
+				getCryptoHash(mezo.value) : 
+				mezo.value) : 
+				(mezo.checked ? 1 : 0) + ""
+			;
+			if(mezo.classList.contains("mez")){
+				makeModes(mode, cav, [mezo.name.toLowerCase(), getMez(mezo, text)]);
+            }
+            if(mezo.classList.contains("settr")){
+                JSONValue[mezo.name] = text;
+            }
+        }
+    }
+	return toBin(cav, mode);
 }
 
 
@@ -307,8 +303,12 @@ export const exportedMethods = {
     getValueFromAll: getValueFromAll,
     getCryptoHash: getCryptoHash,
     getDBThings: getDBThings,
+	makeModes: makeModes,
+	toBin: toBin,
     getSchemTab: getSchemTab,
     getSchemTabValFromUsqF: getSchemTabValFromUsqF,
     qTextReform: qTextReform,
     exampleREST: exampleREST,
 };
+
+export const eM = exportedMethods;

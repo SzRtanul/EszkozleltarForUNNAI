@@ -36,6 +36,10 @@ export const endpointUn = [
 
 ];
 
+export const nonPKendpoints = [
+	""
+];
+
 export const qInserts = [
     "insert/\\\-$schema\\\-/\\\-$table\\\-",
     "gettable/\\\-$schema\\\-/\\\-$table\\\-",
@@ -48,3 +52,4 @@ export const qInserts = [
     "methscal/\\\-$schema\\\-/\\\-$table\\\-",
     "meth/\\\-$schema\\\-/\\\-$table\\\-",
 ];
+

@@ -80,21 +80,21 @@ const sampUpdate = (
 	mezok="", 
 	insD=false, 
 	kuldFelirat, 
-	gombfelirat="Módosítás", 
+	gombfelirat="M", 
 	ctn="td"
 )=>{
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
 	const ane = `
 \x00\x01${ctn} class="film">
 ${ defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) }
-\x00\x00button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">${gombfelirat}
+\x00\x00button runsclick="\x06" nextTo="scen:1" class="scen scen0">${gombfelirat}
 \x00\x02
 \x00\xFF`;
 	return ane;
 };
 
 
-const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
+const sampDelete = (usqF, gombfelirat="T", ctn="td") => {
 	return `
 \x00\x01${ ctn } class="film"
 \x00\x01div class="scene scen scen1"
@@ -104,7 +104,7 @@ const sampDelete = (usqF, gombfelirat="Törlés", ctn="td") => {
 }">Igen
 \x00\x00button runsclick="\x06" class="cancel" nextTo="scen:0">Mégse
 \x00\x00p class="allapot"
-\x00\x02button runsclick="\x06" nextTo="scen:1" class="scene scen scen0 sceneI">${ gombfelirat }
+\x00\x02button runsclick="\x06" nextTo="scen:1" class="scen scen0">${ gombfelirat }
 \x00\x02
 \x00\xFF`;
 };
@@ -133,7 +133,7 @@ const tempex = [
         for(let i = 0; i < args.length; i++){
             ret+="<th>"+args[i]+"</th>";
         }
-        for(let i = 0; i< befTHlen; i++){
+        for(let i = 0; i < befTHlen; i++){
             ret += "<th></th>";
         }
         if(nFD.length > 0) ret += sampUpdate(undefined, nFD[0], nFD[1], true, nFD[2] || "Hozzáad", nFD[3] || "+", "th");
@@ -153,7 +153,6 @@ const tempex = [
 export const templates = {
     // Defaults
 	nothing: (a, bef) => {
-		console.log("Te ...: " + bef);
 		return bef;
 	},
     table: (args, retr="") => {
@@ -200,12 +199,13 @@ export const templates = {
 \x00\x01${ cTn2 } class='d1 lgridcol2 megnhelyiseg'
 \x00\x00${ cTn } class='c1 tcent jlec'>${ a[1] }
 \x00\x00${ cTn } class='c2 tcent'>${ helyisegtipus }
-\x00\x02${ cTn2 } class='d2 tcent flec'>${ emelet }. emelet${ (a[7].length > 0 ? " [ " + a[7] + " ]" : "") }
+\x00\x02${ cTn2 } class='d2 tcent flec'
+>${ emelet }. emelet${ (a[7].length > 0 ? " [ " + a[7] + " ]" : "") }
 \x00\x04
 \x00\xFF
 `;
     },
-    tbodybef: (args) => "<tbody adj='afterbegin'>",
+    tbodybef: (args) => "<table><tbody adj='afterbegin'>",
     //divbef: (args) => "",
     divbef: (args) => `<div>`,
     divend: (args) => "</div>",
@@ -242,7 +242,14 @@ export const templates = {
 	left: ${args[4]}px;"
 \x00\x01ul class="grayblack liview scen"
 \x00\x00li>Alakzatpontok
-\x00\xFF ${ udMezC(args[0], [1], mezok.helyisegUpd(args, true), undefined, undefined, undefined, "li") }
+\x00\xFF${
+	udMezC(
+		args[0], [1],
+		mezok.helyisegUpd(args, true),
+		undefined, undefined, undefined,
+		"li"
+	)
+}
 \x00\x02button class='helyiseg' style="
 	position: absolute;
 	top: ${0}px;
@@ -599,5 +606,65 @@ ${
         return text + kieg;
     },
 	eszkttyp: (args, bef) => `
+`,
+	dshbLeltarList: (a, term) => {
+		return `
+ tr
+  td>${a[0]}
+  td>${a[1]}
+  td>${a[2]}
+  td>${a[3]}
+  td>${a[4]}
+  td>${a[5]}
+  td>${term}
 `
+	},
+	dshbLeltarEsemenyList: (a, term) => {
+		return `
+ tr
+  td>${a[0]}
+  td>${a[1]}
+  td>${a[2]}
+  td>${a[3]}
+  td>${a[4]}
+  td>${a[5]}
+  td>${term}
+`
+	},
+	ulbef: (a, kieg="", kieg2="") => "<ul " + kieg + ">" + kieg2,
+	ulend:() => "</ul>",
+	dshbTermUlBef: (a) => {
+		return ulbef( 
+			a,
+			"", `
+`
+		);
+	},
+	dshbLi: (a, b1="") => {
+		return `
+ li
+  button>${a[1]}
+${b1.length > 9 ? " ÿ" + b1 : ""}`;
+	},
+	dshbLiEszkoz: () => {
+		return "";
+	},
+	dshbLiMarka: () => {
+		return "";
+	},
+	dshbLiTermek: (a) => {
+		return `
+ li>
+${
+	false ? udMezC(
+		a[1], "2",
+		mezok.termekUpd(a),
+		"<img alt='M' src=''>",
+		"<img alt='D' src=''>",
+		undefined,
+		"div"
+	) : ""
+}
+  button>${ a[1] }`;
+	},
 };
