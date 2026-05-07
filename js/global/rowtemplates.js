@@ -81,7 +81,8 @@ const sampUpdate = (
 	insD=false, 
 	kuldFelirat, 
 	gombfelirat="M", 
-	ctn="td"
+	ctn="td",
+	dt
 )=>{
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
 	const ane = `
@@ -109,17 +110,17 @@ const sampDelete = (usqF, gombfelirat="T", ctn="td") => {
 \x00\xFF`;
 };
 
-const udMezC = (id, endptr, mezok="", ufg, df, ufk, cntnr) => { // Automatikusan update
-    return sampUpdate(id, [endptr], mezok, undefined, ufk, ufg, cntnr) +
+const udMezC = (id, endptr, mezok="", ufg, df, ufk, cntnr, dt) => { // Automatikusan update
+    return sampUpdate(id, [endptr], mezok, undefined, ufk, ufg, cntnr, dt) +
         sampDelete([endptr, id], df, cntnr);
 }
 
 const nevUp = (args, endptr, megj="") => {
-    return templates.trow(args, udMezC(args[0], endptr, mezok.nevUpd(args, megj)));
+    return tps.trow(args, udMezC(args[0], endptr, mezok.nevUpd(args, megj)));
 };
 
 const otherUpd = (args=[], usqF, myUpd="", egyebbf="", egyebbh="") => {
-    return templates.trow(
+    return tps.trow(
         args,
         egyebbf +
         udMezC(usqF?.length > 1 ? args[usqF[1]] : args[0], usqF[0], mezok[myUpd](args)) +
@@ -130,7 +131,7 @@ const otherUpd = (args=[], usqF, myUpd="", egyebbf="", egyebbh="") => {
 const tempex = [
     (args, koszbe="", nFD=[], befTHlen=0)=>{
         let ret = "<table><thead><tr>"+ koszbe +"</tr><tr>";
-        for(let i = 0; i < args.length; i++){
+        for(let i = 0; i < args.length-2; i++){
             ret+="<th>"+args[i]+"</th>";
         }
         for(let i = 0; i < befTHlen; i++){
@@ -150,7 +151,7 @@ const tempex = [
     }
 ];
 
-export const templates = {
+export const tps = {
     // Defaults
 	nothing: (a, bef) => {
 		return bef;
@@ -164,7 +165,7 @@ export const templates = {
     theade: (args, koszbe, newFormData) => tempex[0](args, koszbe, newFormData),
     divheade: (args) => {
         let text = "<div class='fleft tbord'>";
-        for(let i = 0; i < args.length; i++){
+        for(let i = 0; i < args.length-2; i++){
             text += "<div class='tbord'>" + args[i] + "</div>";
         }
         text += "</div>";
@@ -182,7 +183,7 @@ export const templates = {
 	<br>${a3.length > 0 ? a3 : "-n/a-"}
 \x00\xFF`;
     },
-//    megnTermekD: (args, eszkoznev, markanev) => templates.megnTermekT(args, eszkoznev, markanev, "div"),
+//    megnTermekD: (args, eszkoznev, markanev) => tps.megnTermekT(args, eszkoznev, markanev, "div"),
 	megnTermekD: (a, eszkoznev, markanev) => genGDivs(
 		gComb.megnTermekD,
 		[
@@ -212,13 +213,13 @@ export const templates = {
     trow: (args, egyeb="", befilts =[], befs=[]) => {
         let ret = "<tr class='retnrow'>";
         if(befs.length == 0){
-            for(let i = 0; i < args.length; i++){
+            for(let i = 0; i < args.length-2; i++){
                 ret+="<td>"+args[i]+"</td>";
             }
         }
         else{
             let c = 0;
-            for(let i = 0; i < args.length; i++){
+            for(let i = 0; i < args.length-2; i++){
                 if(c < befs.length && befs[c] < i) c++;
                 if(c < befs.length && befs[c] == i) ret += "<td>" + befilts[c] + "</td>"
                 else ret += "<td>" + args[i] + "</td>";
@@ -379,18 +380,18 @@ export const templates = {
     theadeTervrajz: (args) => {
         return "";
     },
-    theadeCustomLeltarList:(a) => templates.theade(a.slice(0, a.length - 2)),
-    optionCegList: (args) => templates.optionList(args, args[1]),
-    optionTermekList: (args, markanev="", eszkoznev="") => templates.optionList(args, `${ eszkoznev } [${markanev} - ${args[3]}]`),
-    optionBeszerzesList: (args) => templates.optionList(args, args[1]),
-    optionEmeletList: (args) => templates.optionList(args, args[1]),
-    optionHelyisegList: (args) => templates.optionList(args, args[1]),
-    optionLeltarList: (args) => templates.optionList(args, args[1]),
-    optionLeltarEsemenyList: (args) => templates.optionList(args, args[1]),
-    optionFalList: (args) => templates.optionList(args, args[1]),
-    optionTagozatList: (args) => templates.optionList(args, args[1]),
-    optionOsztalyList: (args) => templates.optionList(args, args[1]),
-    optionTeremKiosztasList: (args) => templates.optionList(args, args[1]),
+    theadeCustomLeltarList:(a) => tps.theade(a.slice(0, a.length - 2)),
+    optionCegList: (args) => tps.optionList(args, args[1]),
+    optionTermekList: (args, markanev="", eszkoznev="") => tps.optionList(args, `${ eszkoznev } [${markanev} - ${args[3]}]`),
+    optionBeszerzesList: (args) => tps.optionList(args, args[1]),
+    optionEmeletList: (args) => tps.optionList(args, args[1]),
+    optionHelyisegList: (args) => tps.optionList(args, args[1]),
+    optionLeltarList: (args) => tps.optionList(args, args[1]),
+    optionLeltarEsemenyList: (args) => tps.optionList(args, args[1]),
+    optionFalList: (args) => tps.optionList(args, args[1]),
+    optionTagozatList: (args) => tps.optionList(args, args[1]),
+    optionOsztalyList: (args) => tps.optionList(args, args[1]),
+    optionTeremKiosztasList: (args) => tps.optionList(args, args[1]),
     trowEszkozList: (args) => nevUp(args, 12, "Eszköz neve"),
     trowMarkaList: (args) => nevUp(args, 13, "Márka"),
     trowHelyisegTipusList: (args) => nevUp(args, 14, "Helyiség neve"),
@@ -422,7 +423,7 @@ export const templates = {
     trowTeremKiosztasList: (args) => otherUpd(args, [11], "teremKiosztasUpd"),
     trowEszkozSzuksegletList: (args) => otherUpd(args, [16], "eszkozSzuksegletUpd"),
     trowTermekSzuksegletList: (args) => otherUpd(args, [17], "termekSzuksegletUpd"),
-    trowleLeltarList: (a) => templates.trow(
+    trowleLeltarList: (a) => tps.trow(
         a,
         udMezC(a[6],
             6,
@@ -433,7 +434,7 @@ export const templates = {
         )
     ),
     trowleLeltarEsemenyList: (a, ...befilts) => {
-        const templ = templates.trow(
+        const templ = tps.trow(
             a,
             udMezC(
                 [a[0], a[1]],
@@ -448,7 +449,7 @@ export const templates = {
         );
         return templ;
     },
-    trowleBeszerzesList: (a) => templates.trow(
+    trowleBeszerzesList: (a) => tps.trow(
         a,
         "<td class='g1 jfgrid'>" +
         udMezC(
@@ -466,17 +467,17 @@ export const templates = {
     ),
     theadleBeszerzesList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
-        return templates.theade(mTNs.customBeszerzesList(a));
+        return tps.theade(mTNs.customBeszerzesList(a));
     },
     theadleHelyisegList: (a) => {
         const bef = `<td colspan="${a.length-1}"></td>`;
-        return templates.theade(a.slice(0, a.length - 2));
+        return tps.theade(a.slice(0, a.length - 2));
     },
     //
     // 1. customBeszerzesList
     //
     customBeszerzesList2: (a, justF="", ...res) => {
-        return justF.length > 2 ? templates.customBeszerzesList(a, ...res) : "";
+        return justF.length > 2 ? tps.customBeszerzesList(a, ...res) : "";
     },
     customBeszerzesList: (a, helyiseg="", leltaresemeny="", hhead="", lehead="", tend="", ...befilts) => {
         let text = `
@@ -607,64 +608,141 @@ ${
     },
 	eszkttyp: (args, bef) => `
 `,
-	dshbLeltarList: (a, term) => {
+	dshbHelyisegList: (a, em, helyst) => {
+//		console.log(helyst);
+		return em + ". emelet: " + a[1] + " - " + helyst;
+	},
+	dshbLelt: (a, helys, mert="db") => {
+//		console.log(helys)
 		return `
  tr
-  td>${a[0]}
-  td>${a[1]}
-  td>${a[2]}
-  td>${a[3]}
-  td>${a[4]}
-  td>${a[5]}
-  td>${term}
-`
+  td class="nowrap">${helys}
+  td>${a[3]} ${mert}
+ `;
 	},
-	dshbLeltarEsemenyList: (a, term) => {
+	dshbLeltEs: (a, leltEsTip) => {
 		return `
  tr
-  td>${a[0]}
-  td>${a[1]}
-  td>${a[2]}
-  td>${a[3]}
-  td>${a[4]}
-  td>${a[5]}
-  td>${term}
-`
+  td class="nowrap">${a[3]}
+  td>${leltEsTip}
+  td>${a[1]} db
+ 
+`;
 	},
-	ulbef: (a, kieg="", kieg2="") => "<ul " + kieg + ">" + kieg2,
-	ulend:() => "</ul>",
-	dshbTermUlBef: (a) => {
-		return ulbef( 
-			a,
-			"", `
-`
-		);
-	},
-	dshbLi: (a, b1="") => {
+	dshbBesz: (a, ceg, uEC=[]) => {
+		console.log(ceg)
 		return `
- li
-  button>${a[1]}
-${b1.length > 9 ? " ÿ" + b1 : ""}`;
-	},
-	dshbLiEszkoz: () => {
-		return "";
-	},
-	dshbLiMarka: () => {
-		return "";
-	},
-	dshbLiTermek: (a) => {
-		return `
- li>
+ dg-div class="autoc"
+ dg-div class="film autor"
+ dg-div class="autoc dshbBesz2-TA ker"
+  g-div TA="d">${ceg} KFT.
+  g-div TA="e">${a[4]} db
+  g-div TA="i">${a[8]}
+ g-div TA="k">
+  button runsclick="" nextTo="sc:1" class="sc sc0">ˇ
+  button runsclick="" nextTo="sc:0" class="scene sc sc1">^
+ 
+ dg-div class="dshbBeszR-TA ker scene sc sc1">
+  g-div TA="a" class="d-non">${a[0]}
+  g-div TA="b">${a[1]}
+  g-div TA="c">${a[2]} gyÉv
+  g-div TA="d">${a[5] === "1" ? "Használt" : "Új"}
+  g-div TA="e">${a[6]} Ft
+  g-div TA="f">${a[7]} inter
+  g-div TA="g">${a[9]}
+ 
+ div>
 ${
-	false ? udMezC(
-		a[1], "2",
-		mezok.termekUpd(a),
+	udMezC(
+		uEC[1], uEC[2],
+		mezok[uEC[3]]?.apply(null, uEC[4]),
 		"<img alt='M' src=''>",
 		"<img alt='D' src=''>",
 		undefined,
+		"div", uEC[5]
+	)
+}
+ 
+`
+	},
+	dshbBeszAlt: (a, besz, leltAEs) => {
+		return `
+ dg-div>
+  div>${besz}
+  div>${leltAEs}
+ `;
+	},
+	ulbef: (a, kieg="", kieg2="") => "<ul " + kieg + ">" + kieg2,
+	ulend:() => "</ul>",
+	dshbLi: (b="", b1="", b2="", uEC=[false], sU) => {
+		return `
+ li class="retnrow"
+ dg-div class="dshbLi${b2}">
+  button>${b}
+${
+	uEC?.[0] ? udMezC(
+		uEC[1], uEC[2],
+		mezok[uEC[3]]?.apply(null, uEC[4]),
+		"<img alt='M' src=''>",
+		"<img alt='D' src=''>",
+		undefined,
+		"div", uEC[5]
+	) : ""
+}
+${
+	sU?.[0] ? sampUpdate(
+		undefined, [sU[1], 0],
+		mezok[sU[2]]?.apply(null, sU[3]),
+		true, "Hozzáad",
+		sU[4] || "+",
 		"div"
 	) : ""
 }
-  button>${ a[1] }`;
+ 
+${b1.length > 8 ? " ÿ" + b1 : ""}`;
+	},
+	dshbUlBef: (a) => {
+		
+		const ahn = tps.ulbef(a, "",
+				tps.dshbLi(
+					"", "", "",
+					[false],
+					[
+						true,
+						-1,
+						"nevUpd", ["", "Eszköznév"]
+					]
+		));
+		console.log(ahn);
+		return ahn;
+	},
+	dshbLiEszkoz: (a, m) => {
+		return tps.dshbLi(a[1], m, undefined,
+			[true],
+			[true]
+		);
+	},
+	dshbLiMarka: (a, m, mm) => {
+		return tps.dshbLi(
+			m, mm, void 0, [false],
+			[true]
+		);
+	},
+	dshbLiTermek: (a) => {
+		return `
+ li class="retnrow"
+ dg-div class="dshbLiTermek">
+  button>${ a[3] }
+${
+	true ? udMezC(
+		a[0], "2",
+		mezok.termekUpdD1D2(a),
+		"<img alt='M' src=''>",
+		"<img alt='D' src=''>",
+		undefined,
+		"div", "eszkozid:"+a[1]+":markaid:"+a[2]
+	) : ""
+}
+`;
 	},
 };

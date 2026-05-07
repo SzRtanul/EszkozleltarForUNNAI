@@ -1,19 +1,30 @@
+.ker > *{
+	border: 1px solid white;
+}
+
 ul{
+/*
+*/
 	background-color: white;
 	list-style: none;
 	padding-inline-start: 30px;
 	font-family: 'Arial', 'Monaco';
+	margin: 0px;
 }
 
 li{
+	background-color: white;
 	line-height: 1.3;
 	margin-inline-start: -10px;
 }
 
-li>*{
+li>dg-div>button{
+	/*
 	display: block;
 	width: calc(100% - 30px);
 	height: 100%;
+	*/
+	all: unset;
 	margin: 0px;
 	min-height: 0px;
 	padding-left: 20px;
@@ -23,8 +34,23 @@ li>*{
 	white-space: nowrap;
 }
 
-li>span:hover{
+li{
+/*	float: right;*/
+	min-width: 400px;
+}
+
+li>dg-div:hover{
 	background-color: #BBFFBB;
+}
+
+.dshbLi{
+	grid-template-columns: 8fr;
+	grid-auto-columns: 1fr;
+	grid-auto-flow: column;
+}
+
+.dshbLiTermek{
+	grid-template-columns: 8fr 1fr 1fr;
 }
 
 .myd{

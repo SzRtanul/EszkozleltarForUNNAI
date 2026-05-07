@@ -1,7 +1,7 @@
 import { gl } from "./globvars.js"
 import { whd } from "./queriessetup.js";
 import { retnCombinations } from "./retntemplates.js";
-import { templates } from "./rowtemplates.js";
+import { tps } from "./rowtemplates.js";
 
 const columnSep = "\x00";
 
@@ -116,7 +116,7 @@ export function makeUpdateForm(e){
     const virtForm = "";
 }
 
-function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], szur=0){
+function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], szur=0){
     let [cjust, yEn] = cjuste.split(":");
 	yEn = Number(yEn);
 	let res = [];
@@ -134,6 +134,7 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
     const templeBefs = [];
     const templeUsq = [];
     const befRowsNum = [];
+	const befInfs = [];
     let templeLast = -1;
     let yeP = 0;
     const ye = two[1]?.split("---");
@@ -141,6 +142,7 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
 	if(yelen >= ye.length) return "";
 	
     for(const cja of ye){
+		let mater0 = [];
 		if(yeP > yelen) break;
         if(cja.startsWith("?")){
             const rn = cja.substring(1, cja.length);
@@ -148,12 +150,16 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
                 const retn = retns[rn];
                 if(true || cjutte === cjust && !retn){ // cjust-6
 					//console.log("BOBER")
-                    /*retns[rn] = */doUjratolt(rn);
-                }
-                const rUBRs = retnsUsQsAndRowsNums[rn];
-                templeBefs.push(retns[rn]);
-                templeUsq.push(rUBRs[0]);
-                befRowsNum.push(rUBRs[1]);
+                    const rd = doUjratoltN(rn);
+					templeBefs.push(rd[0]);
+					templeUsq.push(rd[1]);
+					befRowsNum.push(rd[2]);
+                }else{
+					const rUBRs = retnsUsQsAndRowsNums[rn];
+					templeBefs.push(retns[rn]);
+					templeUsq.push(rUBRs[0]);
+					befRowsNum.push(rUBRs[1]);
+				}
                 templeLast++;
             }
         }
@@ -163,7 +169,7 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
                 const metnum = Number("0x"+cja.substring(i,i+2));
                 methods.push(
 					(i == 0 || !justRow) && !isNaN(metnum) && metnum != 255 ? 
-						templates[metnames[metnum]] : 0
+						tps[metnames[metnum]] : 0
 				);
             }
             const reqType = Number("0x"+ cja.substring(9, 10));
@@ -178,6 +184,7 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
 				templeUsq.push(
                     yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum].text
                 );
+				befInfs.push([cjust+"-"+yeP]);
                 templeLast++;
             }
             else{
@@ -195,8 +202,10 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
                 const resrownums = [];
                 const resultsBefRowsNums = [];
                 const whereBef = [];
+				const resultInfs = [];
                 let befsNum = 0;
                 let mata = 0;
+				mater0 = materia;//[0]?.split(":");
                 for(const len of materia){
                     const lklen = len.split(":");
                     let lastResBefIndex = whereBef.push((resultBef.length + lklen.length)) -1;
@@ -207,6 +216,7 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
                             resultBef.push(templeBefs[hirF]);
                             resultQ.push(templeUsq[hirF]);
                             resultsBefRowsNums.push(befRowsNum[hirF]);
+							resultInfs.push(befInfs[hirF])
                         }
                         else{
                             whereBef[lastResBefIndex]--; // Utolsó hiba: --2025. 08. 08. 15:46--
@@ -232,11 +242,11 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
                 }
 				const gg = yeP == yelen;
                 templeBefs.push(whataf(
-                    cjust,
+                    [cjust, mater0],
                     templeUsq[templeLast], methods, 
                     resrownums, gg ? szur : undefined, gg ? offlim : undefined,
 					resultBef, resultsBefRowsNums, resultQ,
-                    befIlter, whereBef
+                    befIlter, whereBef, resultInfs
                 ));
                 befRowsNum.push(resrownums);
             }
@@ -244,7 +254,7 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
                 const resrownums = [];
 				const gg = yeP == yelen;
                 templeBefs.push(whataf(
-                    cjust, templeUsq[templeLast], methods, resrownums, 
+                    [cjust, mater0], templeUsq[templeLast], methods, resrownums, 
 					gg ? szur : undefined, gg ? offlim : undefined
                 ));
                 befRowsNum.push(resrownums);
@@ -261,9 +271,15 @@ function doUjratolt(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], s
 			retns[cjust] = rtnV;
 		}
     }
-    if(bon) 
-		retnsUsQsAndRowsNums[cjust] = [templeUsq[templeLast], befRowsNum[templeLast]]
-    return rtnV;
+	const rdm = [templeUsq[templeLast], befRowsNum[templeLast]]
+    if(bon) {
+		retnsUsQsAndRowsNums[cjust] = rdm;
+	}
+    return [rtnV, ...rdm];
+}
+
+function doUjratolt(...args){
+	return doUjratoltN(...args)[0]
 }
 
 function replaceLast(str, search, replace) {
@@ -274,7 +290,7 @@ function replaceLast(str, search, replace) {
 
 
 function whataf(
-    cjust = "",
+    cmater = [],
     responseInput = "",
     retnrows = [0, 0, 0, 0], 
     outResBefNums = [],
@@ -284,7 +300,8 @@ function whataf(
     befrownums = [],
     befusqs = [],
     befFilters = [],
-    wherebef = []
+    wherebef = [],
+	befInfs = []
 ){
     let fullText = "";
     const resHaveThead = responseInput.startsWith("T") ? 1 : 0;
@@ -299,8 +316,11 @@ function whataf(
     if(resHaveThead && retnrows[1] != 0){
         outResBefNums[0] = 1;
         fullText = aTF(
-			retnrows[1](resPlit.slice(0, leptek), ...befretns.slice(eleje, wherebef[1]))
-		);
+			retnrows[1](
+				resPlit.slice(0, leptek)
+					.concat([cmater[0], cmater[1][1]]),
+				...befretns.slice(eleje, wherebef[1])
+		));
         outResBefNums.push(fullText.length); // ALAMÉAEA
     }
     if(error == 0 && retnrows[0] != 0){
@@ -432,10 +452,13 @@ function whataf(
                     resultsBef[resLast] += szen;
                 }
             }
-			try{
-				fullText += aTF(retnrows[0](resPlit.slice(i, i + leptek), ...resultsBef));
+//			try{
+				fullText += aTF(retnrows[0](resPlit.slice(i, i + leptek)
+					.concat([cmater[0], cmater[1][0]]), ...resultsBef
+				));
+//				console.log(resPlit.slice(i, i + leptek).concat(cmater));
 				outResBefNums.push(fullText.length);
-			} catch(err){
+/*			} catch(err){
 				console.error(err.message);
 				console.log(fullText);
 				console.log(resPlit)
@@ -443,7 +466,7 @@ function whataf(
 				console.log(leptek);
 				console.log(resPlit.length);
 			}
-        }
+*/      }
     }
     else if(retnrows[3] != 0){
         fullText += aTF(retnrows[3](resPlit.split(columnSep)));
@@ -453,7 +476,7 @@ function whataf(
     if(retnrows[2]!=0) {
         outResBefNums[0] += 2;
         fullText += wherebef.length > 2 ? aTF(retnrows[2](
-            ...befretns.slice(wherebef[1], wherebef[2])
+            [cmater[0], cmater[1][2]], ...befretns.slice(wherebef[1], wherebef[2])
         )) : aTF(retnrows[2]());
         outResBefNums.push(fullText.length);
     }

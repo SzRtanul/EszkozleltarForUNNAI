@@ -2,11 +2,11 @@ const filmek = {};
 const dFilmek = {};
 
 function doFilm(e){
-	console.log("Ez fut egyáltalán?")
+//	console.log("Ez fut egyáltalán?")
     const hovas = e.target.getAttribute("nextTo")?.split(';');
-    const film = e.target.closest(".film");
-	console.log(film);
-	console.log(hovas)
+    const film = e.target.closest(".film, film-d, film-en");
+//	console.log(film);
+//	console.log(hovas)
     if(film  && hovas){
         for(let i = 0; i < hovas.length; i++){
             const hova = hovas[i].split(':');

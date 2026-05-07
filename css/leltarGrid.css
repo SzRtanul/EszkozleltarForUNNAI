@@ -3,11 +3,21 @@ dg-div{
 	height: 100%;
 }
 
-dg-div > *{
+dg-div > *:not(dg-div){
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+}
+
+.autoc{
+	grid-auto-columns: 1fr;
+	grid-auto-flow: column;
+}
+
+.autor{
+	grid-auto-rows: 1fr;
+	grid-auto-flow: row;
 }
 
 th > dg-div{
@@ -37,6 +47,36 @@ td g-div > div{
 	grid-template-columns: repeat(2, minmax(max-content, 1fr));
 	grid-template-areas: 
 		"a b"
+	;
+}
+
+.dshbBesz2-TA{
+	grid-auto-columns: minmax(max-content, 1fr);
+	/*
+	grid-template-columns: repeat(3, minmax(max-content, 1fr));
+	*/
+	grid-template-areas: 
+		"i i i i e e"
+		"d d d d d k"
+	;
+}
+
+.dshbBeszR-TA{
+	grid-auto-columns: minmax(max-content, 1fr);
+	grid-template-areas: 
+		"k k b c c c"
+		"n n n g g f" 
+		"n n n d e e"
+	;
+}
+
+.dshbBesz-TA{
+	grid-template-columns: repeat(3, minmax(max-content, 1fr));
+	grid-template-areas: 
+		"c i i"
+		"j j e"
+		"f g g"
+		"d d h"
 	;
 }
 

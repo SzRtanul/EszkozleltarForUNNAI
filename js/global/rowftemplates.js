@@ -1,5 +1,5 @@
-export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít", inS=false) => 
-`<form runssubmit="${inS ? "\x01" : "\x02"}" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" + value  + (!inS ? "/" + id : "")}' nextTo="" class="scene scen scen1">
+export const defUrlap = (id="", usqf="", value="", fields="", kuldFelirat="Frissít", inS=false, dt="") => 
+`<form dt="${dt}" runssubmit="${inS ? "\x01" : "\x02"}" usqf="${usqf}" value='${(inS ? "insert" : "update") + "/" + value  + (!inS ? "/" + id : "")}' nextTo="" class="scene scen scen1">
     <div>
         ${!inS ? '<label>Id</label><input type="number" value="' + id + '" disabled class="">' : ''}
         ${fields}
@@ -68,6 +68,13 @@ export const mezok = {
         return mez.label("Eszköznév") + mT.eszkozID(args[1]) +
             mez.label("Márka") + mT.markaID(args[2]) +
             mez.label("Tipus") + mT.nev(args[3], "tipus");
+    },
+    termekUpdD1: (args=[])=>{
+        return mez.label("Márka") + mT.markaID(args[2]) +
+            mez.label("Tipus") + mT.nev(args[3], "tipus");
+    },
+    termekUpdD1D2: (args=[])=>{
+        return mez.label("Tipus") + mT.nev(args[3], "tipus");
     },
     beszerzesUpd: (args=[]) => {
         return mez.label("Termék") + mT.termekID(args[1]) +

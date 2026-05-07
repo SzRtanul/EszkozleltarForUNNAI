@@ -41,7 +41,7 @@ export async function upload(e, uu, resp, isInsert=false){
 			ehn.insertAdjacentHTML(adj, rep);
 		}
 		else{
-			const ahn = tr.closest(".retnrow");
+			const ahn = tr.closest(".retnrow, .retupd");
 			ahn.outerHTML = rep;
 		}
 	}

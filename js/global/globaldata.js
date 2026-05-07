@@ -147,7 +147,7 @@ function getSchemTab(al1, al2){
 }
 
 function getSchemTabValFromUsqF(usqF){
-    const usesDB = !isNaN(usqF) ? getSchemTab(...formDRef[usqF]?.split(/[^0-9]/).map(Number)) : [];
+    const usesDB = !isNaN(usqF) && usqF > -1 ? getSchemTab(...formDRef[usqF]?.split(/[^0-9]/).map(Number)) : [];
     return usesDB.join("/");
 }
 
@@ -211,11 +211,16 @@ function toBin(cav=[], mode){
     return finalBuffer.buffer;
 }
 
-function getDBThings(urlap, mode=0, JSONValue={}){
+function getDBThings(urlap, mode=0, JSONValue={}, DEFValues=""){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
     //const myUrlap = urlap.elements;
+	const DEFs = DEFValues.split(":");
 	const cav = ["", ""];
 	const [columns, values] = cav;
+
+	for(let i = 0; i + 1 < DEFs.length; i += 2){
+		makeModes(mode, cav, DEFs.slice(i, i + 2));
+	}
     for(const mezo of myUrlap){
         // if (typeof mezo.name !== "string" || mezo.name.trim() === "") mezo.name="";
         if(mezo.name && mezo.name.length > 0){

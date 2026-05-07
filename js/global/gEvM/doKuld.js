@@ -41,7 +41,7 @@ export async function doKuld(e, afterMethod=()=>""){
     let tr = "";
     if(fvalue){
         const JSONValue = !isNaN(ut) && typeof ut !== "undefined" ? utJSON[ut] : {};
-        ddtxt = exportedMethods.getDBThings(urlap, usqF[0], JSONValue);
+        ddtxt = exportedMethods.getDBThings(urlap, usqF[0], JSONValue, attrs["dt"]);
         tr =  exportedMethods.qTextReform(fvalue, JSONValue);
     }
     else if(usqF.length > 1){
