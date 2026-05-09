@@ -30,7 +30,8 @@ export const endpoints = [
     "gettable/public/termekszuksegletossz_v",
     // 25.
     "gettable/public/exaempty",
-	"gettable/public/distctermem"
+	"gettable/public/distctermem",
+	"gettable/public/distclelhely" // Leltár helyisegid distinct
 ];
 
 export const endpointUn = [

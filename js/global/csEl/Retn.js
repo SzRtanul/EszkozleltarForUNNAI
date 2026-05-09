@@ -135,9 +135,6 @@ export class Retn extends HTMLElement {
 
 		shadow.innerHTML = 
 		`
-		<link rel="stylesheet" href="../global.css">
-		<link rel="stylesheet" href="../css/leltar.css">
-		<link rel="stylesheet" href="../css/leltarGrid.css">
 		<mark-s class="alekten" cjust='${cjust}'></mark-s>`;
 		const div = shadow.querySelector("mark-s");
 		this.div = div;

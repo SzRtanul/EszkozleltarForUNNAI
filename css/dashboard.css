@@ -89,10 +89,6 @@ g-div[TA="B"]{
 	right: 10px;
 }
 
-.m2fr{
-	grid-template-columns: 1fr 1fr;
-}
-
 .m2fr > g-div{
 	display: flex;
 	align-items: start;

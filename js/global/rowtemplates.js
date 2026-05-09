@@ -620,6 +620,15 @@ ${
   td>${a[3]} ${mert}
  `;
 	},
+	dshbLeltD: (a, helys, mert="db") => {
+//		console.log(helys)
+		return `
+ div
+  div class="nowrap">${helys}
+  div>${a[3]} ${mert}
+ `;
+	},
+
 	dshbLeltEs: (a, leltEsTip) => {
 		return `
  tr
@@ -629,8 +638,22 @@ ${
  
 `;
 	},
-	dshbBesz: (a, ceg, uEC=[]) => {
-		console.log(ceg)
+	dshbBeszH: (a, sU) => {
+		return `
+ div>DDDDD
+${
+	sU?.[0] ? sampUpdate(
+		undefined, [sU[1], 0],
+		mezok[sU[2]]?.apply(null, sU[3]),
+		true, "Hozzáad",
+		sU[4] || "+",
+		"div"
+	) : ""
+}
+ 
+`;
+	},
+	dshbBeszMin: (a, ceg, uEC=[]) => {
 		return `
  dg-div class="autoc"
  dg-div class="film autor"
@@ -651,26 +674,62 @@ ${
   g-div TA="f">${a[7]} inter
   g-div TA="g">${a[9]}
  
- div>
+ dg-div>
 ${
-	udMezC(
+	uEC?.[0] === true ? udMezC(
 		uEC[1], uEC[2],
 		mezok[uEC[3]]?.apply(null, uEC[4]),
 		"<img alt='M' src=''>",
 		"<img alt='D' src=''>",
 		undefined,
 		"div", uEC[5]
-	)
+	) : ""
+}
+ 
+`
+	},
+	dshbBesz: (a, ceg, uEC=[]) => {
+		return `
+ dg-div class="autoc"
+ dg-div class="film autor"
+ dg-div class="autoc dshbBesz2-TA ker"
+  g-div TA="d">${ceg} KFT.
+  g-div TA="e">${a[4]} db
+  g-div TA="i">${a[8]}
+ g-div TA="k">
+  button runsclick="" nextTo="sc:1" class="sc sc0">ˇ
+  button runsclick="" nextTo="sc:0" class="scene sc sc1">^
+ 
+ dg-div class="dshbBeszR-TA ker scene sc sc1">
+  g-div TA="a" class="d-non">${a[0]}
+  g-div TA="b">${a[1]}
+  g-div TA="c">${a[2]} gyÉv
+  g-div TA="d">${a[5] === "1" ? "Használt" : "Új"}
+  g-div TA="e">${a[6]} Ft
+  g-div TA="f">${a[7]} inter
+  g-div TA="g">${a[9]}
+ 
+ dg-div>
+${
+	uEC?.[0] === true ? udMezC(
+		uEC[1], uEC[2],
+		mezok[uEC[3]]?.apply(null, uEC[4]),
+		"<img alt='M' src=''>",
+		"<img alt='D' src=''>",
+		undefined,
+		"div", uEC[5]
+	) : ""
 }
  
 `
 	},
 	dshbBeszAlt: (a, besz, leltAEs) => {
-		return `
- dg-div>
+		const con = `
+ dg-div class="ker">
   div>${besz}
-  div>${leltAEs}
+  dg-div "autor">${leltAEs}
  `;
+		return con;
 	},
 	ulbef: (a, kieg="", kieg2="") => "<ul " + kieg + ">" + kieg2,
 	ulend:() => "</ul>",
@@ -713,7 +772,6 @@ ${b1.length > 8 ? " ÿ" + b1 : ""}`;
 						"nevUpd", ["", "Eszköznév"]
 					]
 		));
-		console.log(ahn);
 		return ahn;
 	},
 	dshbLiEszkoz: (a, m) => {

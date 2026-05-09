@@ -71,15 +71,20 @@ export const retnCombinations = {
 	"dshbUlBef|||"+
 		"050001FF;005---02FFFFFF;001---040001FF;01A;1=1=0:0=0=1=1=2---030601FF;000;2=0=0",
 	dshb_beszerzeslist: "dshbBesz|||?megnCeg---00FFFFFF;006;0=3=0",
+	dshb_beszerzeslistmin: "dshbBesz|||?megnCeg---00FFFFFF;006;0=3=0",
 	dshb_helyiseglist: "megn:dshbHelyisegList|||" + 
 		"00FFFFFF;007---00FFFFFF;002---01FFFFFF;008;0=8=0:1=6=0",
     dshb_leltarlist:
-		"theade:dshbLelt:tbodyend:dshbBeszAlt:tbodybef|||" +
-		"?dshb_helyiseglist---010402FF;009;0=1=0---?dshb_beszerzeslist---03FFFFFF;006;"+"2=0=0:1=0=2",
+		"theade:dshbLelt:tbodyend:dshbBeszAlt:tbodybef:dshbBeszH|||" +
+		"?dshb_helyiseglist---010402FF;009;0=1=0---?dshb_beszerzeslist---0305FFFF;006;2=0=0:1=0=2",
     dshb_leltaresemenylist:
-		"theade:dshbLeltEs:tbodyend:dshbBeszAlt:tbodybef:megn|||" +
-		"05FFFFFF;003---010402FF;00A;0=2=0---?dshb_beszerzeslist---03FFFFFF;006;2=0=0:1=0=0",
-	dshb_beszlelt: "",
+		"theade:dshbLeltEs:tbodyend:dshbBeszAlt:tbodybef:megn:dshbBeszH|||" +
+		"05FFFFFF;003---010402FF;00A;0=2=0---?dshb_beszerzeslist" +
+		"---0306FFFF;006;2=0=0:1=0=0",
+	dshb_leltbesz:
+		"dshbBeszMin:dshbBeszH:dshbBeszAlt:megn:dshbLeltD|||" +
+		"?dshb_beszerzeslistmin---?dshb_helyiseglist---0401FFFF;009;0=2=0---" +
+		"0201FFFF;008;1=0=0:2=0=1",
 	dshb_beszleltes: "",
     fallist: retEx[0]("00B", "theadeFalList", "trowFalList"),
     tagozatlist: retEx[0]("00C", "theadeTagozatList", "trowTagozatList"),
