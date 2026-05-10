@@ -79,8 +79,8 @@ export const retnCombinations = {
 		"?dshb_helyiseglist---010402FF;009;0=1=0---?dshb_beszerzeslist---0305FFFF;006;2=0=0:1=0=2",
     dshb_leltaresemenylist:
 		"theade:dshbLeltEs:tbodyend:dshbBeszAlt:tbodybef:megn:dshbBeszH|||" +
-		"05FFFFFF;003---010402FF;00A;0=2=0---?dshb_beszerzeslist" +
-		"---0306FFFF;006;2=0=0:1=0=0",
+		"05FFFFFF;003---010402FF;00A;0=2=0---?dshb_beszerzeslist---" +
+		":tesztParaméter---0306FFFF;006;2=0=0:1=0=0:_3",
 	dshb_leltbesz:
 		"dshbBeszMin:dshbBeszH:dshbBeszAlt:megn:dshbLeltD|||" +
 		"?dshb_beszerzeslistmin---?dshb_helyiseglist---0401FFFF;009;0=2=0---" +

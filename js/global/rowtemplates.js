@@ -623,8 +623,8 @@ ${
 	dshbLeltD: (a, helys, mert="db") => {
 //		console.log(helys)
 		return `
- div
-  div class="nowrap">${helys}
+ dg-div class="autoc ker"
+  g-div class="nowrap">${helys}
   div>${a[3]} ${mert}
  `;
 	},
@@ -638,9 +638,9 @@ ${
  
 `;
 	},
-	dshbBeszH: (a, sU) => {
+	dshbBeszH: (a, gc="", sU) => {
 		return `
- div>DDDDD
+ div>DDDDD${gc}
 ${
 	sU?.[0] ? sampUpdate(
 		undefined, [sU[1], 0],

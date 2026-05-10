@@ -116,6 +116,10 @@ export function makeUpdateForm(e){
     const virtForm = "";
 }
 
+function doAlakit(cja = ""){
+	return TS;
+}
+
 function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], szur=0){
     let [cjust, yEn] = cjuste.split(":");
 	yEn = Number(yEn);
@@ -131,10 +135,8 @@ function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], 
     }
 	//console.log("Fut")
     const metnames = two[0].split(":");
-    const templeBefs = [];
-    const templeUsq = [];
-    const befRowsNum = [];
-	const befInfs = [];
+    const TS = [[],[],[],[]];
+	const [templeBefs, templeUsq, befRowsNum, befInfs] = TS;
     let templeLast = -1;
     let yeP = 0;
     const ye = two[1]?.split("---");
@@ -144,37 +146,42 @@ function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], 
     for(const cja of ye){
 		let mater0 = [];
 		if(yeP > yelen) break;
-        if(cja.startsWith("?")){
-            const rn = cja.substring(1, cja.length);
-            if(rn.length > 0){
-                const retn = retns[rn];
-                if(true || cjutte === cjust && !retn){ // cjust-6
+		let TSi = []; // templeBefs, templeUsq, befRowsNum, befInfs
+		if(cja.startsWith(":")){
+			templeBefs.push(cja.substring(1));
+			templeLast++;
+		}
+		if(cja.startsWith("?")){
+			const rn = cja.substring(1, cja.length);
+			if(rn.length > 0){
+				const retn = retns[rn];
+				if(true || cjutte === cjust && !retn){ // cjust-6
 					//console.log("BOBER")
-                    const rd = doUjratoltN(rn);
-					templeBefs.push(rd[0]);
-					templeUsq.push(rd[1]);
-					befRowsNum.push(rd[2]);
-                }else{
+					const rd = doUjratoltN(rn);
+					TSi = rd;
+				}else{
 					const rUBRs = retnsUsQsAndRowsNums[rn];
-					templeBefs.push(retns[rn]);
-					templeUsq.push(rUBRs[0]);
-					befRowsNum.push(rUBRs[1]);
+					TSi = [retns[rn], rUBRs[0], rUBRs[1]];
 				}
-                templeLast++;
-            }
-        }
-        else if(cja.length > 10){
-            const methods = [];
-            for(let i = 0; i < 8; i+=2){
-                const metnum = Number("0x"+cja.substring(i,i+2));
-                methods.push(
+				for(let ka = 0; ka < TSi.length; ka++){
+					TS[ka].push(TSi[ka]);
+				}
+				templeLast++;
+			}
+		}
+		else if(cja.length > 10){
+			const methods = [];
+			for(let i = 0; i < 8; i+=2){
+				const metnum = Number("0x"+cja.substring(i,i+2));
+				methods.push(
 					(i == 0 || !justRow) && !isNaN(metnum) && metnum != 255 ? 
 						tps[metnames[metnum]] : 0
 				);
-            }
-            const reqType = Number("0x"+ cja.substring(9, 10));
-            const reqNum = Number("0x"+ cja.substring(10, 12));
-            if(
+			}
+			const reqType = Number("0x"+ cja.substring(9, 10));
+			const reqNum = Number("0x"+ cja.substring(10, 12));
+			befInfs.push([cjust+"-"+yeP]);
+			if(
 				!isNaN(reqType) &&
 				!isNaN(reqNum) &&
 				reqType < whd.length &&
@@ -182,84 +189,87 @@ function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], 
 			){
 			//	console.log("TempleRef:\n" + responseInput);
 				templeUsq.push(
-                    yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum].text
-                );
-				befInfs.push([cjust+"-"+yeP]);
-                templeLast++;
-            }
-            else{
-                templeUsq.push("F\x01");
-                templeLast++;
-                //break;
-            }
-            if(cja.length >13){
-                const materia = cja.substring(13, cja.length).split(":_"); // retnrowType selecter(választó)
-                let mal = "";
-                const resultBef = [];
-                const resultQ = [];
-                const befIlter = [];
-                let anex = 0;
-                const resrownums = [];
-                const resultsBefRowsNums = [];
-                const whereBef = [];
+					yeP == yelen && responseInput != 0 ? responseInput : whd[reqType][reqNum].text
+				);
+				templeLast++;
+			}
+			else{
+				templeUsq.push("F\x01");
+				templeLast++;
+				//break;
+			}
+			if(cja.length > 13){
+				const materia = cja.substring(13, cja.length).split(":_"); // retnrowType selecter(választó)
+				let mal = "";
+				let anex = 0;
+				let befsNum = 0;
+				let mata = 0;
+
+				const resultBef = [];
+				const resultQ = [];
+				const befIlter = [];
+				const resrownums = [];
+				const resultsBefRowsNums = [];
+				const whereBef = [];
 				const resultInfs = [];
-                let befsNum = 0;
-                let mata = 0;
 				mater0 = materia;//[0]?.split(":");
-                for(const len of materia){
-                    const lklen = len.split(":");
-                    let lastResBefIndex = whereBef.push((resultBef.length + lklen.length)) -1;
-                    for(const lk of lklen){ // To retnrow
-                        const matre = lk.split(/[-,=\;]+/).filter(Boolean); // filter parameters with retnrow
-                        let hirF = Number(matre[0]);
-                        if(matre && matre.length > 0 && !isNaN(hirF) && hirF < yeP){
-                            resultBef.push(templeBefs[hirF]);
-                            resultQ.push(templeUsq[hirF]);
-                            resultsBefRowsNums.push(befRowsNum[hirF]);
+				for(const len of materia){
+					const lklen = len.split(":");
+					let lastResBefIndex = whereBef.push((resultBef.length + lklen.length)) -1;
+					for(const lk of lklen){ // To retnrow
+						const matre = lk.split(/[-,=\;]+/).filter(Boolean); // filter parameters with retnrow
+						let hirF = Number(matre[0]);
+						if(matre && matre.length > 0 && !isNaN(hirF) && hirF < yeP){
+							resultBef.push(templeBefs[hirF]);
+							resultQ.push(templeUsq[hirF]);
+							resultsBefRowsNums.push(befRowsNum[hirF]);
 							resultInfs.push(befInfs[hirF])
-                        }
-                        else{
-                            whereBef[lastResBefIndex]--; // Utolsó hiba: --2025. 08. 08. 15:46--
-                        }
-                        if(mata < 1){
-                            //mode implementation
-                            let mat = 1;
-                            matre.length = matre.length & 0b111111; // LIMITÁCIÓ
-                            let matlimn = matre.length;
-                            let bfg = matre.length;
-                            if((matlimn & 1) == 0){
-                                if(matre[1]) bfg = (Number("0b" + matre[1]) << (32 - matre[1].length)) ^ (bfg - 1);
-                                mat = 2;
-                            }
-                            befIlter.push(bfg);
-                            for(; mat < matlimn; mat++){
-                                befIlter.push(isNaN(matre[mat]) ? matre[mat] : Number(matre[mat]));
-                            }
-                        }
-                        befsNum++;
-                    }
-                    mata++;
-                }
+						}
+						else{
+							whereBef[lastResBefIndex]--; // Utolsó hiba: --2025. 08. 08. 15:46--
+						}
+						if(mata < 1){
+							//mode implementation
+							let mat = 1;
+							matre.length = matre.length & 0b111111; // LIMITÁCIÓ
+							let matlimn = matre.length;
+							let bfg = matre.length;
+							if((matlimn & 1) == 0){
+								if(matre[1]) bfg = (Number("0b" + matre[1]) << (32 - matre[1].length)) ^ (bfg - 1);
+								mat = 2;
+							}
+							befIlter.push(bfg);
+							for(; mat < matlimn; mat++){
+								befIlter.push(isNaN(matre[mat]) ? matre[mat] : Number(matre[mat]));
+							}
+						}
+						befsNum++;
+					}
+					mata++;
+				}
 				const gg = yeP == yelen;
-                templeBefs.push(whataf(
-                    [cjust, mater0],
-                    templeUsq[templeLast], methods, 
-                    resrownums, gg ? szur : undefined, gg ? offlim : undefined,
+				templeBefs.push(whataf(
+					[cjust, mater0],
+					templeUsq[templeLast], methods, 
+					resrownums, gg ? szur : undefined, gg ? offlim : undefined,
 					resultBef, resultsBefRowsNums, resultQ,
-                    befIlter, whereBef, resultInfs
-                ));
-                befRowsNum.push(resrownums);
-            }
-            else{
-                const resrownums = [];
+					befIlter, whereBef, resultInfs
+				));
+				befRowsNum.push(resrownums);
+			}
+			else{
+				const resrownums = [];
 				const gg = yeP == yelen;
-                templeBefs.push(whataf(
-                    [cjust, mater0], templeUsq[templeLast], methods, resrownums, 
+				templeBefs.push(whataf(
+					[cjust, mater0], templeUsq[templeLast], methods, resrownums, 
 					gg ? szur : undefined, gg ? offlim : undefined
-                ));
-                befRowsNum.push(resrownums);
-            }
-        }
+				));
+				befRowsNum.push(resrownums);
+			}
+		}
+		for(let ka = 0; ka < TS.length; ka++){
+			if(TS[ka].length < templeLast + 1) TS[ka].push("");
+		}
         yeP++;
     }
     const tspl = templeBefs;
@@ -267,7 +277,7 @@ function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], 
 	const bon = responseInput === 0 && szur === 0 && !yEn && isNaN(yEn);
     if(templeLast > -1){
         rtnV = templeBefs[templeLast];
-        if(bon) {
+        if(bon){
 			retns[cjust] = rtnV;
 		}
     }
