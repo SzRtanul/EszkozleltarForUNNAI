@@ -6,6 +6,16 @@ export let eventTarget = new EventTarget();
 export const outsideEventMethStores = [];
 export const serverhost = "http://localhost:13000/EszkozleltarForUNNAI/";
 
+
+function moreType(parts=[], schema=[]) {
+    return schema.map((converter, i) => {
+        const value = parts[i];
+        if (value === undefined || value === "")
+            return undefined;
+        return converter(value);
+    });
+}
+
 function doResetEventTarget(){
     eventTarget = new EventTarget();
 }
@@ -139,7 +149,7 @@ const view = new DataView(buffer);
 const txtenc = new TextEncoder();
 
 function getMez(mezo, text){
-    return text.length > 0 ? ((mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'') + ',') : "null,";
+    return text.length > 0 ? ((mezo.classList.contains("woap") ? text : '\'' + text?.replaceAll('\'', '\'\'') + '\'')) : "null";
 }
 
 function getSchemTab(al1, al2){
@@ -154,7 +164,7 @@ function getSchemTabValFromUsqF(usqF){
 const modes = [
 	(cav, nav) => {
 		cav[0] += nav[0] + ",";
-		cav[1] += nav[1];
+		cav[1] += nav[1] + ",";
 	},
 	(cav, nav) => {
 		cav[1] += nav[0] + "=" + nav[1];
@@ -179,15 +189,24 @@ function makeModes(mode, cav=[], nav=[]){
 }
 
 function toBin(cav=[], mode){
-	let [columns, values] = cav;
+	let [columns, values, Nscht, Ncol] = cav;
     if(columns.length>0) columns = columns.substring(0, columns.length-1);
     
-    const encodedValues = txtenc.encode(values.slice(0, -1)); // values.length-1 helyett a végét vágjuk le
-    num = encodedValues.length;
-    
 	// Méretszámítás
+    const encodedValues = txtenc.encode(values.slice(0, -1)); // values.length-1 helyett a végét vágjuk le
+    const num = [0, encodedValues.length];
     const colData = (mode == 0) ? txtenc.encode(columns + "\x00") : new Uint8Array(0);
-    const totalSize = colData.length + 4 + encodedValues.length;
+	const ences = ["", ""];
+	let totalSize = colData.length + 4 + encodedValues.length;
+	for(let i = 2; i < cav.length; i++){
+		const inj = txtenc.encode(cav[i] + "\x00");
+		const iln = inj.length;
+		if(iln > 0){
+			totalSize += 4 + iln;
+			num.push(iln);
+			ences.push(inj);
+		}
+	}
 
     const finalBuffer = new Uint8Array(totalSize);
     const view = new DataView(finalBuffer.buffer);
@@ -199,23 +218,30 @@ function toBin(cav=[], mode){
         offset += colData.length;
     }
 
-    view.setUint32(offset, num, true); 
+    view.setUint32(offset, num[1], true); 
     offset += 4;
     finalBuffer.set(encodedValues, offset);
+	offset += num[1];
     
+	for(let i = 2; i < ences.length; i++){
+		view.setUint32(offset, num[i], true); 
+		offset += 4;
+		finalBuffer.set(ences[i], offset);
+		offset += num[i];
+	}
+
     const decoder = new TextDecoder('latin1');
     console.log("Nyers szöveges nézet: " + decoder.decode(finalBuffer));
-	// let fullText = 0;
-    // fullText = (mode==0 ? columns + "\x00" : "") + String.fromCharCode(...num32ui) + values.substring(0, values.length-1);
-    // console.log("Full: " + fullText);
-    return finalBuffer.buffer;
+    
+	return finalBuffer.buffer;
 }
 
-function getDBThings(urlap, mode=0, JSONValue={}, DEFValues=""){
+function getDBThingsN(urlap, mode=0, JSONValue={}, DEFValues=""){
     const myUrlap = urlap.querySelectorAll("* [name]:not([name=''])");
     //const myUrlap = urlap.elements;
 	const DEFs = DEFValues.split(":");
-	const cav = ["", ""];
+	const cav = ["", "", urlap.getAttribute("vcol") || "*", urlap.getAttribute("vscth") || ""];
+	const checkCav = ["", ""];
 	const [columns, values] = cav;
 
 	for(let i = 0; i + 1 < DEFs.length; i += 2){
@@ -233,12 +259,19 @@ function getDBThings(urlap, mode=0, JSONValue={}, DEFValues=""){
 			if(mezo.classList.contains("mez")){
 				makeModes(mode, cav, [mezo.name.toLowerCase(), getMez(mezo, text)]);
             }
+			if(mezo.classList.contains("check")){
+				makeModes(mode, checkCav, [mezo.name.toLowerCase(), getMez(mezo, text)]);
+            }
             if(mezo.classList.contains("settr")){
                 JSONValue[mezo.name] = text;
             }
         }
     }
-	return toBin(cav, mode);
+	return [toBin(cav, mode), ""];
+}
+
+function getDBThings(...args){
+	return getDBThingsN(...args)[0];
 }
 
 
@@ -314,6 +347,7 @@ export const exportedMethods = {
     getSchemTabValFromUsqF: getSchemTabValFromUsqF,
     qTextReform: qTextReform,
     exampleREST: exampleREST,
+	moreType: moreType
 };
 
 export const eM = exportedMethods;

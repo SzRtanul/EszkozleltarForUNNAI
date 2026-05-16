@@ -27,16 +27,21 @@ export async function retreload(e){
 export async function upload(e, uu, resp, isInsert=false){
 	const tr = e.target;
 	const ret = tr.closest(".alekten");
+	console.log("ENN:")
+	console.log([e, uu, resp, isInsert]);
 	if(ret){
 //		console.log("EHJ:\n" + resp);
 		const cjust = ret.getAttribute("cjust");
+		console.log(cjust);
 		await doQueryUpdates();
 		const rep = exportedRetnMethods.doUjratolt(
 			cjust, resp, true
 		);
-//		console.log("REP:\n" + rep)
+		console.log("REP:\n" + rep);
 		if(isInsert){
-			const ehn = ret.querySelector("[adj]")
+			const ehn = 
+				//tr.closest("[adj]");
+				ret.querySelector("[adj]");
 			const adj = ehn.getAttribute("adj");
 			ehn.insertAdjacentHTML(adj, rep);
 		}

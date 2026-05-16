@@ -68,7 +68,7 @@ export const retnCombinations = {
     leltarlist: retEx[0]("009;0=1=0", "theadeLeltarList", "trowLeltarList", undefined, "", "?megnHelyisegT---"),
     leltaresemenylist: retEx[0]("00A", "theadeLeltarEsemenyList", "trowLeltarEsemenyList"),
 	dshb_termeklist: "ulbef:ulend:megn:dshbLiEszkoz:dshbLiMarka:dshbLiTermek:" +
-	"dshbUlBef|||"+
+	"dshbUlBefEszk|||"+
 		"050001FF;005---02FFFFFF;001---040001FF;01A;1=1=0:0=0=1=1=2---030601FF;000;2=0=0",
 	dshb_beszerzeslist: "dshbBesz|||?megnCeg---00FFFFFF;006;0=3=0",
 	dshb_beszerzeslistmin: "dshbBesz|||?megnCeg---00FFFFFF;006;0=3=0",

@@ -1,4 +1,4 @@
-import { exportedMethods } from "./globaldata.js";
+import { exportedMethods, eM } from "./globaldata.js";
 import { mezok, defUrlap } from "./rowftemplates.js";
 
 // RETNNNNNNNNNNNNNNNNNN
@@ -87,7 +87,17 @@ const sampUpdate = (
     const value = exportedMethods.getSchemTabValFromUsqF(usqF[0]);
 	const ane = `
 \x00\x01${ctn} class="film">
-${ defUrlap(id, (usqF?.length > 1 ? usqF[1] : "1"), value, mezok, kuldFelirat, insD) }
+${ 
+	defUrlap(
+		id, 
+		(usqF?.length > 1 ? usqF[1] : "1"), 
+		value, 
+		mezok, 
+		kuldFelirat, 
+		insD, 
+		dt
+	)
+}
 \x00\x00button runsclick="\x06" nextTo="scen:1" class="scen scen0">${gombfelirat}
 \x00\x02
 \x00\xFF`;
@@ -726,17 +736,17 @@ ${
 	dshbBeszAlt: (a, besz, leltAEs) => {
 		const con = `
  dg-div class="ker">
-  div>${besz}
+  div wUpd="innerHTML/classList" wTh="retntemp-3" szur="1/1">${besz}
   dg-div "autor">${leltAEs}
  `;
 		return con;
 	},
 	ulbef: (a, kieg="", kieg2="") => "<ul " + kieg + ">" + kieg2,
 	ulend:() => "</ul>",
-	dshbLi: (b="", b1="", b2="", uEC=[false], sU) => {
+	dshbLi: (b="", b1="", kg=[], uEC=[false], sU) => {
 		return `
- li class="retnrow"
- dg-div class="dshbLi${b2}">
+ li class="retnrow${kg?.[0] ?? ""}"
+ dg-div class="dshbLi${kg?.[1] ?? ""}">
   button>${b}
 ${
 	uEC?.[0] ? udMezC(
@@ -754,35 +764,42 @@ ${
 		mezok[sU[2]]?.apply(null, sU[3]),
 		true, "Hozzáad",
 		sU[4] || "+",
-		"div"
+		"div", sU[5]
 	) : ""
 }
  
 ${b1.length > 8 ? " ÿ" + b1 : ""}`;
 	},
-	dshbUlBef: (a) => {
-		
+	dshbUlBefEszk: (a) => {
+//		const an = eM.moreType(egyeb.split(";", [Boolean, Number]))		
 		const ahn = tps.ulbef(a, "",
 				tps.dshbLi(
-					"", "", "",
+					"Eszközlista", "", ["\" adj=\"afterend"],
 					[false],
 					[
 						true,
-						-1,
+						12,
 						"nevUpd", ["", "Eszköznév"]
 					]
 		));
 		return ahn;
 	},
-	dshbLiEszkoz: (a, m) => {
-		return tps.dshbLi(a[1], m, undefined,
-			[true],
-			[true]
+	dshbLiEszkoz: (a, m, egyeb) => {
+		console.log(a[a.length - 2]);
+		console.log(a[a.length - 1]);
+		return tps.dshbLi(a[1], m, [" alekten\" cjust=\"" + a[a.length - 2] + "-2"],
+			[true, a[0], 12, "nevUpd", [a, "Eszkoznév"]],
+			[true, 2, "termekUpdD1", [], undefined,
+			[
+				"eszkozid:" + a[0],
+				"eszkozid,markaid"
+				//"public.distctermrm"
+			]]
 		);
 	},
 	dshbLiMarka: (a, m, mm) => {
 		return tps.dshbLi(
-			m, mm, void 0, [false],
+			m, mm, ["\" adj=\"beforebegin"], [false],
 			[true]
 		);
 	},
@@ -798,7 +815,7 @@ ${
 		"<img alt='M' src=''>",
 		"<img alt='D' src=''>",
 		undefined,
-		"div", "eszkozid:"+a[1]+":markaid:"+a[2]
+		"div", ["eszkozid:"+a[1]+":markaid:"+a[2]]
 	) : ""
 }
 `;

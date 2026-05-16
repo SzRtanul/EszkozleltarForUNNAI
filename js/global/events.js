@@ -121,7 +121,7 @@ function doAlakit(cja = ""){
 }
 
 function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], szur=0){
-    let [cjust, yEn] = cjuste.split(":");
+    let [cjust, yEn] = cjuste.split("-");
 	yEn = Number(yEn);
 	let res = [];
 	const lkl = cjust?.startsWith('-') ?
@@ -131,7 +131,7 @@ function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], 
 	//console.log("LKL: " + lkl)
     const two = lkl?.split("|||");
     if(!two || two.length < 2){
-        return;
+        return [""];
     }
 	//console.log("Fut")
     const metnames = two[0].split(":");
@@ -141,7 +141,7 @@ function doUjratoltN(cjuste="", responseInput=0, justRow=false, offlim=[0, -1], 
     let yeP = 0;
     const ye = two[1]?.split("---");
     const yelen = !isNaN(yEn) ? yEn : ye.length-1;
-	if(yelen >= ye.length) return "";
+	if(yelen >= ye.length) return [""];
 	
     for(const cja of ye){
 		let mater0 = [];
